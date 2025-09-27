@@ -1,0 +1,18 @@
+{
+  "about": {
+    "paragraph-1": "We are a dedicated community passionate about delivering advanced fixes, realistic maps, and the best map combos for Euro Truck Simulator 2.",
+    "paragraph-2": "Join us to explore the combination of human, nature, and technology.",
+    "title": "About Us"
+  },
+  "hero": {
+    "actions": {
+      "start-to-use": "Start to Use"
+    },
+    "description": "Welcome to Jatuo's Place - A Hub for ETS2 Modding Community"
+  },
+  "members": {
+    "description": "These members contribute a lot to our community",
+    "donate": "Donate",
+    "title": "Members"
+  }
+}

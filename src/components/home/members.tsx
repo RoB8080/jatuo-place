@@ -1,0 +1,147 @@
+import { useTranslation } from "react-i18next";
+import { FlexibleBox } from "@/components/common/flexible-box";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import type { FC } from "react";
+import Bilibili from "@/assets/svgs/brand/bilibili.svg?react";
+import Kuaishou from "@/assets/svgs/brand/kuaishou.svg?react";
+
+import { Button } from "../ui/button";
+import { HandHeart } from "lucide-react";
+
+interface MemberInfo {
+  name: string;
+  avatar: string;
+  roles: string[];
+  externalLinks?: {
+    icon: FC<{ className?: string }>;
+    href: string;
+  }[];
+  donateHref?: string;
+}
+
+const memberInfos: MemberInfo[] = [
+  {
+    name: "Rxx2008",
+    avatar: "/members/avatar.rxx2008.jpg",
+    roles: ["RC Mapper", "Miscellaneous"],
+    externalLinks: [
+      {
+        icon: Bilibili,
+        href: "https://space.bilibili.com/3546639839005383",
+      },
+      {
+        icon: Kuaishou,
+        href: "https://www.kuaishou.com/profile/3x84qcyvfehr3kw",
+      },
+    ],
+    donateHref: "https://www.paypal.com/paypalme/rxx2008",
+  },
+  {
+    name: "Jane",
+    avatar: "/members/avatar.jane.jpg",
+    roles: ["Programmer", "RC Mapper", "Def Fixer"],
+    externalLinks: [
+      {
+        icon: Bilibili,
+        href: "https://space.bilibili.com/472090875",
+      },
+    ],
+  },
+  {
+    name: "somebody1",
+    avatar: "https://placehold.co/128x128?random=1",
+    roles: ["Miscellaneous"],
+  },
+  {
+    name: "somebody2",
+    avatar: "https://placehold.co/128x128?random=2",
+    roles: ["Miscellaneous"],
+  },
+  {
+    name: "somebody3",
+    avatar: "https://placehold.co/128x128?random=3",
+    roles: ["Miscellaneous"],
+  },
+];
+
+function Member({ info }: { info: MemberInfo }) {
+  const { t } = useTranslation("home");
+  return (
+    <div className="relative flex flex-row gap-8 rounded-xl bg-muted p-8">
+      <div className="flex-none">
+        <Avatar className="size-16">
+          <AvatarImage src={info.avatar} />
+          <AvatarFallback>{info.name}</AvatarFallback>
+        </Avatar>
+      </div>
+      <div className="flex-auto">
+        <div className="text-xl leading-8 font-medium text-foreground">
+          {info.name}
+        </div>
+        <div className="text-sm leading-5 font-medium text-muted-foreground">
+          {info.roles.join(" / ")}
+        </div>
+        <div className="mt-1 -ml-2 flex flex-row">
+          {info.externalLinks?.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button
+                className="text-muted-foreground"
+                variant="ghost"
+                size="icon"
+              >
+                <link.icon className="size-5" />
+              </Button>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {info.donateHref && (
+        <a
+          className="absolute top-3 right-3"
+          key={info.donateHref}
+          href={info.donateHref}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button
+            className="text-muted-foreground transition-all hover:text-primary"
+            variant="ghost"
+          >
+            <HandHeart className="size-5" />
+            <div>{t(($) => $.members.donate)}</div>
+          </Button>
+        </a>
+      )}
+    </div>
+  );
+}
+
+export function Members() {
+  const { t } = useTranslation("home");
+  return (
+    <FlexibleBox
+      as="section"
+      data-slot="members"
+      className="py-12"
+      innerClassName="flex flex-col gap-8 px-4 md:flex-row md:px-0"
+    >
+      <div className="top-8 md:sticky md:w-[240px] ">
+        <h2>{t(($) => $.members.title)}</h2>
+        <p className="pt-4 font-medium text-muted-foreground">
+          {t(($) => $.members.description)}
+        </p>
+      </div>
+      <div className="flex flex-auto flex-col gap-4">
+        {memberInfos.map((member) => (
+          <Member key={member.name} info={member} />
+        ))}
+      </div>
+    </FlexibleBox>
+  );
+}

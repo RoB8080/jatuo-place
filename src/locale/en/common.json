@@ -1,0 +1,18 @@
+{
+  "routes": {
+    "home": "Home",
+    "map-combo": {
+      "ets2-155": "routes.map-combo.ets2-155"
+    }
+  },
+  "external": {
+    "discord": "Join us on Discord",
+    "github": "View on GitHub",
+    "qq": "Join us on QQ"
+  },
+  "theme": {
+    "dark": "Dark",
+    "light": "Light",
+    "system": "Follow System"
+  }
+}

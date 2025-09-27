@@ -1,0 +1,18 @@
+{
+  "routes": {
+    "home": "首页",
+    "map-combo": {
+      "ets2-155": ""
+    }
+  },
+  "external": {
+    "discord": "加入我们的Discord",
+    "github": "查看项目代码",
+    "qq": "加入我们的QQ群"
+  },
+  "theme": {
+    "dark": "暗色",
+    "light": "亮色",
+    "system": "跟随系统"
+  }
+}

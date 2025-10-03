@@ -6,6 +6,7 @@ import tseslint from "typescript-eslint";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import { defineConfig, globalIgnores } from "eslint/config";
 import tailwind from "eslint-plugin-tailwindcss";
+import eslintPluginTanStackQuery from "@tanstack/eslint-plugin-query";
 import path from "node:path";
 
 export default defineConfig([
@@ -19,6 +20,7 @@ export default defineConfig([
       reactRefresh.configs.vite,
       eslintPluginPrettierRecommended,
       tailwind.configs["flat/recommended"],
+      eslintPluginTanStackQuery.configs["flat/recommended"],
     ],
     languageOptions: {
       ecmaVersion: 2020,

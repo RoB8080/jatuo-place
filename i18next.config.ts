@@ -6,7 +6,7 @@ export default defineConfig({
     input: ["src/**/*.{ts,tsx}"],
     output: "src/locale/{{language}}/{{namespace}}.json",
     defaultNS: "common",
-    preservePatterns: ["routes.*", "*.dynamic.*"],
+    preservePatterns: ["mod-category.*.name", "mod.*"],
     functions: ["t", "i18n.t", "i18next.t"],
   },
 });

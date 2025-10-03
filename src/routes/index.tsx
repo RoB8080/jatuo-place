@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="flex-auto">
+    <div className="flex-auto overflow-auto">
       <Hero />
       <FlexibleBox>
         <Separator />

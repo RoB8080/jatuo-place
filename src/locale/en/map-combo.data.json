@@ -1,0 +1,17 @@
+{
+  "mod-category": {
+    "africa": { "name": "Africa Map" },
+    "asia": { "name": "Asia Map" },
+    "europe": { "name": "Europe Map" },
+    "function": { "name": "Functional Mod" },
+    "other": { "name": "Other Map" },
+    "rus": { "name": "Russia Map" },
+    "virtual": { "name": "Virtual Map" },
+    "patch": { "name": "Map Patch" }
+  },
+  "mod": {
+    "ets2_global_background_map": {
+      "description": "This background map has full coverage of nearly the entire world"
+    }
+  }
+}

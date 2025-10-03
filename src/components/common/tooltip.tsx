@@ -1,20 +1,20 @@
 import {
-  Tooltip as TooltipPrimitive,
+  Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import type { ReactNode } from "react";
 
-export interface TooltipProps {
+export interface SimpleTooltipProps {
   children?: ReactNode;
   content?: ReactNode;
 }
 
-export function Tooltip({ children, content }: TooltipProps) {
+export function SimpleTooltip({ children, content }: SimpleTooltipProps) {
   return (
-    <TooltipPrimitive>
+    <Tooltip>
       <TooltipTrigger asChild>{children}</TooltipTrigger>
       <TooltipContent>{content}</TooltipContent>
-    </TooltipPrimitive>
+    </Tooltip>
   );
 }

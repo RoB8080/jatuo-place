@@ -14,6 +14,8 @@ export const resources = {
   ru,
 };
 
+export type LocaleLang = keyof typeof resources;
+
 export const defaultNS = "common";
 
 i18n

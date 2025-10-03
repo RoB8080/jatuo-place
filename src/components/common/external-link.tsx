@@ -6,7 +6,7 @@ import Discord from "@/assets/svgs/brand/discord.svg?react";
 import { cn } from "@/libs/utils";
 import { Button } from "../ui/button";
 import { useTranslation } from "react-i18next";
-import { Tooltip } from "./tooltip";
+import { SimpleTooltip } from "./tooltip";
 
 type ExternalLinkData = {
   href: string;
@@ -56,7 +56,7 @@ function ExternalLinkButton({
 }) {
   const { t } = useTranslation("common");
   return (
-    <Tooltip
+    <SimpleTooltip
       key={target.localeKey}
       content={t(($) => $.external[target.localeKey])}
     >
@@ -79,7 +79,7 @@ function ExternalLinkButton({
           <target.icon />
         </Button>
       </a>
-    </Tooltip>
+    </SimpleTooltip>
   );
 }
 

@@ -57,7 +57,7 @@ export const ThemeSwitcher = ({
     <div
       data-size={size}
       className={cn(
-        "data-[size=lg]:h-9 data-[size=sm]:h-6 data-[size=sm]:p-0.5 relative isolate flex h-8 rounded-full bg-background p-1 ring-1 ring-border",
+        "relative isolate flex h-8 rounded-full bg-background p-1 ring-1 ring-border data-[size=lg]:h-9 data-[size=sm]:h-6 data-[size=sm]:p-0.5",
         className,
       )}
     >
@@ -68,7 +68,7 @@ export const ThemeSwitcher = ({
           <button
             aria-label={label}
             data-size={size}
-            className="data-[size=lg]:h-7 data-[size=lg]:w-7 data-[size=sm]:h-5 data-[size=sm]:w-5 relative h-6 w-6 rounded-full cursor-pointer hover:bg-muted"
+            className="relative h-6 w-6 cursor-pointer rounded-full hover:bg-muted data-[size=lg]:h-7 data-[size=lg]:w-7 data-[size=sm]:h-5 data-[size=sm]:w-5"
             key={key}
             onClick={() => handleThemeClick(key as "light" | "dark" | "system")}
             type="button"
@@ -84,7 +84,7 @@ export const ThemeSwitcher = ({
               data-size={size}
               data-active={isActive}
               className={cn(
-                "relative z-10 m-auto h-4 w-4 data-[size=lg]:h-4.5 data-[size=lg]:w-4.5 data-[size=sm]:h-3.5 data-[size=sm]:w-3.5 text-muted-foreground data-[active=true]:text-foreground",
+                "relative z-10 m-auto h-4 w-4 text-muted-foreground data-[active=true]:text-foreground data-[size=lg]:h-4.5 data-[size=lg]:w-4.5 data-[size=sm]:h-3.5 data-[size=sm]:w-3.5",
               )}
             />
           </button>

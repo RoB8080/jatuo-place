@@ -1,14 +1,10 @@
 {
   "<1></1> <3></3>": "<1></1> <3></3>",
-  "tabs": {
-    "download-list": "下载列表",
-    "mod-order": "模组顺序"
-  },
   "condition-display": {
     "and": "AND：所有条件必须满足",
-    "or": "OR：任一条件必须满足",
-    "not": "NOT：条件必须不满足",
     "incompatible-mod": "不兼容",
+    "not": "NOT：条件必须不满足",
+    "or": "OR：任一条件必须满足",
     "requires": "依赖"
   },
   "mod-tree": {
@@ -16,8 +12,8 @@
     "paid": "付费模组",
     "select-all": "全选",
     "title": "选择模组",
-    "unselect-all": "全不选",
-    "unable-to-select": "无法选择模组"
+    "unable-to-select": "无法选择模组",
+    "unselect-all": "全不选"
   },
   "notes": {
     "description": "游戏前请查看以下注意事项",

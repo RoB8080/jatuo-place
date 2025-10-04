@@ -29,6 +29,11 @@ import { evaluateConditionTree } from "@/libs/map-combo/condition";
 import { ConditionDisplay } from "./condition-failure-display";
 import type { Mod } from "@/libs/map-combo";
 
+function PaidText() {
+  const { t } = useTranslation("map-combo");
+  return <div>{t(($) => $["mod-tree"].paid)}</div>;
+}
+
 function ModHoverCard({
   mod,
   children,
@@ -41,7 +46,6 @@ function ModHoverCard({
   const { id, name, author, mainPageURL, isPaid, posterURL, hasDescription } =
     mod;
   const { t } = useTranslation("map-combo-data");
-  const { t: tMapCombo } = useTranslation("map-combo");
   const desc = hasDescription
     ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
       t(($) => ($.mod as any)[id].description)
@@ -53,8 +57,7 @@ function ModHoverCard({
       els.push(<div>by {author}</div>);
     }
     if (isPaid) {
-      const paidText = tMapCombo(($) => $["mod-tree"].paid);
-      els.push(<div>{paidText}</div>);
+      els.push(<PaidText />);
     }
 
     return els.reduce<ReactElement[]>((acc, cur, idx) => {
@@ -64,7 +67,7 @@ function ModHoverCard({
       acc.push(cur);
       return acc;
     }, []);
-  }, [author, isPaid, tMapCombo]);
+  }, [author, isPaid]);
 
   return (
     <SimpleHoverCard

@@ -12,24 +12,8 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { VersionSelect } from "@/components/map-combo/version-select";
 import { ModTree } from "@/components/map-combo/mod-tree";
 import { ModFileList } from "@/components/map-combo/mod-file-list";
-import { useTranslation } from "react-i18next";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function RouteComponent() {
-  const { t } = useTranslation("map-combo");
-  const tabs = [
-    {
-      value: "download-list",
-      label: t(($) => $["tabs"]["download-list"]),
-      render: () => <>123</>,
-    },
-    {
-      value: "mod-order",
-      label: t(($) => $["tabs"]["mod-order"]),
-      render: () => <ModFileList className="h-full px-2" />,
-    },
-  ];
-
   return (
     <MapComboProvider>
       <SidebarProvider
@@ -52,30 +36,16 @@ function RouteComponent() {
           </SidebarFooter> */}
         </Sidebar>
         <SidebarInset>
-          <Tabs defaultValue="download-list" className="min-h-0 flex-auto">
-            <div className="flex flex-row items-center justify-between gap-2 p-2 pb-0">
-              <div className="flex flex-row items-center gap-2">
-                <SidebarTrigger variant="outline" />
-                <VersionSelect />
-              </div>
-              <TabsList className="border">
-                {tabs.map((tab) => (
-                  <TabsTrigger key={tab.value} value={tab.value}>
-                    {tab.label}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
+          <div className="flex flex-row items-center justify-between gap-2 p-2 pb-0">
+            <div className="flex flex-row items-center gap-2">
+              <SidebarTrigger
+                className="bg-card hover:bg-accent"
+                variant="outline"
+              />
+              <VersionSelect className="bg-card hover:bg-accent" />
             </div>
-            {tabs.map((tab) => (
-              <TabsContent
-                className="min-h-0 flex-auto"
-                key={tab.value}
-                value={tab.value}
-              >
-                {tab.render()}
-              </TabsContent>
-            ))}
-          </Tabs>
+          </div>
+          <ModFileList className="overflow-auto px-2" />
         </SidebarInset>
       </SidebarProvider>
     </MapComboProvider>

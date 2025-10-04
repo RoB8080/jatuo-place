@@ -13,8 +13,8 @@ export function AppHeader({ className }: AppHeaderProps) {
   return (
     <FlexibleBox
       as="header"
-      className={cn("border-b flex-none", className)}
-      innerClassName="flex h-12 shrink-0 items-center gap-2 px-4 justify-between"
+      className={cn("flex-none border-b", className)}
+      innerClassName="flex h-12 shrink-0 items-center justify-between gap-2 px-4"
     >
       <div data-slot="header-left" className="flex items-center gap-2">
         <HeaderNav />

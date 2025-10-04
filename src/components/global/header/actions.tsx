@@ -25,7 +25,7 @@ export function HeaderActions() {
         className="w-[220px]"
         content={
           <>
-            <DropdownMenuLabel className="flex items-center flex-row justify-between">
+            <DropdownMenuLabel className="flex flex-row items-center justify-between">
               <div>{t(($) => $.header.appearance)}</div>
               <ThemeSwitcher size="sm" />
             </DropdownMenuLabel>

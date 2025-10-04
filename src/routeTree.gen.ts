@@ -9,48 +9,55 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as MapComboRouteImport } from './routes/map-combo'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as MapComboEts2155RouteImport } from './routes/map-combo/ets2-155'
 
+const MapComboRoute = MapComboRouteImport.update({
+  id: '/map-combo',
+  path: '/map-combo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MapComboEts2155Route = MapComboEts2155RouteImport.update({
-  id: '/map-combo/ets2-155',
-  path: '/map-combo/ets2-155',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/map-combo/ets2-155': typeof MapComboEts2155Route
+  '/map-combo': typeof MapComboRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/map-combo/ets2-155': typeof MapComboEts2155Route
+  '/map-combo': typeof MapComboRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/map-combo/ets2-155': typeof MapComboEts2155Route
+  '/map-combo': typeof MapComboRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/map-combo/ets2-155'
+  fullPaths: '/' | '/map-combo'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/map-combo/ets2-155'
-  id: '__root__' | '/' | '/map-combo/ets2-155'
+  to: '/' | '/map-combo'
+  id: '__root__' | '/' | '/map-combo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  MapComboEts2155Route: typeof MapComboEts2155Route
+  MapComboRoute: typeof MapComboRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/map-combo': {
+      id: '/map-combo'
+      path: '/map-combo'
+      fullPath: '/map-combo'
+      preLoaderRoute: typeof MapComboRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -58,19 +65,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/map-combo/ets2-155': {
-      id: '/map-combo/ets2-155'
-      path: '/map-combo/ets2-155'
-      fullPath: '/map-combo/ets2-155'
-      preLoaderRoute: typeof MapComboEts2155RouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  MapComboEts2155Route: MapComboEts2155Route,
+  MapComboRoute: MapComboRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -110,10 +110,6 @@ export function DropdownMenuComposite({
 
   const { Menu, Trigger, Content } = getComponents(asSub);
 
-  if (asSub) {
-    console.debug("children", children);
-  }
-
   return (
     <Menu modal={false} open={open} onOpenChange={onOpenChange}>
       <Trigger asChild>{children}</Trigger>

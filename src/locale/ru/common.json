@@ -1,14 +1,12 @@
 {
-  "routes": {
-    "home": "",
-    "map-combo": {
-      "ets2-155": ""
-    }
-  },
   "external": {
     "discord": "",
     "github": "",
     "qq": ""
+  },
+  "routes": {
+    "home": "",
+    "map-combo": ""
   },
   "theme": {
     "dark": "",

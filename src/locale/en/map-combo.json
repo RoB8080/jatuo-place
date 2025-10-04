@@ -1,0 +1,31 @@
+{
+  "<1></1> <3></3>": "<1></1> <3></3>",
+  "condition-display": {
+    "and": "AND: all conditions must be satisfied",
+    "incompatible-mod": "is incompatible with current selection",
+    "not": "NOT: condition must not be satisfied",
+    "or": "OR: any condition must be satisfied",
+    "requires": "requires"
+  },
+  "mod-file-list": {
+    "download": "Download"
+  },
+  "mod-tree": {
+    "fold-all": "Fold All",
+    "paid": "Paid",
+    "select-all": "Select All",
+    "title": "Select Mods",
+    "unable-to-select": "Unable to select mod",
+    "unselect-all": "Unselect All"
+  },
+  "notes": {
+    "description": "Please check the following notes before playing",
+    "p1": "1. Make sure you own all DLCs to ensure gameplay.",
+    "p2": "2. When using the load order, remember to create a new profile.",
+    "p3": "3. Open <0>{{config}}</0> and set <1>{{param}}</1> to 50 to ensure gameplay experience.",
+    "title": "Notes"
+  },
+  "version-select": {
+    "placeholder": "Select Version"
+  }
+}

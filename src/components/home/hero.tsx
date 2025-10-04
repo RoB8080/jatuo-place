@@ -19,7 +19,7 @@ export function Hero() {
         {t(($) => $.hero.description)}
       </p>
       <div className="flex items-center justify-center gap-4">
-        <Link to="/map-combo/ets2-155">
+        <Link to="/map-combo">
           <Button
             variant="default"
             type="button"

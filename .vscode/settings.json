@@ -17,6 +17,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always"
   },
+  "json.format.enable": true,
   "eslint.format.enable": true,
   "typescript.preferences.autoImportFileExcludePatterns": [
       "./node_modules/@radix-ui/**/*"
@@ -30,5 +31,9 @@
   ],
   "tailwindCSS.classFunctions": [
     "cva"
-  ]
+  ],
+  "cSpell.words": [
+    "Jatuo"
+  ],
+  "files.eol": "\n"
 }

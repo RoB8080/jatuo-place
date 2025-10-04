@@ -1,11 +1,17 @@
 import { AppHeader } from "@/components/global/header";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 
+// Create a client
+const queryClient = new QueryClient();
+
 const RootLayout = () => (
-  <div className="min-h-svh w-full flex flex-col">
-    <AppHeader />
-    <Outlet />
-  </div>
+  <QueryClientProvider client={queryClient}>
+    <div className="flex h-svh w-full flex-col">
+      <AppHeader />
+      <Outlet />
+    </div>
+  </QueryClientProvider>
 );
 
 export const Route = createRootRoute({ component: RootLayout });

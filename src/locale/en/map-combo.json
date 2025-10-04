@@ -7,9 +7,12 @@
     "or": "OR: any condition must be satisfied",
     "requires": "requires"
   },
+  "mod-file-list": {
+    "download": "Download"
+  },
   "mod-tree": {
     "fold-all": "Fold All",
-    "paid": "Paid Mod",
+    "paid": "Paid",
     "select-all": "Select All",
     "title": "Select Mods",
     "unable-to-select": "Unable to select mod",

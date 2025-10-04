@@ -1,11 +1,57 @@
-import { useRef } from "react";
+import { useRef, type Ref } from "react";
 import { Card, CardContent } from "../ui/card";
-import { useMapComboContext } from "./context";
+import { useMapComboContext, type ActivatedModFile } from "./context";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn } from "@/libs/utils";
+import { Download } from "lucide-react";
+import { Button } from "../ui/button";
+import { useTranslation } from "react-i18next";
+import { SimpleTooltip } from "../common";
 
 export interface ModFileListProps {
   className?: string;
+}
+
+function ModFile({
+  data,
+  ref,
+}: {
+  data: ActivatedModFile;
+  ref: Ref<HTMLDivElement>;
+}) {
+  const { name, posterURL, mod } = data;
+  const { downloadURL } = mod ?? {};
+  const { t } = useTranslation("map-combo");
+  const downloadLabel = t(($) => $["mod-file-list"].download);
+
+  return (
+    <Card size="sm" ref={ref}>
+      <CardContent className="flex gap-3">
+        {posterURL && (
+          <img
+            src={posterURL}
+            alt={name}
+            className="h-22 w-auto flex-none rounded-md"
+          />
+        )}
+        <div className="flex flex-auto flex-col">
+          <h4>{name}</h4>
+          <p className="flex-auto text-wrap text-muted-foreground"></p>
+          <div className="flex flex-row-reverse">
+            {downloadURL && (
+              <SimpleTooltip content={downloadLabel}>
+                <a href={downloadURL} target="_blank" rel="noopener noreferrer">
+                  <Button size="icon-sm">
+                    <Download className="size-3.5" />
+                  </Button>
+                </a>
+              </SimpleTooltip>
+            )}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
 }
 
 export function ModFileList({ className }: ModFileListProps) {
@@ -40,27 +86,16 @@ export function ModFileList({ className }: ModFileListProps) {
           }}
         >
           {items.map((virtualItem) => {
-            const { name, posterURL } = activatedModFiles[virtualItem.index];
+            const modFile = activatedModFiles[virtualItem.index];
+            if (!modFile) {
+              return null;
+            }
             return (
-              <Card
-                size="sm"
+              <ModFile
                 key={virtualItem.key}
-                data-index={virtualItem.index}
+                data={modFile}
                 ref={virtualizer.measureElement}
-              >
-                <CardContent className="flex gap-3">
-                  {posterURL && (
-                    <img
-                      src={posterURL}
-                      alt={name}
-                      className="h-22 w-auto flex-none rounded-md"
-                    />
-                  )}
-                  <div>
-                    <h4>{name}</h4>
-                  </div>
-                </CardContent>
-              </Card>
+              />
             );
           })}
         </div>

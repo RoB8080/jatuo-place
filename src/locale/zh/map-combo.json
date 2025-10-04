@@ -7,9 +7,12 @@
     "or": "OR：任一条件必须满足",
     "requires": "依赖"
   },
+  "mod-file-list": {
+    "download": "下载"
+  },
   "mod-tree": {
     "fold-all": "全部折叠",
-    "paid": "付费模组",
+    "paid": "付费",
     "select-all": "全选",
     "title": "选择模组",
     "unable-to-select": "无法选择模组",

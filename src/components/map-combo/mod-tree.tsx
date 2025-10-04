@@ -13,9 +13,11 @@ import {
   CircleAlert,
   CircleDollarSign,
   CopyMinus,
+  GitCommitVertical,
   Link,
   ListMinus,
   ListPlus,
+  User,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { intersection } from "es-toolkit";
@@ -29,9 +31,14 @@ import { evaluateConditionTree } from "@/libs/map-combo/condition";
 import { ConditionDisplay } from "./condition-failure-display";
 import type { Mod } from "@/libs/map-combo";
 
-function PaidText() {
+function PaidMeta() {
   const { t } = useTranslation("map-combo");
-  return <div>{t(($) => $["mod-tree"].paid)}</div>;
+  return (
+    <span>
+      <CircleDollarSign className="mr-0.5 inline-block size-3.5 align-[-1.5px]" />
+      {t(($) => $["mod-tree"].paid)}
+    </span>
+  );
 }
 
 function ModHoverCard({
@@ -43,8 +50,16 @@ function ModHoverCard({
   children: ReactElement;
   extraContent?: ReactNode;
 }) {
-  const { id, name, author, mainPageURL, isPaid, posterURL, hasDescription } =
-    mod;
+  const {
+    id,
+    name,
+    author,
+    mainPageURL,
+    isPaid,
+    posterURL,
+    hasDescription,
+    version,
+  } = mod;
   const { t } = useTranslation("map-combo-data");
   const desc = hasDescription
     ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,15 +69,28 @@ function ModHoverCard({
   const metaEls = useMemo(() => {
     const els: ReactElement[] = [];
     if (author) {
-      els.push(<div>by {author}</div>);
+      els.push(
+        <span key="author">
+          <User className="mr-0.5 inline-block size-3.5 align-[-1.5px]" />
+          {author}
+        </span>,
+      );
+    }
+    if (version) {
+      els.push(
+        <span key="version">
+          <GitCommitVertical className="mr-0.5 inline-block size-3.5 align-[-1.5px]" />
+          {version}
+        </span>,
+      );
     }
     if (isPaid) {
-      els.push(<PaidText />);
+      els.push(<PaidMeta />);
     }
 
     return els.reduce<ReactElement[]>((acc, cur, idx) => {
       if (idx !== 0) {
-        acc.push(<div>•</div>);
+        acc.push(<span> • </span>);
       }
       acc.push(cur);
       return acc;

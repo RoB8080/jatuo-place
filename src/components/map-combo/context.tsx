@@ -1,21 +1,13 @@
+import { createContext, type ReactNode, useContext, useMemo } from "react";
 import {
-  createContext,
-  type ReactNode,
-  useContext,
-  useCallback,
-  useMemo,
-} from "react";
-import {
-  useVersionData,
-  versionKeys,
-  usePersistState,
+  useVersion,
+  useModSelection,
   type MapComboData,
   type Mod,
   type ModCategory,
   type ModFile,
   evaluateCondition,
 } from "@/libs/map-combo";
-import { uniq } from "es-toolkit";
 
 /** mod data with its related files */
 export type DataTreeMod = Mod & {
@@ -53,7 +45,7 @@ export interface MapComboContextValue {
 }
 
 const MapComboContext = createContext<MapComboContextValue>({
-  availableVersionKeys: versionKeys,
+  availableVersionKeys: [],
   selectedVersionKey: undefined,
   setSelectedVersionKey: () => {},
   isLoadingVersionData: false,
@@ -149,63 +141,24 @@ export function MapComboProvider({ children }: { children: ReactNode }) {
   const {
     selectedVersionKey,
     setSelectedVersionKey,
-    expandedCategoryIDs,
-    setExpandedCategoryIDs,
-    selectedModIDs,
-    setSelectedModIDs,
-  } = usePersistState();
+    availableVersionKeys,
+    versionData,
+    isLoadingVersionData,
+  } = useVersion();
 
-  const { data: versionData, isLoading: isLoadingVersionData } =
-    useVersionData(selectedVersionKey);
+  const {
+    selectedModIDs,
+    expandedCategoryIDs,
+    selectMods,
+    unselectMods,
+    toggleCategory,
+    expandCategories,
+    collapseCategories,
+  } = useModSelection(selectedVersionKey, versionData);
 
   const dataTree = useMemo(
     () => (versionData ? buildDataTree(versionData) : []),
     [versionData],
-  );
-
-  const toggleCategory = useCallback(
-    (categoryID: string) => {
-      setExpandedCategoryIDs((prev) =>
-        uniq(
-          (prev || []).includes(categoryID)
-            ? (prev || []).filter((id) => id !== categoryID)
-            : [...(prev || []), categoryID],
-        ),
-      );
-    },
-    [setExpandedCategoryIDs],
-  );
-
-  const expandCategories = useCallback(
-    (categoryIDs: string[]) => {
-      setExpandedCategoryIDs((prev) => uniq([...(prev || []), ...categoryIDs]));
-    },
-    [setExpandedCategoryIDs],
-  );
-
-  const collapseCategories = useCallback(
-    (categoryIDs: string[]) => {
-      setExpandedCategoryIDs((prev) =>
-        uniq((prev || []).filter((id) => !categoryIDs.includes(id))),
-      );
-    },
-    [setExpandedCategoryIDs],
-  );
-
-  const selectMods = useCallback(
-    (modIDs: string[]) => {
-      setSelectedModIDs((prev) => uniq([...(prev || []), ...modIDs]));
-    },
-    [setSelectedModIDs],
-  );
-
-  const unselectMods = useCallback(
-    (modIDs: string[]) => {
-      setSelectedModIDs((prev) =>
-        uniq((prev || []).filter((id) => !modIDs.includes(id))),
-      );
-    },
-    [setSelectedModIDs],
   );
 
   const activatedModFiles = useMemo(
@@ -229,7 +182,7 @@ export function MapComboProvider({ children }: { children: ReactNode }) {
   return (
     <MapComboContext.Provider
       value={{
-        availableVersionKeys: versionKeys,
+        availableVersionKeys,
         selectedVersionKey,
         setSelectedVersionKey,
         isLoadingVersionData,

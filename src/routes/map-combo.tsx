@@ -45,7 +45,7 @@ function RouteComponent() {
               <VersionSelect className="bg-card hover:bg-accent" />
             </div>
           </div>
-          <ModFileList className="overflow-auto px-2" />
+          <ModFileList className="flex-auto overflow-auto px-2" />
         </SidebarInset>
       </SidebarProvider>
     </MapComboProvider>

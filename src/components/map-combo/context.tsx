@@ -97,6 +97,11 @@ function buildDataTree(data: MapComboData | undefined): DataTree {
     }
     seenModIDSet.add(mod.id);
 
+    // passive mod will not show in the mod selection
+    if (mod.isPassive) {
+      return data;
+    }
+
     const category = categoryMap.get(mod.categoryID);
     if (!category) {
       return data; // category not found, skip

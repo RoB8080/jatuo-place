@@ -45,6 +45,8 @@ export interface Mod {
   condition?: Condition;
   /** ID of the belonged mod category */
   categoryID: string;
+  /** Whether the mod is passive, if true, will not show in the mod selection */
+  isPassive?: boolean;
 }
 
 /**

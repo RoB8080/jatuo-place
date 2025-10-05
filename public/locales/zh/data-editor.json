@@ -1,6 +1,9 @@
 {
-  "tab": {
-    "category": "分类",
-    "mod": "模组"
+  "actions": {
+    "failed-loading-prod-data": "从线上数据加载失败",
+    "from-prod-data": "从线上数据加载",
+    "invalid-data": "无效数据",
+    "load": "加载",
+    "save": "保存"
   }
 }

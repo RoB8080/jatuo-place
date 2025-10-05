@@ -1,6 +1,9 @@
 {
-  "tab": {
-    "category": "Category",
-    "mod": "Mod"
+  "actions": {
+    "failed-loading-prod-data": "Failed to load production data",
+    "from-prod-data": "From production data",
+    "invalid-data": "Invalid data",
+    "load": "Load",
+    "save": "Save"
   }
 }

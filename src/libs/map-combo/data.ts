@@ -1,7 +1,12 @@
 import { useTranslation } from "react-i18next";
-import { type SupportedLanguage, fallbackLanguage } from "../i18n";
+import {
+  type SupportedLanguage,
+  fallbackLanguage,
+  supportedLanguages,
+} from "../i18n";
 import type { Condition } from "./condition";
 import { useCallback } from "react";
+import { z } from "zod";
 
 /**
  * Map of locale strings used in Map Combo, must contain fallback language
@@ -10,16 +15,27 @@ export type LocaleMap = Partial<Record<SupportedLanguage, string>> & {
   [fallbackLanguage]: string;
 };
 
+const localMapSchema = z.object({
+  [fallbackLanguage]: z.string(),
+  ...Object.fromEntries(
+    Object.keys(supportedLanguages)
+      .filter((key) => key !== fallbackLanguage)
+      .map((key) => [key, z.string().optional()]),
+  ),
+});
+
+function localize(localeMap: LocaleMap, language: SupportedLanguage) {
+  // Return the expected locale if it exists
+  // Otherwise, return the fallback locale if it exists
+  // As a last resort, return an empty string
+  return localeMap[language] || localeMap[fallbackLanguage] || "";
+}
+
 /** Get a localizer to localize a locale map */
 export function useLocalizer(): (localeMap: LocaleMap) => string {
   const language = useTranslation().i18n.language as SupportedLanguage;
   return useCallback(
-    (localeMap: LocaleMap) => {
-      // Return the expected locale if it exists
-      // Otherwise, return the fallback locale if it exists
-      // As a last resort, return an empty string
-      return localeMap[language] || localeMap[fallbackLanguage] || "";
-    },
+    (localeMap: LocaleMap) => localize(localeMap, language),
     [language],
   );
 }
@@ -32,9 +48,14 @@ export function useLocalizer(): (localeMap: LocaleMap) => string {
 export interface ModCategory {
   /** ID of the mod category, defined by us, must be unique in a map combo */
   id: string;
-  /** Local Map of name */
+  /** name of the category, locale map */
   name: LocaleMap;
 }
+
+const modCategorySchema = z.object({
+  id: z.string(),
+  name: localMapSchema,
+});
 
 /**
  * Data structure of a mod, it's a virtual entity, and may related to multiple mod files in game.
@@ -58,10 +79,10 @@ export interface Mod {
   downloadURL?: string;
   /** Whether the mod is paid, expect to show a indicator */
   isPaid?: boolean;
-  /** If this mod has description, if true, will locale it by `mod.${id}.description` */
-  hasDescription?: boolean;
-  /** If this mod has tips, if true, will locale it by `mod.${id}.tip` */
-  hasTip?: boolean;
+  /** Optional description, locale map */
+  description?: LocaleMap;
+  /** Optional tips, locale map */
+  tips?: LocaleMap[];
 
   /** Mod available condition, if not true */
   condition?: Condition;
@@ -70,6 +91,22 @@ export interface Mod {
   /** Whether the mod is passive, if true, will not show in the mod selection */
   isPassive?: boolean;
 }
+
+const modSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  author: z.string().optional(),
+  version: z.string(),
+  posterURL: z.string().optional(),
+  mainPageURL: z.string().optional(),
+  downloadURL: z.string().optional(),
+  isPaid: z.boolean().optional(),
+  description: localMapSchema.optional(),
+  tips: z.array(localMapSchema).optional(),
+  condition: z.custom<Condition>().optional(),
+  categoryID: z.string(),
+  isPassive: z.boolean().optional(),
+});
 
 /**
  * Data structure of a mod file, representing an item in in-game mod manager
@@ -87,6 +124,14 @@ export interface ModFile {
   /** ID of the belonged mod */
   modID: string;
 }
+
+const modFileSchema = z.object({
+  name: z.string(),
+  posterURL: z.string().optional(),
+  tips: z.string().optional(),
+  condition: z.custom<Condition>().optional(),
+  modID: z.string(),
+});
 
 /**
  * Complete mod data structure
@@ -107,3 +152,9 @@ export interface MapComboData {
    */
   files: ModFile[];
 }
+
+export const mapComboDataSchema = z.object({
+  categories: z.array(modCategorySchema),
+  mods: z.array(modSchema),
+  files: z.array(modFileSchema),
+});

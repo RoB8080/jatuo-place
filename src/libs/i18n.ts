@@ -12,6 +12,7 @@ export type I18NextResources = {
   global: typeof import("../../public/locales/en/global.json");
   home: typeof import("../../public/locales/en/home.json");
   "map-combo": typeof import("../../public/locales/en/map-combo.json");
+  "data-editor": typeof import("../../public/locales/en/data-editor.json");
 };
 
 export const defaultNS = "common";

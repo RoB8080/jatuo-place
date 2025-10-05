@@ -29,10 +29,7 @@ export type ThemeSwitcherProps = {
   className?: string;
 };
 
-export const ThemeSwitcher = ({
-  size = "md",
-  className,
-}: ThemeSwitcherProps) => {
+export function ThemeSwitcher({ size = "md", className }: ThemeSwitcherProps) {
   const { setTheme, theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const layoutId = useId();
@@ -92,4 +89,4 @@ export const ThemeSwitcher = ({
       })}
     </div>
   );
-};
+}

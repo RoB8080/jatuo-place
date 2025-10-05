@@ -13,7 +13,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useIsMobile } from "@/libs/common";
 import { Separator } from "@/components/ui/separator";
-import { ThemeSwitcher } from "@/components/ui/shadcn-io/theme-switcher";
+import { ThemeSwitcher } from "@/components/global/theme";
 
 export function HeaderActions() {
   const { t } = useTranslation("global");

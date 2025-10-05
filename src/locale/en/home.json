@@ -10,8 +10,19 @@
     },
     "description": "Welcome to Jatuo's Place - A Hub for ETS2 Modding Community"
   },
+  "member": {
+    "role": {
+      "def_fixer": "Def Fixer",
+      "miscellaneous": "Miscellaneous",
+      "programmer": "Programmer",
+      "rc_mapper": "RC Mapper",
+      "ui_engineer": "UI Engineer",
+      "vtc_manager": "VTC Manager",
+      "web_developer": "Web Developer"
+    }
+  },
   "members": {
-    "description": "These members contribute a lot to our community",
+    "description": "Our members who contribute a lot to our community",
     "donate": "Donate",
     "title": "Members"
   }

@@ -1,18 +1,29 @@
 {
   "about": {
-    "paragraph-1": "",
-    "paragraph-2": "",
-    "title": ""
+    "paragraph-1": "Мы — преданное сообщество, увлеченное созданием продвинутых исправлений, реалистичных карт и лучших комбинаций карт для Euro Truck Simulator 2.",
+    "paragraph-2": "Присоединяйтесь к нам, чтобы исследовать сочетание человека, природы и технологий.",
+    "title": "О нас"
   },
   "hero": {
     "actions": {
-      "start-to-use": ""
+      "start-to-use": "Начать использовать"
     },
-    "description": ""
+    "description": "Добро пожаловать в Jatuo's Place - центр сообщества моддинга ETS2"
+  },
+  "member": {
+    "role": {
+      "def_fixer": "Исправитель Def",
+      "miscellaneous": "Разное",
+      "programmer": "Программист",
+      "rc_mapper": "RC Картограф",
+      "ui_engineer": "UI Инженер",
+      "vtc_manager": "VTC Менеджер",
+      "web_developer": "Веб-разработчик"
+    }
   },
   "members": {
-    "description": "",
-    "donate": "",
-    "title": ""
+    "description": "Наши участники, которые внесли большой вклад в наше сообщество",
+    "donate": "Пожертвовать",
+    "title": "Участники"
   }
 }

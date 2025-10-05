@@ -110,7 +110,7 @@ function ModHoverCard({
                 <Button
                   className="-mt-0.5 -mr-0.5"
                   variant="link"
-                  size="icon-sm"
+                  size="icon-xs"
                 >
                   <Link />
                 </Button>
@@ -241,7 +241,7 @@ function CategoryNode({ category }: { category: DataTreeCategory }) {
           <div>
             <SimpleTooltip content={t(($) => $["mod-tree"]["select-all"])}>
               <Button
-                size="icon-sm"
+                size="icon-xs"
                 variant="ghost"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -293,7 +293,7 @@ export function ModTree() {
             <Button
               variant="ghost"
               onClick={collapseAllCategories}
-              size="icon-sm"
+              size="icon-xs"
             >
               <CopyMinus />
             </Button>

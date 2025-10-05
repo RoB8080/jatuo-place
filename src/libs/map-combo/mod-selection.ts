@@ -6,7 +6,7 @@ import {
 } from "react";
 import { usePersistState } from "@/libs/common";
 import { uniq } from "es-toolkit";
-import type { Mod, MapComboData } from "./types";
+import type { Mod, MapComboData } from "./data";
 import {
   evaluateCondition,
   getReferencedMods,

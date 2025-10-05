@@ -2,35 +2,67 @@
   "categories": [
     {
       "id": "function",
-      "name": "Other Mods"
+      "name": {
+        "en": "Function Mods",
+        "zh": "功能模组",
+        "ru": "Функциональные моды"
+      }
     },
     {
       "id": "europe",
-      "name": "Other Mods"
+      "name": {
+        "en": "Europe Maps",
+        "zh": "欧洲地图",
+        "ru": "Карты Европы"
+      }
     },
     {
       "id": "rus",
-      "name": "Other Mods"
+      "name": {
+        "en": "Russian Maps",
+        "zh": "俄罗斯地图",
+        "ru": "Карты России"
+      }
     },
     {
       "id": "africa",
-      "name": "Other Mods"
+      "name": {
+        "en": "African Maps",
+        "zh": "非洲地图",
+        "ru": "Карты Африки"
+      }
     },
     {
       "id": "asia",
-      "name": "Other Mods"
+      "name": {
+        "en": "Asian Maps",
+        "zh": "亚洲地图",
+        "ru": "Карты Азии"
+      }
     },
     {
       "id": "other",
-      "name": "Other Mods"
+      "name": {
+        "en": "Other Maps",
+        "zh": "其他地图",
+        "ru": "Другие карты"
+      }
     },
     {
       "id": "virtual",
-      "name": "Other Mods"
+      "name": {
+        "en": "Virtual Maps",
+        "zh": "虚拟地图",
+        "ru": "Виртуальные карты"
+      }
     },
     {
       "id": "patch",
-      "name": "Patch Mods"
+      "name": {
+        "en": "Patch Mods",
+        "zh": "补丁模组",
+        "ru": "Патчи моды"
+      }
     }
   ],
   "mods": [

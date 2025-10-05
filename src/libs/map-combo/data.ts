@@ -1,17 +1,39 @@
-// Map Combo Types
-
+import { useTranslation } from "react-i18next";
+import { type SupportedLanguage, fallbackLanguage } from "../i18n";
 import type { Condition } from "./condition";
+import { useCallback } from "react";
+
+/**
+ * Map of locale strings used in Map Combo, must contain fallback language
+ */
+export type LocaleMap = Partial<Record<SupportedLanguage, string>> & {
+  [fallbackLanguage]: string;
+};
+
+/** Get a localizer to localize a locale map */
+export function useLocalizer(): (localeMap: LocaleMap) => string {
+  const language = useTranslation().i18n.language as SupportedLanguage;
+  return useCallback(
+    (localeMap: LocaleMap) => {
+      // Return the expected locale if it exists
+      // Otherwise, return the fallback locale if it exists
+      // As a last resort, return an empty string
+      return localeMap[language] || localeMap[fallbackLanguage] || "";
+    },
+    [language],
+  );
+}
 
 /**
  * Category of mod, used only for dividing mods into groups for better browser and selection experience
  * - locale namespace: `map-combo-data`
- * - locale key: `mod-category.${id}.name`
+ * - locale key: `category.${id}.name`
  */
 export interface ModCategory {
   /** ID of the mod category, defined by us, must be unique in a map combo */
   id: string;
-  /** Whether the category is visible for selection, we don't want rc and fix mods to be visible */
-  isVisible?: boolean;
+  /** Local Map of name */
+  name: LocaleMap;
 }
 
 /**

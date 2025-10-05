@@ -29,7 +29,7 @@ import { SimpleTooltip } from "../common";
 import { SimpleHoverCard } from "../common/hover-card";
 import { evaluateConditionTree } from "@/libs/map-combo/condition";
 import { ConditionDisplay } from "./condition-failure-display";
-import type { Mod } from "@/libs/map-combo";
+import { useLocalizer, type Mod } from "@/libs/map-combo";
 
 function PaidMeta() {
   const { t } = useTranslation("map-combo");
@@ -50,21 +50,7 @@ function ModHoverCard({
   children: ReactElement;
   extraContent?: ReactNode;
 }) {
-  const {
-    id,
-    name,
-    author,
-    mainPageURL,
-    isPaid,
-    posterURL,
-    hasDescription,
-    version,
-  } = mod;
-  const { t } = useTranslation("map-combo-data");
-  const desc = hasDescription
-    ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      t(($) => ($.mod as any)[id].description)
-    : undefined;
+  const { name, author, mainPageURL, isPaid, posterURL, version } = mod;
 
   const metaEls = useMemo(() => {
     const els: ReactElement[] = [];
@@ -124,9 +110,6 @@ function ModHoverCard({
             {posterURL && (
               <img className="h-18 rounded-md" src={posterURL} alt={name} />
             )}
-            {desc ? (
-              <p className="text-xs text-muted-foreground">{desc}</p>
-            ) : null}
           </div>
           {extraContent}
         </div>
@@ -204,6 +187,8 @@ function ModNode({ mod }: { mod: DataTreeMod }) {
 function CategoryNode({ category }: { category: DataTreeCategory }) {
   const { id, mods } = category;
   const { t } = useTranslation("map-combo");
+  const localize = useLocalizer();
+
   const {
     toggleCategory,
     expandedCategoryIDs,
@@ -211,11 +196,7 @@ function CategoryNode({ category }: { category: DataTreeCategory }) {
     unselectMods,
     selectedModIDs,
   } = useMapComboContext();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const name = t(($) => ($["mod-category"] as any)[id].name, {
-    ns: "map-combo-data",
-  });
-
+  const name = localize(category.name);
   const modIDs = useMemo(() => mods.map((mod) => mod.id), [mods]);
   const totalCount = modIDs.length;
   const selectedCount = intersection(modIDs, selectedModIDs).length;

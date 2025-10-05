@@ -3,8 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { usePersistState } from "@/libs/common";
 
 const versionDataMap: Record<string, () => Promise<MapComboData>> = {
-  demo: async () =>
-    (await import("@/data/map-combo-data-v3.json")).default as MapComboData,
+  demo: async () => (await import("@/data/demo.json")).default as MapComboData,
 };
 
 export const versionKeys = Object.keys(versionDataMap);

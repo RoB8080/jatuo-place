@@ -22,7 +22,7 @@ First of all, user should pick a version of map combo, and pick the mods they wa
 
 ### i18n
 - We suppose to support English, Russian and Simplified Chinese.
-- The locale json file is in `src/locale/${language}/${namespace}.json`
+- The locale json file is in `public/locales/${language}/${namespace}.json`
 - The default namespace is `common`
 - Use `useTranslation` to get `t` in React components
 - Always use selector function to translate text, e.g. `t($ => $.xxx.yyy)`, string based is not supported

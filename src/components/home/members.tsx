@@ -4,14 +4,31 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { FC } from "react";
 import Bilibili from "@/assets/svgs/brand/bilibili.svg?react";
 import Kuaishou from "@/assets/svgs/brand/kuaishou.svg?react";
+import Trucky from "@/assets/svgs/brand/trucky.svg?react";
 
 import { Button } from "../ui/button";
 import { HandHeart } from "lucide-react";
 
+type Roles =
+  // t("member.role.rc_mapper", { ns: "home" })
+  | "rc_mapper"
+  // t("member.role.programmer", { ns: "home" })
+  | "programmer"
+  // t("member.role.def_fixer", { ns: "home" })
+  | "def_fixer"
+  // t("member.role.miscellaneous", { ns: "home" })
+  | "miscellaneous"
+  // t("member.role.ui_engineer", { ns: "home" })
+  | "ui_engineer"
+  // t("member.role.web_developer", { ns: "home" })
+  | "web_developer"
+  // t("member.role.vtc_manager", { ns: "home" })
+  | "vtc_manager";
+
 interface MemberInfo {
   name: string;
   avatar: string;
-  roles: string[];
+  roles: Roles[];
   externalLinks?: {
     icon: FC<{ className?: string }>;
     href: string;
@@ -23,8 +40,12 @@ const memberInfos: MemberInfo[] = [
   {
     name: "Rxx2008",
     avatar: "/members/avatar.rxx2008.jpg",
-    roles: ["RC Mapper", "Miscellaneous"],
+    roles: ["rc_mapper", "miscellaneous"],
     externalLinks: [
+      {
+        icon: Trucky,
+        href: "https://truckymods.io/user/273265#projects",
+      },
       {
         icon: Bilibili,
         href: "https://space.bilibili.com/3546639839005383",
@@ -39,8 +60,12 @@ const memberInfos: MemberInfo[] = [
   {
     name: "Jane",
     avatar: "/members/avatar.jane.jpg",
-    roles: ["Programmer", "RC Mapper", "Def Fixer"],
+    roles: ["programmer", "rc_mapper", "def_fixer"],
     externalLinks: [
+      {
+        icon: Trucky,
+        href: "https://truckymods.io/user/273265#projects",
+      },
       {
         icon: Bilibili,
         href: "https://space.bilibili.com/472090875",
@@ -48,19 +73,36 @@ const memberInfos: MemberInfo[] = [
     ],
   },
   {
-    name: "somebody1",
-    avatar: "https://placehold.co/128x128?random=1",
-    roles: ["Miscellaneous"],
+    name: "Joseph",
+    avatar: "/members/avatar.joseph.jpg",
+    roles: ["rc_mapper"],
+    externalLinks: [
+      {
+        icon: Trucky,
+        href: "https://truckymods.io/user/273265#projects",
+      },
+    ],
   },
   {
-    name: "somebody2",
-    avatar: "https://placehold.co/128x128?random=2",
-    roles: ["Miscellaneous"],
+    name: "Sūn_Siro14",
+    avatar: "/members/avatar.sun_siro14.jpg",
+    roles: ["rc_mapper"],
+    externalLinks: [
+      {
+        icon: Trucky,
+        href: "https://truckymods.io/user/273265#projects",
+      },
+    ],
   },
   {
-    name: "somebody3",
-    avatar: "https://placehold.co/128x128?random=3",
-    roles: ["Miscellaneous"],
+    name: "初一爱笑啊",
+    avatar: "/members/avatar.chu_yi_ai_xiao_a.jpg",
+    roles: ["vtc_manager"],
+  },
+  {
+    name: "RoB8080",
+    avatar: "/members/avatar.rob8080.jpg",
+    roles: ["web_developer"],
   },
 ];
 
@@ -79,7 +121,7 @@ function Member({ info }: { info: MemberInfo }) {
           {info.name}
         </div>
         <div className="text-sm leading-5 font-medium text-muted-foreground">
-          {info.roles.join(" / ")}
+          {info.roles.map((role) => t(($) => $.member.role[role])).join(" / ")}
         </div>
         <div className="mt-1 -ml-2 flex flex-row">
           {info.externalLinks?.map((link) => (

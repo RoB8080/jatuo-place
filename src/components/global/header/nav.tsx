@@ -34,6 +34,15 @@ export function HeaderNav() {
             <Link to="/map-combo">{t(($) => $.routes["map-combo"])}</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink
+            active={location.pathname.startsWith("/data-editor")}
+            asChild
+            className="text-accent-foreground data-[active]:font-semibold"
+          >
+            <Link to="/data-editor">{t(($) => $.routes["data-editor"])}</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );

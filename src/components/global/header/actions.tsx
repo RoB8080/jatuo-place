@@ -1,8 +1,8 @@
 import {
   DiscordLinkButton,
-  DropdownMenuComposite,
   GithubLinkButton,
   QQLinkButton,
+  SimpleDropdownMenu,
 } from "@/components/common";
 import { Button } from "@/components/ui/button";
 import { Ellipsis } from "lucide-react";
@@ -21,7 +21,7 @@ export function HeaderActions() {
 
   if (isMobile) {
     return (
-      <DropdownMenuComposite
+      <SimpleDropdownMenu
         className="w-[220px]"
         content={
           <>
@@ -43,7 +43,7 @@ export function HeaderActions() {
             <Ellipsis />
           </Button>
         }
-      </DropdownMenuComposite>
+      </SimpleDropdownMenu>
     );
   }
 

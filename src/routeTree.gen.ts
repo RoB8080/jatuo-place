@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MapComboRouteImport } from './routes/map-combo'
+import { Route as DataEditorRouteImport } from './routes/data-editor'
 import { Route as IndexRouteImport } from './routes/index'
 
 const MapComboRoute = MapComboRouteImport.update({
   id: '/map-combo',
   path: '/map-combo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DataEditorRoute = DataEditorRouteImport.update({
+  id: '/data-editor',
+  path: '/data-editor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/data-editor': typeof DataEditorRoute
   '/map-combo': typeof MapComboRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/data-editor': typeof DataEditorRoute
   '/map-combo': typeof MapComboRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/data-editor': typeof DataEditorRoute
   '/map-combo': typeof MapComboRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/map-combo'
+  fullPaths: '/' | '/data-editor' | '/map-combo'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/map-combo'
-  id: '__root__' | '/' | '/map-combo'
+  to: '/' | '/data-editor' | '/map-combo'
+  id: '__root__' | '/' | '/data-editor' | '/map-combo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DataEditorRoute: typeof DataEditorRoute
   MapComboRoute: typeof MapComboRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/map-combo'
       fullPath: '/map-combo'
       preLoaderRoute: typeof MapComboRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/data-editor': {
+      id: '/data-editor'
+      path: '/data-editor'
+      fullPath: '/data-editor'
+      preLoaderRoute: typeof DataEditorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DataEditorRoute: DataEditorRoute,
   MapComboRoute: MapComboRoute,
 }
 export const routeTree = rootRouteImport

@@ -5,12 +5,8 @@
     "qq": "Join us on QQ"
   },
   "routes": {
+    "data-editor": "Data Editor",
     "home": "Home",
     "map-combo": "Map Combo"
-  },
-  "theme": {
-    "dark": "Dark",
-    "light": "Light",
-    "system": "Follow System"
   }
 }

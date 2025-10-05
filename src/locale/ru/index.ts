@@ -3,6 +3,7 @@ import common from "./common.json";
 import global from "./global.json";
 import mapCombo from "./map-combo.json";
 import mapComboData from "./map-combo.data.json";
+import dataEditor from "./data-editor.json";
 
 export const ru = {
   common,
@@ -10,4 +11,5 @@ export const ru = {
   global,
   "map-combo": mapCombo,
   "map-combo-data": mapComboData,
+  "data-editor": dataEditor,
 };

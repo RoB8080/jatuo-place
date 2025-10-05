@@ -5,12 +5,8 @@
     "qq": "加入我们的QQ群"
   },
   "routes": {
+    "data-editor": "数据编辑器",
     "home": "首页",
     "map-combo": "地图组合"
-  },
-  "theme": {
-    "dark": "暗色",
-    "light": "亮色",
-    "system": "跟随系统"
   }
 }

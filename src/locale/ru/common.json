@@ -1,16 +1,12 @@
 {
   "external": {
-    "discord": "",
-    "github": "",
-    "qq": ""
+    "discord": "Присоединяйтесь к нам в Discord",
+    "github": "Посмотреть на GitHub",
+    "qq": "Присоединяйтесь к нам в QQ"
   },
   "routes": {
-    "home": "",
-    "map-combo": ""
-  },
-  "theme": {
-    "dark": "",
-    "light": "",
-    "system": ""
+    "data-editor": "Редактор данных",
+    "home": "Главная",
+    "map-combo": "Комбинация карт"
   }
 }

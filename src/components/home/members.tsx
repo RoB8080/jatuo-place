@@ -8,6 +8,8 @@ import Trucky from "@/assets/svgs/brand/trucky.svg?react";
 
 import { Button } from "../ui/button";
 import { HandHeart } from "lucide-react";
+import { Item, ItemActions, ItemContent, ItemMedia } from "../ui/item";
+import { useIsMobile } from "@/libs/common";
 
 type Roles =
   // t("member.role.rc_mapper", { ns: "home" })
@@ -108,20 +110,28 @@ const memberInfos: MemberInfo[] = [
 
 function Member({ info }: { info: MemberInfo }) {
   const { t } = useTranslation("home");
+  const isMobile = useIsMobile();
   return (
-    <div className="relative flex flex-row gap-8 rounded-xl bg-muted p-8">
-      <div className="flex-none">
+    <Item variant="muted">
+      <ItemMedia>
         <Avatar className="size-16">
           <AvatarImage src={info.avatar} />
           <AvatarFallback>{info.name}</AvatarFallback>
         </Avatar>
-      </div>
-      <div className="flex-auto">
+      </ItemMedia>
+      <ItemContent>
         <div className="text-xl leading-8 font-medium text-foreground">
           {info.name}
         </div>
-        <div className="text-sm leading-5 font-medium text-muted-foreground">
-          {info.roles.map((role) => t(($) => $.member.role[role])).join(" / ")}
+        <div className="flex flex-col gap-0.5 text-sm leading-5 font-medium text-muted-foreground sm:block">
+          {info.roles.map((role) => (
+            <span
+              className="before:content-['_·_'] sm:first:before:content-none"
+              key={role}
+            >
+              {t(($) => $.member.role[role])}
+            </span>
+          ))}
         </div>
         <div className="mt-1 -ml-2 flex flex-row">
           {info.externalLinks?.map((link) => (
@@ -141,26 +151,38 @@ function Member({ info }: { info: MemberInfo }) {
             </a>
           ))}
         </div>
-      </div>
+      </ItemContent>
 
       {info.donateHref && (
-        <a
-          className="absolute top-3 right-3"
-          key={info.donateHref}
-          href={info.donateHref}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button
-            className="text-muted-foreground transition-all hover:text-primary"
-            variant="ghost"
+        <ItemActions>
+          <a
+            key={info.donateHref}
+            href={info.donateHref}
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <HandHeart className="size-5" />
-            <div>{t(($) => $.members.donate)}</div>
-          </Button>
-        </a>
+            {isMobile ? (
+              <Button
+                className="h-fit flex-col gap-0.5 py-2 text-muted-foreground transition-all hover:text-primary"
+                size="xs"
+                variant="ghost"
+              >
+                <HandHeart className="size-5" />
+                <div>{t(($) => $.members.donate)}</div>
+              </Button>
+            ) : (
+              <Button
+                className="text-muted-foreground transition-all hover:text-primary"
+                variant="ghost"
+              >
+                <HandHeart className="size-5" />
+                <div>{t(($) => $.members.donate)}</div>
+              </Button>
+            )}
+          </a>
+        </ItemActions>
       )}
-    </div>
+    </Item>
   );
 }
 
@@ -171,7 +193,7 @@ export function Members() {
       as="section"
       data-slot="members"
       className="py-12"
-      innerClassName="flex flex-col gap-8 px-4 md:flex-row md:px-0"
+      innerClassName="flex flex-col gap-8 md:flex-row"
     >
       <div className="top-8 md:sticky md:w-[240px] ">
         <h2>{t(($) => $.members.title)}</h2>

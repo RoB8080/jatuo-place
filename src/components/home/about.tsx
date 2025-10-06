@@ -8,7 +8,7 @@ export function About() {
       as="section"
       data-slot="about"
       className="py-12"
-      innerClassName="flex flex-col px-4 md:px-0"
+      innerClassName="flex flex-col"
     >
       <h2>{t(($) => $.about.title)}</h2>
       <p className="pt-4 font-medium text-muted-foreground">

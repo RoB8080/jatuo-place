@@ -43,7 +43,7 @@ function FlexibleBoxInner({
   return (
     <Comp
       className={cn(
-        "mx-auto w-3xl max-w-full xl:w-4xl xl:max-w-[calc(100%-32px)] 2xl:w-7xl",
+        "mx-auto w-3xl max-w-[calc(100%-32px)] xl:w-4xl 2xl:w-7xl",
         className,
       )}
       {...props}

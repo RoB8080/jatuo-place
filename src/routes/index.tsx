@@ -14,11 +14,11 @@ function Index() {
   return (
     <div className="flex-auto overflow-auto">
       <Hero />
-      <FlexibleBox>
+      <FlexibleBox innerClassName="max-w-full">
         <Separator />
       </FlexibleBox>
       <About />
-      <FlexibleBox>
+      <FlexibleBox innerClassName="max-w-full">
         <Separator />
       </FlexibleBox>
       <Members />

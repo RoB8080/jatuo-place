@@ -39,7 +39,7 @@ interface MemberInfo {
 const memberInfos: MemberInfo[] = [
   {
     name: "Rxx2008",
-    avatar: "/members/images/avatar.rxx2008.jpg",
+    avatar: "/images/members/avatar.rxx2008.jpg",
     roles: ["rc_mapper", "miscellaneous"],
     externalLinks: [
       {
@@ -59,7 +59,7 @@ const memberInfos: MemberInfo[] = [
   },
   {
     name: "Jane",
-    avatar: "/members/images/avatar.jane.jpg",
+    avatar: "/images/members/avatar.jane.jpg",
     roles: ["programmer", "rc_mapper", "def_fixer"],
     externalLinks: [
       {
@@ -74,7 +74,7 @@ const memberInfos: MemberInfo[] = [
   },
   {
     name: "Joseph",
-    avatar: "/members/images/avatar.joseph.jpg",
+    avatar: "/images/members/avatar.joseph.jpg",
     roles: ["rc_mapper"],
     externalLinks: [
       {
@@ -85,7 +85,7 @@ const memberInfos: MemberInfo[] = [
   },
   {
     name: "Sūn_Siro14",
-    avatar: "/members/images/avatar.sun_siro14.jpg",
+    avatar: "/images/members/avatar.sun_siro14.jpg",
     roles: ["rc_mapper"],
     externalLinks: [
       {
@@ -96,12 +96,12 @@ const memberInfos: MemberInfo[] = [
   },
   {
     name: "初一爱笑啊",
-    avatar: "/members/images/avatar.chu_yi_ai_xiao_a.jpg",
+    avatar: "/images/members/avatar.chu_yi_ai_xiao_a.jpg",
     roles: ["vtc_manager"],
   },
   {
     name: "RoB8080",
-    avatar: "/members/images/avatar.rob8080.jpg",
+    avatar: "/images/members/avatar.rob8080.jpg",
     roles: ["web_developer"],
   },
 ];

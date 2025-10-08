@@ -1,9 +1,10 @@
 import {
+  modCategorySchema,
   useLocalizer,
   type MapComboData,
   type ModCategory,
 } from "@/libs/map-combo";
-import { useFormContext, useWatch } from "react-hook-form";
+import { useForm, useFormContext, useWatch } from "react-hook-form";
 import {
   Card,
   CardAction,
@@ -26,8 +27,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "../ui/alert-dialog";
-import { useState } from "react";
-import { Field, FieldGroup, FieldLabel } from "../ui/field";
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { Form, FormField, FormItem, FormLabel } from "../ui/form";
+import { useId } from "react";
 
 function CategoryCard(props: { category: ModCategory }) {
   const { category } = props;
@@ -73,91 +75,105 @@ function CategoryCard(props: { category: ModCategory }) {
   );
 }
 
-const CategoryCreateDialog = defineAlertDialogTemplate<
+const CategoryEditDialog = defineAlertDialogTemplate<
   ModCategory,
   { init?: ModCategory }
->(function CategoryCreateDialog(props) {
+>(function CategoryEditDialog(props) {
   const { cancel, init } = props;
   const { t } = useTranslation("data-editor");
-  const [category, setCategory] = useState<ModCategory>(
-    () => init || { id: "", name: { en: "" } },
+  const form = useForm<ModCategory>({
+    resolver: standardSchemaResolver(modCategorySchema),
+    defaultValues: init || { id: "", name: { en: "" } },
+  });
+  const formID = useId();
+
+  const title = t(
+    ($) =>
+      init?.id
+        ? $["category-editor"]["edit-category"] // t("category-editor.edit-category", { ns: "data-editor" })
+        : $["category-editor"]["new-category"], // t("category-editor.new-category", { ns: "data-editor" })
   );
-  const title = t(($) => $["category-editor"]["new-category"]);
-  // t("category-editor.confirm-create-category", { ns: "data-editor" })
-  const confirmText = t(($) => $["category-editor"]["confirm-create-category"]);
-  // t("category-editor.cancel-create-category", { ns: "data-editor" })
-  const cancelText = t(($) => $["category-editor"]["cancel-create-category"]);
 
   return (
     <>
       <AlertDialogHeader>
         <AlertDialogTitle>{title}</AlertDialogTitle>
       </AlertDialogHeader>
-      <FieldGroup>
-        <Field>
-          <FieldLabel>
-            {/* t("category-editor.category-id-label", { ns: "data-editor" }) */}
-            {t(($) => $["category-editor"]["category-id-label"])}
-          </FieldLabel>
-          <Input
-            value={category?.id || ""}
-            onChange={(e) => setCategory({ ...category, id: e.target.value })}
+      <Form {...form}>
+        <form
+          className="flex flex-col gap-3"
+          onSubmit={form.handleSubmit((t) => {
+            console.debug("valid", t);
+          })}
+        >
+          <FormField
+            name="id"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {/* t("category-editor.category-id-label", { ns: "data-editor" }) */}
+                  {t(($) => $["category-editor"]["category-id-label"])}
+                </FormLabel>
+                <Input {...field} />
+              </FormItem>
+            )}
           />
-        </Field>
-        <div className="grid grid-cols-2 gap-2">
-          <Field>
-            <FieldLabel>
-              {/* t("category-editor.category-name-en-label", { ns: "data-editor" }) */}
-              {t(($) => $["category-editor"]["category-name-en-label"])}
-            </FieldLabel>
-            <Input
-              value={category?.name.en || ""}
-              onChange={(e) =>
-                setCategory({
-                  ...category,
-                  name: { ...category.name, en: e.target.value },
-                })
-              }
+          <div className="grid grid-cols-2 gap-2">
+            <FormField
+              control={form.control}
+              name="name.en"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {/* t("category-editor.category-name-en-label", { ns: "data-editor" }) */}
+                    {t(($) => $["category-editor"]["category-name-en-label"])}
+                  </FormLabel>
+                  <Input {...field} />
+                </FormItem>
+              )}
             />
-          </Field>
-          <Field>
-            <FieldLabel>
-              {/* t("category-editor.category-name-ru-label", { ns: "data-editor" }) */}
-              {t(($) => $["category-editor"]["category-name-ru-label"])}
-            </FieldLabel>
-            <Input
-              value={category?.name.ru || ""}
-              onChange={(e) =>
-                setCategory({
-                  ...category,
-                  name: { ...category.name, ru: e.target.value },
-                })
-              }
+            <FormField
+              control={form.control}
+              name="name.ru"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {/* t("category-editor.category-name-ru-label", { ns: "data-editor" }) */}
+                    {t(($) => $["category-editor"]["category-name-ru-label"])}
+                  </FormLabel>
+                  <Input {...field} />
+                </FormItem>
+              )}
             />
-          </Field>
-          <Field>
-            <FieldLabel>
-              {/* t("category-editor.category-name-zh-label", { ns: "data-editor" }) */}
-              {t(($) => $["category-editor"]["category-name-zh-label"])}
-            </FieldLabel>
-            <Input
-              value={category?.name.zh || ""}
-              onChange={(e) =>
-                setCategory({
-                  ...category,
-                  name: { ...category.name, zh: e.target.value },
-                })
-              }
+            <FormField
+              control={form.control}
+              name="name.zh"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {/* t("category-editor.category-name-zh-label", { ns: "data-editor" }) */}
+                    {t(($) => $["category-editor"]["category-name-zh-label"])}
+                  </FormLabel>
+                  <Input {...field} />
+                </FormItem>
+              )}
             />
-          </Field>
-        </div>
-      </FieldGroup>
+          </div>
+        </form>
+      </Form>
       <AlertDialogFooter>
         <Button variant="ghost" onClick={() => cancel()}>
-          {cancelText}
+          {/* t("category-editor.cancel-create-category", { ns: "data-editor" }) */}
+          {t(($) => $["category-editor"]["cancel-create-category"])}
         </Button>
-        <Button onClick={() => console.debug("confirm", category)}>
-          {confirmText}
+        <Button
+          onClick={() => console.debug("confirm", form.getValues())}
+          type="submit"
+          form={formID}
+        >
+          {/* t("category-editor.confirm-create-category", { ns: "data-editor" }) */}
+          {t(($) => $["category-editor"]["confirm-create-category"])}
         </Button>
       </AlertDialogFooter>
     </>
@@ -189,7 +205,7 @@ export function CategoryEditor(props: CategoryEditorProps) {
           variant="dashed"
           onClick={async () => {
             const category = await invokeAlertDialog({
-              component: CategoryCreateDialog,
+              component: CategoryEditDialog,
             });
             console.debug("category", category);
           }}

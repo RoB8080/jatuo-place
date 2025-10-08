@@ -2,8 +2,23 @@
   "actions": {
     "failed-loading-prod-data": "Failed to load production data",
     "from-prod-data": "From production data",
-    "invalid-data": "Invalid data",
     "load": "Load",
     "save": "Save"
+  },
+  "category-editor": {
+    "cancel-create-category": "Cancel",
+    "category-id-label": "ID",
+    "category-name-en-label": "Name (EN)",
+    "category-name-ru-label": "Name (RU)",
+    "category-name-zh-label": "Name (ZH)",
+    "confirm-create-category": "Create",
+    "delete-tip-1": "Delete is only allowed when the category is empty",
+    "mods": "Mods",
+    "new-category": "New Category"
+  },
+  "tabs": {
+    "category": "Category",
+    "mod": "Mod",
+    "order": "Order"
   }
 }

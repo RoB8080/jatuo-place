@@ -2,8 +2,23 @@
   "actions": {
     "failed-loading-prod-data": "Не удалось загрузить данные из продакшн окружения",
     "from-prod-data": "Из продакшн данных",
-    "invalid-data": "Недействительные данные",
     "load": "Загрузить",
     "save": "Сохранить"
+  },
+  "category-editor": {
+    "cancel-create-category": "Отмена",
+    "category-id-label": "ID",
+    "category-name-en-label": "Имя (EN)",
+    "category-name-ru-label": "Имя (RU)",
+    "category-name-zh-label": "Имя (ZH)",
+    "confirm-create-category": "Создать",
+    "delete-tip-1": "Удаление категорий разрешено только при отсутствии модов в категории",
+    "mods": "модов",
+    "new-category": "Новая категория"
+  },
+  "tabs": {
+    "category": "Категория",
+    "mod": "Мод",
+    "order": "Сортировка"
   }
 }

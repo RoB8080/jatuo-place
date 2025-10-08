@@ -2,7 +2,7 @@ import { FileDown, FileUp, MoreHorizontalIcon } from "lucide-react";
 import { SimpleDropdownMenu } from "../common";
 import { Button } from "../ui/button";
 import { ButtonGroup } from "../ui/button-group";
-import { useDataEditorContext } from "./context";
+import { useDataEditorContext } from "./root";
 import { cn } from "@/libs/utils";
 import { useTranslation } from "react-i18next";
 import { DropdownMenuItem, DropdownMenuLabel } from "../ui/dropdown-menu";
@@ -10,27 +10,15 @@ import { loadVersionData, versionKeys } from "@/libs/map-combo";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
-import dayjs from "dayjs";
 import { useId } from "react";
 
 export interface DataEditorActionsProps {
   className?: string;
 }
 
-function saveAsJSON(data: unknown) {
-  const json = JSON.stringify(data, null, 2);
-  const blob = new Blob([json], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `map-combo.${dayjs().format("YYMMDD")}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
 export function DataEditorActions(props: DataEditorActionsProps) {
   const { className } = props;
-  const { extract, overwrite } = useDataEditorContext();
+  const { overwrite } = useDataEditorContext();
   const { t } = useTranslation("data-editor");
   const fileInputID = useId();
   const { mutate: loadFromVersion, isPending: isLoadingFromVersion } =
@@ -43,7 +31,6 @@ export function DataEditorActions(props: DataEditorActionsProps) {
         return data;
       },
       onSuccess: (data) => {
-        console.debug("Loaded version data:", data);
         overwrite(data);
       },
       onError: (error) => {
@@ -57,6 +44,7 @@ export function DataEditorActions(props: DataEditorActionsProps) {
     <div className={cn("flex flex-row items-center gap-2", className)}>
       <ButtonGroup>
         <Button
+          type="button"
           size="sm"
           variant="outline"
           onClick={() => {
@@ -66,7 +54,7 @@ export function DataEditorActions(props: DataEditorActionsProps) {
             fileInput.click();
           }}
         >
-          <input className="hidden" type="file" />
+          <input className="hidden" type="file" id={fileInputID} />
           <FileUp />
           {t(($) => $.actions.load)}
         </Button>
@@ -97,20 +85,7 @@ export function DataEditorActions(props: DataEditorActionsProps) {
           </Button>
         </SimpleDropdownMenu>
       </ButtonGroup>
-      <Button
-        size="sm"
-        variant="outline"
-        onClick={() =>
-          extract().then(({ valid, data }) => {
-            if (valid) {
-              saveAsJSON(data);
-            } else {
-              // t("actions.invalid-data", { ns: "data-editor" })
-              toast.error(t(($) => $.actions["invalid-data"]));
-            }
-          })
-        }
-      >
+      <Button size="sm" variant="outline" type="submit">
         <input className="hidden" type="file" />
         <FileDown />
         {t(($) => $.actions.save)}

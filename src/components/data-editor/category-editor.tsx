@@ -191,7 +191,7 @@ export function CategoryEditor(props: CategoryEditorProps) {
 
   return (
     <ScrollArea data-slot="category-editor" className={className}>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-3 py-2">
         <FormField
           control={control}
           name="categories"

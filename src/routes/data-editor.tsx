@@ -35,7 +35,7 @@ const tabs = [
 function RouteComponent() {
   const { t } = useTranslation("data-editor");
   return (
-    <Tabs className="flex-auto pt-2" defaultValue={tabs[0].key} asChild>
+    <Tabs className="min-h-0 flex-auto pt-2" defaultValue={tabs[0].key} asChild>
       <DataEditorRoot>
         <FlexibleBox
           data-slot="data-editor__header"
@@ -54,7 +54,7 @@ function RouteComponent() {
         </FlexibleBox>
         <FlexibleBox
           data-slot="data-editor__body"
-          className="flex-auto"
+          className="flex min-h-0 flex-auto flex-col"
           innerClassName="h-full"
         >
           {tabs.map((tab) => (

@@ -6,12 +6,11 @@
     "save": "Save"
   },
   "category-editor": {
-    "cancel-create-category": "Cancel",
+    "category-id-description": "Change with caution",
     "category-id-label": "ID",
     "category-name-en-label": "Name (EN)",
     "category-name-ru-label": "Name (RU)",
     "category-name-zh-label": "Name (ZH)",
-    "confirm-create-category": "Create",
     "delete-tip-1": "Delete is only allowed when the category is empty",
     "edit-category": "Edit Category",
     "mods": "Mods",

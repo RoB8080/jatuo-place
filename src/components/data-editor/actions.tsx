@@ -61,7 +61,7 @@ export function DataEditorActions(props: DataEditorActionsProps) {
         <SimpleDropdownMenu
           content={
             <>
-              <DropdownMenuLabel>
+              <DropdownMenuLabel className="text-sm font-normal text-muted-foreground">
                 {t(($) => $.actions["from-prod-data"])}
               </DropdownMenuLabel>
               {versionKeys.map((versionKey) => (

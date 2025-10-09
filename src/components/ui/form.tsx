@@ -15,6 +15,8 @@ import {
 
 import { cn } from "@/libs/utils";
 import { Label } from "@/components/ui/label";
+import { Asterisk } from "lucide-react";
+import type { ComponentProps } from "react";
 
 const Form = FormProvider;
 
@@ -97,8 +99,21 @@ function FormLabel({
     <Label
       data-slot="form-label"
       data-error={!!error}
-      className={cn("data-[error=true]:text-destructive", className)}
+      className={cn("gap-1 data-[error=true]:text-destructive", className)}
       htmlFor={formItemId}
+      {...props}
+    />
+  );
+}
+
+export function FormRequiredIndicator({
+  className,
+  ...props
+}: ComponentProps<"svg">) {
+  return (
+    <Asterisk
+      data-slot="form-required-indicator"
+      className={cn("size-3.5 text-destructive", className)}
       {...props}
     />
   );

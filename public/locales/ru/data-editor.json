@@ -6,12 +6,11 @@
     "save": "Сохранить"
   },
   "category-editor": {
-    "cancel-create-category": "Отмена",
+    "category-id-description": "Изменяйте с осторожностью",
     "category-id-label": "ID",
     "category-name-en-label": "Имя (EN)",
     "category-name-ru-label": "Имя (RU)",
     "category-name-zh-label": "Имя (ZH)",
-    "confirm-create-category": "Создать",
     "delete-tip-1": "Удаление категорий разрешено только при отсутствии модов в категории",
     "edit-category": "Редактировать категорию",
     "mods": "модов",

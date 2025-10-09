@@ -13,7 +13,8 @@
     "category-name-zh-label": "分类名称 (ZH)",
     "delete-tip-1": "删除分类仅在分类下没有模组时才允许",
     "edit-category": "编辑分类",
-    "mods": "个模组",
+    "mods_one": "1 个模组",
+    "mods_other": "{{count}} 个模组",
     "new-category": "新建分类"
   },
   "tabs": {

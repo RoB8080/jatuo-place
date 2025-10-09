@@ -13,7 +13,8 @@
     "category-name-zh-label": "Name (ZH)",
     "delete-tip-1": "Delete is only allowed when the category is empty",
     "edit-category": "Edit Category",
-    "mods": "Mods",
+    "mods_one": "1 Mod",
+    "mods_other": "{{count}} Mods",
     "new-category": "New Category"
   },
   "tabs": {

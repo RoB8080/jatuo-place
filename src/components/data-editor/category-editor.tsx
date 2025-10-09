@@ -128,8 +128,15 @@ function CategoryCard(props: { index: number }) {
                   )}
                 </CardTitle>
                 <CardDescription>
-                  ID: {field.value.id}，共 {modCount}{" "}
-                  {t(($) => $["category-editor"].mods)}
+                  ID: {field.value.id}
+                  {modCount > 0 && (
+                    <>
+                      ,{" "}
+                      {t(($) => $["category-editor"]["mods"], {
+                        count: modCount,
+                      })}
+                    </>
+                  )}
                 </CardDescription>
                 <FormMessage />
                 <CardAction className="flex flex-row items-center self-center">

@@ -28,7 +28,14 @@ import {
   AlertDialogTitle,
 } from "../ui/alert-dialog";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { Form, FormField, FormItem, FormLabel } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { useId } from "react";
 
 function CategoryCard(props: { category: ModCategory }) {
@@ -101,10 +108,16 @@ const CategoryEditDialog = defineAlertDialogTemplate<
       </AlertDialogHeader>
       <Form {...form}>
         <form
+          id={formID}
           className="flex flex-col gap-3"
-          onSubmit={form.handleSubmit((t) => {
-            console.debug("valid", t);
-          })}
+          onSubmit={form.handleSubmit(
+            (t) => {
+              console.debug("valid", t);
+            },
+            () => {
+              console.debug("invalid", form.getValues());
+            },
+          )}
         >
           <FormField
             name="id"
@@ -115,11 +128,14 @@ const CategoryEditDialog = defineAlertDialogTemplate<
                   {/* t("category-editor.category-id-label", { ns: "data-editor" }) */}
                   {t(($) => $["category-editor"]["category-id-label"])}
                 </FormLabel>
-                <Input {...field} />
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 items-start gap-2">
             <FormField
               control={form.control}
               name="name.en"
@@ -129,7 +145,10 @@ const CategoryEditDialog = defineAlertDialogTemplate<
                     {/* t("category-editor.category-name-en-label", { ns: "data-editor" }) */}
                     {t(($) => $["category-editor"]["category-name-en-label"])}
                   </FormLabel>
-                  <Input {...field} />
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -142,7 +161,10 @@ const CategoryEditDialog = defineAlertDialogTemplate<
                     {/* t("category-editor.category-name-ru-label", { ns: "data-editor" }) */}
                     {t(($) => $["category-editor"]["category-name-ru-label"])}
                   </FormLabel>
-                  <Input {...field} />
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -155,7 +177,10 @@ const CategoryEditDialog = defineAlertDialogTemplate<
                     {/* t("category-editor.category-name-zh-label", { ns: "data-editor" }) */}
                     {t(($) => $["category-editor"]["category-name-zh-label"])}
                   </FormLabel>
-                  <Input {...field} />
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -167,11 +192,7 @@ const CategoryEditDialog = defineAlertDialogTemplate<
           {/* t("category-editor.cancel-create-category", { ns: "data-editor" }) */}
           {t(($) => $["category-editor"]["cancel-create-category"])}
         </Button>
-        <Button
-          onClick={() => console.debug("confirm", form.getValues())}
-          type="submit"
-          form={formID}
-        >
+        <Button type="submit" form={formID}>
           {/* t("category-editor.confirm-create-category", { ns: "data-editor" }) */}
           {t(($) => $["category-editor"]["confirm-create-category"])}
         </Button>

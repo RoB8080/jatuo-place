@@ -16,7 +16,7 @@ export type LocaleMap = Partial<Record<SupportedLanguage, string>> & {
 };
 
 const localMapSchema = z.object({
-  [fallbackLanguage]: z.string().min(1),
+  [fallbackLanguage]: z.string().min(1, "Fallback language is required"),
   ...Object.fromEntries(
     Object.keys(supportedLanguages)
       .filter((key) => key !== fallbackLanguage)
@@ -53,7 +53,7 @@ export interface ModCategory {
 }
 
 export const modCategorySchema = z.object({
-  id: z.string().min(1),
+  id: z.string().min(1, "Category ID is required"),
   name: localMapSchema,
 });
 

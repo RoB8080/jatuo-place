@@ -1,4 +1,19 @@
 {
+  "mod": {
+    "count_zero": "Нет модов",
+    "count_one": "1 мод",
+    "count_other": "{{count}} модов",
+    "create": "Новый мод",
+    "delete": "Удалить мод",
+    "delete-confirm": {
+      "cancel": "Отмена",
+      "confirm": "Удалить",
+      "content": "Вы уверены, что хотите удалить 「{{modName}}」(ID: {{modID}})? Файлы будут оставлены, но их ассоциация с модом будет потеряна.",
+      "title": "Удалить мод"
+    },
+    "nomad": "Номадские моды",
+    "edit": "Редактировать мод"
+  },
   "actions": {
     "failed-loading-prod-data": "Не удалось загрузить данные из продакшн окружения",
     "from-prod-data": "Из продакшн данных",
@@ -16,6 +31,36 @@
     "mods_one": "1 мод",
     "mods_other": "{{count}} модов",
     "new-category": "Новая категория"
+  },
+  "category": {
+    "create": "Новая категория",
+    "delete": "Удалить категорию",
+    "delete-confirm": {
+      "cancel": "Отмена",
+      "confirm": "Удалить",
+      "content": "Вы уверены, что хотите удалить 「{{categoryName}}」(ID: {{categoryID}})? Моды будут оставлены, но их ассоциация с категорией будет потеряна.",
+      "title": "Удалить категорию"
+    },
+    "edit": ""
+  },
+  "file": {
+    "count_one": "1 файл",
+    "count_other": "{{count}} файлов",
+    "create": "Новый файл",
+    "delete": "Удалить файл",
+    "delete-confirm": {
+      "cancel": "Отмена",
+      "confirm": "Удалить",
+      "content": "Вы уверены, что хотите удалить 「{{fileName}}」?",
+      "title": "Удалить файл"
+    },
+    "edit": "Редактировать файл",
+    "nomad": "Файлы без мода"
+  },
+  "mod-editor": {
+    "result-count_one": "Найден 1 мод",
+    "result-count_other": "Найдено {{count}} модов",
+    "search-placeholder": "Поиск мода"
   },
   "tabs": {
     "category": "Категория",

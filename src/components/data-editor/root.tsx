@@ -3,6 +3,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   type ComponentProps,
 } from "react";
 import { useForm, type UseFormReturn } from "react-hook-form";
@@ -10,6 +11,7 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { Form } from "../ui/form";
 import dayjs from "dayjs";
 import { toast } from "sonner";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 export interface DataEditorContextValue {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -34,14 +36,29 @@ function saveAsJSON(data: unknown, invalid?: boolean) {
 export function DataEditorRoot(
   props: Omit<ComponentProps<"form">, "onSubmit">,
 ) {
-  const form = useForm<MapComboData>({
-    resolver: standardSchemaResolver(mapComboDataSchema),
-    defaultValues: {
+  const [workingData, setWorkingData] = useLocalStorage<MapComboData>(
+    "data-editor__working-data",
+    {
       categories: [],
       mods: [],
       files: [],
     },
+  );
+  const form = useForm<MapComboData>({
+    resolver: standardSchemaResolver(mapComboDataSchema),
+    defaultValues: workingData,
   });
+
+  useEffect(() => {
+    return form.subscribe({
+      formState: {
+        values: true,
+      },
+      callback: ({ values }) => {
+        setWorkingData(values);
+      },
+    });
+  }, [form, setWorkingData]);
 
   const overwrite = useCallback(
     (data: MapComboData) => {

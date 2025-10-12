@@ -1,4 +1,19 @@
 {
+  "mod": {
+    "count_zero": "没有模组",
+    "count_one": "1 个模组",
+    "count_other": "{{count}} 个模组",
+    "create": "新建模组",
+    "delete": "删除模组",
+    "delete-confirm": {
+      "cancel": "取消",
+      "confirm": "确认",
+      "content": "确定要删除 「{{modName}}」(ID: {{modID}}) 吗？文件将被保留，但它们的模组关联将丢失。",
+      "title": "删除模组"
+    },
+    "nomad": "未分类模组",
+    "edit": "编辑模组"
+  },
   "actions": {
     "failed-loading-prod-data": "从线上数据加载失败",
     "from-prod-data": "从线上数据加载",
@@ -16,6 +31,36 @@
     "mods_one": "1 个模组",
     "mods_other": "{{count}} 个模组",
     "new-category": "新建分类"
+  },
+  "category": {
+    "create": "新建分类",
+    "delete": "删除分类",
+    "delete-confirm": {
+      "cancel": "取消",
+      "confirm": "确认",
+      "content": "确定要删除 「{{categoryName}}」(ID: {{categoryID}}) 吗？模组将被保留，但它们的分类关联将丢失。",
+      "title": "删除分类"
+    },
+    "edit": ""
+  },
+  "file": {
+    "count_one": "1 个文件",
+    "count_other": "{{count}} 个文件",
+    "create": "新建文件",
+    "delete": "删除文件",
+    "delete-confirm": {
+      "cancel": "取消",
+      "confirm": "确认",
+      "content": "确定要删除 「{{fileName}}」 吗？",
+      "title": "删除文件"
+    },
+    "edit": "编辑文件",
+    "nomad": "无模组文件"
+  },
+  "mod-editor": {
+    "result-count_one": "找到 1 个模组",
+    "result-count_other": "找到 {{count}} 个模组",
+    "search-placeholder": "搜索模组"
   },
   "tabs": {
     "category": "分类",

@@ -1,6 +1,7 @@
 import { FlexibleBox } from "@/components/common/flexible-box";
 import { DataEditorActions, DataEditorRoot } from "@/components/data-editor";
 import { CategoryEditor } from "@/components/data-editor/category-editor";
+import { TreeEditor } from "@/components/data-editor/tree-editor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createFileRoute } from "@tanstack/react-router";
 import { Box, Group, ListOrdered } from "lucide-react";
@@ -22,7 +23,7 @@ const tabs = [
     // t("tabs.mod", { ns: "data-editor" })
     key: "mod",
     icon: Box,
-    render: () => <div>Mod</div>,
+    render: () => <TreeEditor />,
   },
   {
     // t("tabs.order", { ns: "data-editor" })

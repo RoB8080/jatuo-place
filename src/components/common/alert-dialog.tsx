@@ -1,5 +1,20 @@
-import { useEffect, useState, type ReactNode } from "react";
-import { AlertDialog, AlertDialogContent } from "@/components/ui/alert-dialog";
+import {
+  useEffect,
+  useState,
+  type ReactNode,
+  type ComponentProps,
+} from "react";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Kbd } from "../ui/kbd";
+import { useHotkeys } from "react-hotkeys-hook";
 
 type AlertDialogTemplate<T = unknown, P = unknown> = (
   props: P & {
@@ -67,6 +82,98 @@ export function invokeAlertDialog<T = unknown, P = unknown>(
   store.dialogs.push({ id, open: true, options, resolve, reject });
   notify();
   return promise;
+}
+
+type ConfirmDialogComponentProps = {
+  title?: ReactNode;
+  content?: ReactNode;
+  cancelText?: ReactNode;
+  confirmText?: ReactNode;
+  cancelProps?: Omit<ComponentProps<typeof Button>, "children" | "onClick">;
+  confirmProps?: Omit<ComponentProps<typeof Button>, "children" | "onClick">;
+};
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function invokeConfirmDialog(
+  options: ConfirmDialogComponentProps,
+): Promise<boolean> {
+  const Template = defineAlertDialogTemplate<
+    boolean,
+    ConfirmDialogComponentProps
+  >(
+    ({
+      id,
+      confirm,
+      title,
+      content,
+      cancelText,
+      confirmText,
+      cancelProps,
+      confirmProps,
+    }) => {
+      useHotkeys("y", () => {
+        try {
+          confirm(true);
+        } catch (e) {
+          console.error("Confirm button click failed", e);
+        }
+      });
+      useHotkeys("esc", () => {
+        try {
+          confirm(false);
+        } catch (e) {
+          console.error("Cancel button click failed", e);
+        }
+      });
+
+      return (
+        <div key={id} className="flex flex-col gap-4">
+          {(title || content) && (
+            <AlertDialogHeader>
+              {title && <AlertDialogTitle>{title}</AlertDialogTitle>}
+              {content && (
+                <AlertDialogDescription>{content}</AlertDialogDescription>
+              )}
+            </AlertDialogHeader>
+          )}
+          <AlertDialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                try {
+                  confirm(false);
+                } catch (e) {
+                  console.error("Cancel button click failed", e);
+                }
+              }}
+              {...cancelProps}
+            >
+              {cancelText ?? "Cancel"}
+              <Kbd>Esc</Kbd>
+            </Button>
+            <Button
+              onClick={() => {
+                try {
+                  confirm(true);
+                } catch (e) {
+                  console.error("Confirm button click failed", e);
+                }
+              }}
+              {...confirmProps}
+            >
+              {confirmText ?? "Confirm"}
+              <Kbd>Y</Kbd>
+            </Button>
+          </AlertDialogFooter>
+        </div>
+      );
+    },
+  );
+
+  return invokeAlertDialog<boolean, ConfirmDialogComponentProps>({
+    component: Template,
+    componentProps: options,
+  });
 }
 
 // eslint-disable-next-line react-refresh/only-export-components

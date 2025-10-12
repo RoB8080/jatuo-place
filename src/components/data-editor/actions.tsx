@@ -45,7 +45,6 @@ export function DataEditorActions(props: DataEditorActionsProps) {
       <ButtonGroup>
         <Button
           type="button"
-          size="sm"
           variant="outline"
           onClick={() => {
             const fileInput = document.getElementById(
@@ -78,14 +77,14 @@ export function DataEditorActions(props: DataEditorActionsProps) {
           <Button
             disabled={isLoadingFromVersion}
             variant="outline"
-            size="icon-sm"
+            size="icon"
             aria-label="More Options"
           >
             {isLoadingFromVersion ? <Spinner /> : <MoreHorizontalIcon />}
           </Button>
         </SimpleDropdownMenu>
       </ButtonGroup>
-      <Button size="sm" variant="outline" type="submit">
+      <Button variant="outline" type="submit">
         <input className="hidden" type="file" />
         <FileDown />
         {t(($) => $.actions.save)}

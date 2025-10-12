@@ -1,4 +1,19 @@
 {
+  "mod": {
+    "count_zero": "No mod",
+    "count_one": "1 mod",
+    "count_other": "{{count}} mods",
+    "create": "New Mod",
+    "delete": "mod.delete",
+    "delete-confirm": {
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "content": "Are you sure you want to delete 「{{modName}}」(ID: {{modID}})? Files will be kept but their mod association will be lost.",
+      "title": "Delete Mod"
+    },
+    "nomad": "Nomad Mods",
+    "edit": "Edit Mod"
+  },
   "actions": {
     "failed-loading-prod-data": "Failed to load production data",
     "from-prod-data": "From production data",
@@ -16,6 +31,36 @@
     "mods_one": "1 Mod",
     "mods_other": "{{count}} Mods",
     "new-category": "New Category"
+  },
+  "category": {
+    "create": "New Category",
+    "delete": "Delete Category",
+    "delete-confirm": {
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "content": "Are you sure you want to delete 「{{categoryName}}」(ID: {{categoryID}})? Mods will be kept but their category association will be lost.",
+      "title": "Delete Category"
+    },
+    "edit": "category.edit"
+  },
+  "file": {
+    "count_one": "1 file",
+    "count_other": "{{count}} files",
+    "create": "New File",
+    "delete": "Delete File",
+    "delete-confirm": {
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "content": "Are you sure you want to delete 「{{fileName}}」?",
+      "title": "Delete File"
+    },
+    "edit": "Edit File",
+    "nomad": "Nomad Files"
+  },
+  "mod-editor": {
+    "result-count_one": "Found 1 mod",
+    "result-count_other": "Found {{count}} mods",
+    "search-placeholder": "Search Mod"
   },
   "tabs": {
     "category": "Category",

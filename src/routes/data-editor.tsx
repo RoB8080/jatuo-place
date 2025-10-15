@@ -1,10 +1,9 @@
 import { FlexibleBox } from "@/components/common/flexible-box";
 import { DataEditorActions, DataEditorRoot } from "@/components/data-editor";
-import { CategoryEditor } from "@/components/data-editor/category-editor";
 import { TreeEditor } from "@/components/data-editor/tree-editor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createFileRoute } from "@tanstack/react-router";
-import { Box, Group, ListOrdered } from "lucide-react";
+import { Box, ListOrdered } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export const Route = createFileRoute("/data-editor")({
@@ -14,14 +13,8 @@ export const Route = createFileRoute("/data-editor")({
 
 const tabs = [
   {
-    // t("tabs.category", { ns: "data-editor" })
-    key: "category",
-    icon: Group,
-    render: () => <CategoryEditor />,
-  },
-  {
-    // t("tabs.mod", { ns: "data-editor" })
-    key: "mod",
+    // t("tabs.entity", { ns: "data-editor" })
+    key: "entity",
     icon: Box,
     render: () => <TreeEditor />,
   },
@@ -36,7 +29,7 @@ const tabs = [
 function RouteComponent() {
   const { t } = useTranslation("data-editor");
   return (
-    <Tabs className="min-h-0 flex-auto pt-2" defaultValue={tabs[0].key} asChild>
+    <Tabs className="min-h-0 flex-auto pt-2" defaultValue={tabs[0].key}>
       <DataEditorRoot>
         <FlexibleBox
           data-slot="data-editor__header"

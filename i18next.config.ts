@@ -7,6 +7,5 @@ export default defineConfig({
     output: "public/locales/{{language}}/{{namespace}}.json",
     defaultNS: "common",
     preservePatterns: ["mod-category.*.name", "mod.*"],
-    functions: ["t", "i18n.t", "i18next.t"],
   },
 });

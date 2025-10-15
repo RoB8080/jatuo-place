@@ -1,4 +1,12 @@
 {
+  "combobox": {
+    "empty": "No result.",
+    "search": "Search...",
+    "select": "Select..."
+  },
+  "empty": {
+    "noData": "No Data"
+  },
   "external": {
     "discord": "Join us on Discord",
     "github": "View on GitHub",

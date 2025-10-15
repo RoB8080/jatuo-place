@@ -1,4 +1,12 @@
 {
+  "combobox": {
+    "empty": "Нет результатов.",
+    "search": "Поиск...",
+    "select": "Выбрать..."
+  },
+  "empty": {
+    "noData": "Нет данных"
+  },
   "external": {
     "discord": "Присоединяйтесь к нам в Discord",
     "github": "Посмотреть на GitHub",

@@ -1,44 +1,6 @@
-import { useTranslation } from "react-i18next";
-import {
-  type SupportedLanguage,
-  fallbackLanguage,
-  supportedLanguages,
-} from "../i18n";
 import type { Condition } from "./condition";
-import { useCallback } from "react";
 import { z } from "zod";
-
-/**
- * Map of locale strings used in Map Combo, must contain fallback language
- */
-export type LocaleMap = Partial<Record<SupportedLanguage, string>> & {
-  [fallbackLanguage]: string;
-};
-
-const localMapSchema = z.object({
-  [fallbackLanguage]: z.string().min(1, "Fallback language is required"),
-  ...Object.fromEntries(
-    Object.keys(supportedLanguages)
-      .filter((key) => key !== fallbackLanguage)
-      .map((key) => [key, z.string().optional()]),
-  ),
-});
-
-function localize(localeMap: LocaleMap, language: SupportedLanguage) {
-  // Return the expected locale if it exists
-  // Otherwise, return the fallback locale if it exists
-  // As a last resort, return an empty string
-  return localeMap[language] || localeMap[fallbackLanguage] || "";
-}
-
-/** Get a localizer to localize a locale map */
-export function useLocalizer(): (localeMap: LocaleMap) => string {
-  const language = useTranslation().i18n.language as SupportedLanguage;
-  return useCallback(
-    (localeMap: LocaleMap) => localize(localeMap, language),
-    [language],
-  );
-}
+import { localeMapSchema, type LocaleMap } from "./locale";
 
 /**
  * Category of mod, used only for dividing mods into groups for better browser and selection experience
@@ -54,7 +16,7 @@ export interface ModCategory {
 
 export const modCategorySchema = z.object({
   id: z.string().min(1, "Category ID is required"),
-  name: localMapSchema,
+  name: localeMapSchema,
 });
 
 /**
@@ -92,7 +54,12 @@ export interface Mod {
   isPassive?: boolean;
 }
 
-const modSchema = z.object({
+/** Mod without recursive condition, used for tanstack form */
+export type NonRecursiveMod = Omit<Mod, "condition"> & {
+  condition?: Record<string, unknown>;
+};
+
+export const modSchema = z.object({
   id: z.string(),
   name: z.string(),
   author: z.string().optional(),
@@ -101,8 +68,8 @@ const modSchema = z.object({
   mainPageURL: z.string().optional(),
   downloadURL: z.string().optional(),
   isPaid: z.boolean().optional(),
-  description: localMapSchema.optional(),
-  tips: z.array(localMapSchema).optional(),
+  description: localeMapSchema.optional(),
+  tips: z.array(localeMapSchema).optional(),
   condition: z.custom<Condition>().optional(),
   categoryID: z.string(),
   isPassive: z.boolean().optional(),
@@ -125,7 +92,12 @@ export interface ModFile {
   modID: string;
 }
 
-const modFileSchema = z.object({
+/** Mod file without recursive condition, used for tanstack form */
+export type NonRecursiveModFile = Omit<ModFile, "condition"> & {
+  condition?: Record<string, unknown>;
+};
+
+export const modFileSchema = z.object({
   name: z.string(),
   posterURL: z.string().optional(),
   tips: z.string().optional(),

@@ -13,7 +13,7 @@ const RootLayout = () => (
       <AppHeader />
       <Outlet />
     </div>
-    <Toaster />
+    <Toaster expand={true} visibleToasts={5} />
     <AlertDialogRoot />
   </QueryClientProvider>
 );

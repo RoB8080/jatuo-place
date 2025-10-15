@@ -18,19 +18,19 @@
     "failed-loading-prod-data": "从线上数据加载失败",
     "from-prod-data": "从线上数据加载",
     "load": "加载",
-    "save": "保存"
+    "save": {
+      "label": "保存",
+      "validation-failed": {
+        "exception-tip": "请检查控制台以获取更多详细信息。",
+        "save-anyway": "强制保存",
+        "title": "无效数据"
+      }
+    }
   },
   "category-editor": {
-    "category-id-description": "谨慎修改",
-    "category-id-label": "分类ID",
     "category-name-en-label": "分类名称 (EN)",
     "category-name-ru-label": "分类名称 (RU)",
-    "category-name-zh-label": "分类名称 (ZH)",
-    "delete-tip-1": "删除分类仅在分类下没有模组时才允许",
-    "edit-category": "编辑分类",
-    "mods_one": "1 个模组",
-    "mods_other": "{{count}} 个模组",
-    "new-category": "新建分类"
+    "category-name-zh-label": "分类名称 (ZH)"
   },
   "category": {
     "create": "新建分类",
@@ -41,7 +41,27 @@
       "content": "确定要删除 「{{categoryName}}」(ID: {{categoryID}}) 吗？模组将被保留，但它们的分类关联将丢失。",
       "title": "删除分类"
     },
-    "edit": ""
+    "edit": "编辑分类"
+  },
+  "entity": {
+    "categoryPanel": {
+      "idDescription": "更改时请谨慎，因为这会影响现有模组的分类关联。",
+      "idLabel": "分类 ID",
+      "notFound": "未找到分类",
+      "title": "编辑分类"
+    },
+    "editPanel": {
+      "cancel": "取消",
+      "save": "保存"
+    },
+    "filePanel": {
+      "notFound": "未找到文件",
+      "title": "编辑文件"
+    },
+    "modPanel": {
+      "notFound": "未找到模组",
+      "title": "编辑模组"
+    }
   },
   "file": {
     "count_one": "1 个文件",
@@ -63,8 +83,7 @@
     "search-placeholder": "搜索模组"
   },
   "tabs": {
-    "category": "分类",
-    "mod": "模组",
+    "entity": "实体",
     "order": "排序"
   }
 }

@@ -5,9 +5,7 @@ import {
   InputGroupInput,
   InputGroupAddon,
 } from "../ui/input-group";
-import { FormField } from "../ui/form";
-import { useFormContext } from "react-hook-form";
-import { type MapComboData } from "@/libs/map-combo";
+import { useCategories } from "./atoms/hooks";
 import { cn } from "@/libs/utils";
 import { TreeRoot } from "../common/tree";
 import { useState } from "react";
@@ -52,8 +50,9 @@ export interface TreeEditorProps {
 }
 
 export function TreeEditor(props: TreeEditorProps) {
+  "use no memo";
   const { className } = props;
-  const { control } = useFormContext<MapComboData>();
+  const categories = useCategories();
   const [searchValue, setSearchValue] = useState("");
 
   return (
@@ -71,19 +70,17 @@ export function TreeEditor(props: TreeEditorProps) {
       </div>
       <ScrollArea className="min-h-0 flex-1">
         <TreeRoot size="sm" className="flex flex-col">
-          <FormField
-            control={control}
-            name="categories"
-            render={({ field }) => (
-              <>
-                {field.value.map((category) => (
-                  <CategoryTreeNode key={category.id} category={category} />
-                ))}
-                <ModNomadListTreeNode />
-                <FileNomadListTreeNode />
-              </>
-            )}
-          />
+          <>
+            {categories.map((category, idx) => (
+              <CategoryTreeNode
+                index={idx}
+                key={category.id}
+                category={category}
+              />
+            ))}
+            <ModNomadListTreeNode />
+            <FileNomadListTreeNode />
+          </>
         </TreeRoot>
         <ScrollBar
           data-slot="tree-editor-content-scrollbar"

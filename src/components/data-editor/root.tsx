@@ -1,104 +1,133 @@
-import { mapComboDataSchema, type MapComboData } from "@/libs/map-combo";
+import {
+  type MapComboData,
+  type ModCategory,
+  type Mod,
+  type ModFile,
+} from "@/libs/map-combo";
 import {
   createContext,
-  useCallback,
   useContext,
-  useEffect,
-  type ComponentProps,
+  useMemo,
+  type Dispatch,
+  type ReactElement,
+  type ReactNode,
+  type SetStateAction,
 } from "react";
-import { useForm, type UseFormReturn } from "react-hook-form";
-import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { Form } from "../ui/form";
-import dayjs from "dayjs";
-import { toast } from "sonner";
-import { useLocalStorage } from "@uidotdev/usehooks";
+import { atom, useAtom, type PrimitiveAtom, type Atom } from "jotai";
+import { atomFamily } from "jotai/utils";
+
+const WORKING_DATA_KEY = "data-editor__working-data";
+const defaultWorkingData: MapComboData = {
+  categories: [],
+  mods: [],
+  files: [],
+};
+
+function getInitialWorkingData(): MapComboData {
+  const data = localStorage.getItem(WORKING_DATA_KEY);
+  if (!data) return defaultWorkingData;
+  try {
+    return JSON.parse(data);
+  } catch (e) {
+    console.debug("invalid working data", e);
+    localStorage.removeItem(WORKING_DATA_KEY);
+    return defaultWorkingData;
+  }
+}
+
+// 全局数据不再使用 TanStack Form；仅保留 workingData 原子与写入。
+
+export interface DerivedAtoms {
+  categoriesAtom: Atom<ModCategory[]>;
+  modsAtom: Atom<Mod[]>;
+  filesAtom: Atom<ModFile[]>;
+  modsByCategoryFamily: (categoryID: string) => Atom<Mod[]>;
+  filesByModFamily: (modID: string) => Atom<ModFile[]>;
+  nomadModsAtom: Atom<Mod[]>;
+  nomadFilesAtom: Atom<ModFile[]>;
+}
 
 export interface DataEditorContextValue {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  form: UseFormReturn<MapComboData, any, MapComboData>;
-  /** Overwrite form data */
-  overwrite: (data: MapComboData) => void;
+  workingDataAtom: PrimitiveAtom<MapComboData>;
+  workingData: MapComboData;
+  setWorkingData: Dispatch<SetStateAction<MapComboData>>;
+  derivedAtoms: DerivedAtoms;
 }
 
 const DataEditorContext = createContext<DataEditorContextValue | null>(null);
 
-function saveAsJSON(data: unknown, invalid?: boolean) {
-  const json = JSON.stringify(data, null, 2);
-  const blob = new Blob([json], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `map-combo${invalid ? ".invalid" : ""}.${dayjs().format("YYYYMMDD")}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
+function useWorkingDataAtom() {
+  return useMemo(() => {
+    const primitive = atom(getInitialWorkingData());
+    return atom(
+      (get) => get(primitive),
+      (get, set, action: SetStateAction<MapComboData>) => {
+        // change value
+        set(primitive, action);
+        // sync to local storage
+        localStorage.setItem(WORKING_DATA_KEY, JSON.stringify(get(primitive)));
+      },
+    );
+  }, []);
 }
 
-export function DataEditorRoot(
-  props: Omit<ComponentProps<"form">, "onSubmit">,
-) {
-  const [workingData, setWorkingData] = useLocalStorage<MapComboData>(
-    "data-editor__working-data",
-    {
-      categories: [],
-      mods: [],
-      files: [],
-    },
-  );
-  const form = useForm<MapComboData>({
-    resolver: standardSchemaResolver(mapComboDataSchema),
-    defaultValues: workingData,
-  });
+export function DataEditorRoot(props: { children: ReactNode }): ReactElement {
+  const { children } = props;
+  const workingDataAtom = useWorkingDataAtom();
+  const [workingData, setWorkingData] = useAtom(workingDataAtom);
 
-  useEffect(() => {
-    return form.subscribe({
-      formState: {
-        values: true,
-      },
-      callback: ({ values }) => {
-        setWorkingData(values);
-      },
-    });
-  }, [form, setWorkingData]);
+  const derivedAtoms: DerivedAtoms = useMemo(() => {
+    const categoriesAtom: Atom<ModCategory[]> = atom(
+      (get) => get(workingDataAtom).categories,
+    );
+    const modsAtom: Atom<Mod[]> = atom((get) => get(workingDataAtom).mods);
+    const filesAtom: Atom<ModFile[]> = atom(
+      (get) => get(workingDataAtom).files,
+    );
 
-  const overwrite = useCallback(
-    (data: MapComboData) => {
-      form.setValue("categories", data.categories);
-      form.setValue("mods", data.mods);
-      form.setValue("files", data.files, {
-        shouldDirty: true,
-        shouldTouch: true,
-      });
-    },
-    [form],
-  );
+    const modsByCategoryFamily: (categoryID: string) => Atom<Mod[]> =
+      atomFamily((categoryID: string) =>
+        atom((get) =>
+          get(workingDataAtom).mods.filter((m) => m.categoryID === categoryID),
+        ),
+      );
 
-  const handleValidSubmit = useCallback((data: MapComboData) => {
-    saveAsJSON(data);
-  }, []);
+    const filesByModFamily: (modID: string) => Atom<ModFile[]> = atomFamily(
+      (modID: string) =>
+        atom((get) =>
+          get(workingDataAtom).files.filter((f) => f.modID === modID),
+        ),
+    );
 
-  const handleInvalidSubmit = useCallback(
-    (err: unknown) => {
-      console.error("invalid data", err);
-      toast.warning("数据不符合要求，将保存临时版本");
-      saveAsJSON(form.getValues(), true);
-    },
-    [form],
-  );
+    const nomadModsAtom: Atom<Mod[]> = atom((get) =>
+      get(workingDataAtom).mods.filter((m) => !m.categoryID),
+    );
+    const nomadFilesAtom: Atom<ModFile[]> = atom((get) =>
+      get(workingDataAtom).files.filter((f) => !f.modID),
+    );
+
+    return {
+      categoriesAtom,
+      modsAtom,
+      filesAtom,
+      modsByCategoryFamily,
+      filesByModFamily,
+      nomadModsAtom,
+      nomadFilesAtom,
+    };
+  }, [workingDataAtom]);
 
   return (
-    <DataEditorContext.Provider value={{ overwrite, form }}>
-      <Form {...form}>
-        <form
-          {...props}
-          onSubmit={form.handleSubmit(handleValidSubmit, handleInvalidSubmit)}
-        />
-      </Form>
+    <DataEditorContext.Provider
+      value={{ workingDataAtom, workingData, setWorkingData, derivedAtoms }}
+    >
+      {children}
     </DataEditorContext.Provider>
   );
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export function useDataEditorContext() {
+export function useDataEditorContext(): DataEditorContextValue {
   const context = useContext(DataEditorContext);
   if (context === null) {
     throw new Error(

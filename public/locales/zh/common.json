@@ -1,4 +1,12 @@
 {
+  "combobox": {
+    "empty": "暂无结果",
+    "search": "搜索...",
+    "select": "请选择..."
+  },
+  "empty": {
+    "noData": "暂无数据"
+  },
   "external": {
     "discord": "加入我们的Discord",
     "github": "查看项目代码",

@@ -18,19 +18,19 @@
     "failed-loading-prod-data": "Failed to load production data",
     "from-prod-data": "From production data",
     "load": "Load",
-    "save": "Save"
+    "save": {
+      "label": "Save",
+      "validation-failed": {
+        "exception-tip": "Please check console for more details.",
+        "save-anyway": "Save Anyway",
+        "title": "Invalid Data"
+      }
+    }
   },
   "category-editor": {
-    "category-id-description": "Change with caution",
-    "category-id-label": "ID",
     "category-name-en-label": "Name (EN)",
     "category-name-ru-label": "Name (RU)",
-    "category-name-zh-label": "Name (ZH)",
-    "delete-tip-1": "Delete is only allowed when the category is empty",
-    "edit-category": "Edit Category",
-    "mods_one": "1 Mod",
-    "mods_other": "{{count}} Mods",
-    "new-category": "New Category"
+    "category-name-zh-label": "Name (ZH)"
   },
   "category": {
     "create": "New Category",
@@ -41,7 +41,27 @@
       "content": "Are you sure you want to delete 「{{categoryName}}」(ID: {{categoryID}})? Mods will be kept but their category association will be lost.",
       "title": "Delete Category"
     },
-    "edit": "category.edit"
+    "edit": "Edit Category"
+  },
+  "entity": {
+    "categoryPanel": {
+      "idDescription": "Change with caution, as it will affect the association of existing mods.",
+      "idLabel": "Category ID",
+      "notFound": "Category not found",
+      "title": "Edit Category"
+    },
+    "editPanel": {
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "filePanel": {
+      "notFound": "File not found",
+      "title": "Edit File"
+    },
+    "modPanel": {
+      "notFound": "Mod not found",
+      "title": "Edit Mod"
+    }
   },
   "file": {
     "count_one": "1 file",
@@ -63,8 +83,7 @@
     "search-placeholder": "Search Mod"
   },
   "tabs": {
-    "category": "Category",
-    "mod": "Mod",
+    "entity": "Entity",
     "order": "Order"
   }
 }

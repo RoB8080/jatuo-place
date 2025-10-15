@@ -18,19 +18,19 @@
     "failed-loading-prod-data": "Не удалось загрузить данные из продакшн окружения",
     "from-prod-data": "Из продакшн данных",
     "load": "Загрузить",
-    "save": "Сохранить"
+    "save": {
+      "label": "Сохранить",
+      "validation-failed": {
+        "exception-tip": "Пожалуйста, проверьте консоль для получения дополнительных деталей.",
+        "save-anyway": "Сохранить mesmo assim",
+        "title": "Недействительные данные"
+      }
+    }
   },
   "category-editor": {
-    "category-id-description": "Изменяйте с осторожностью",
-    "category-id-label": "ID",
     "category-name-en-label": "Имя (EN)",
     "category-name-ru-label": "Имя (RU)",
-    "category-name-zh-label": "Имя (ZH)",
-    "delete-tip-1": "Удаление категорий разрешено только при отсутствии модов в категории",
-    "edit-category": "Редактировать категорию",
-    "mods_one": "1 мод",
-    "mods_other": "{{count}} модов",
-    "new-category": "Новая категория"
+    "category-name-zh-label": "Имя (ZH)"
   },
   "category": {
     "create": "Новая категория",
@@ -41,7 +41,27 @@
       "content": "Вы уверены, что хотите удалить 「{{categoryName}}」(ID: {{categoryID}})? Моды будут оставлены, но их ассоциация с категорией будет потеряна.",
       "title": "Удалить категорию"
     },
-    "edit": ""
+    "edit": "Редактировать категорию"
+  },
+  "entity": {
+    "categoryPanel": {
+      "idDescription": "Измените с осторожностью, так как это повлияет на ассоциацию существующих модов.",
+      "idLabel": "ID категории",
+      "notFound": "",
+      "title": ""
+    },
+    "editPanel": {
+      "cancel": "Отмена",
+      "save": "Сохранить"
+    },
+    "filePanel": {
+      "notFound": "Файл не найден",
+      "title": "Редактировать файл"
+    },
+    "modPanel": {
+      "notFound": "Мод не найден",
+      "title": "Редактировать мод"
+    }
   },
   "file": {
     "count_one": "1 файл",
@@ -63,8 +83,7 @@
     "search-placeholder": "Поиск мода"
   },
   "tabs": {
-    "category": "Категория",
-    "mod": "Мод",
+    "entity": "Сущности",
     "order": "Сортировка"
   }
 }

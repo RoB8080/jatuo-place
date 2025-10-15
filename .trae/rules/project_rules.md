@@ -38,6 +38,8 @@ This project serves an ETS2/ATS community. Its primary functionality is to help 
 - i18n CLI:
   - `pnpm i18n:extract` — extract translation keys once.
 - Keep keys nested and descriptive; avoid free‑form string calls.
+ - Prefer wrapping `useTranslation()` + `t` calls into a dedicated hook at outer scope so the extractor can recognize them; if not possible, add a fallback comment like `// t('external.github', { ns: 'common' })` to help the extractor detect the key.
+ - Use clear, direct key paths (avoid bracket access). Prefer `$.aB.xY` over `$['a-b']['x-y']` style access.
 
 ## Project Structure
 - `src/components` — UI building blocks and composites:
@@ -89,7 +91,8 @@ This project serves an ETS2/ATS community. Its primary functionality is to help 
 - `pnpm eslint --fix <scope>` — auto‑fix lint issues; limit scope to avoid large changes.
 
 ## Contributing Rules
-- Use English in code, comments, and commit messages.
+- Use `pnpm` exclusively; do not use `npm` (install dependencies, run scripts, and manage the lockfile with `pnpm` only).
+- Write everything in English (code, comments, commit messages, and UI copy); translations live in `public/locales`.
 - Keep components small and focused; avoid monolithic pages.
 - Prefer composition over inheritance; extract common patterns to `components/common`.
 - Always add translation keys for new UI, and run `i18n:dev` while developing.
@@ -105,5 +108,5 @@ This project serves an ETS2/ATS community. Its primary functionality is to help 
 - For new UI elements, start from `components/ui` and compose in `components/common`.
 - For i18n, only use the selector function form with `t($ => ...)`.
 - Respect strict TypeScript and ESLint rules; avoid suppressions unless justified.
-- Do not self-run `pnpm dev` to verify results; leave verification to the user.
+- Do not self-run `pnpm dev` or `pnpm preview` to verify results; leave verification to the user.
 

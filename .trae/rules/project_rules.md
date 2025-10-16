@@ -105,5 +105,5 @@
 - Build UI from `components/ui`; compose in `components/common`.
 - Use selector form for i18n: `t($ => ...)`.
 - Respect TypeScript/ESLint; avoid suppressions.
-- Don’t self-run `pnpm dev` or `pnpm preview`; let the user verify.
+- Don’t run `dev` or `preview` script to debug the project. Let user do it.
 

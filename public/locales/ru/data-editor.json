@@ -82,6 +82,16 @@
     "result-count_other": "Найдено {{count}} модов",
     "search-placeholder": "Поиск мода"
   },
+  "orderPanel": {
+    "moveBottom": "Вниз до конца",
+    "moveDown": "Опустить",
+    "moveTop": "Вверх до начала",
+    "moveUp": "Поднять",
+    "searchPlaceholder": "Поиск файла",
+    "resultCount_one": "Найден 1 результат",
+    "resultCount_other": "Найдено {{count}} результатов",
+    "locate": "Найти"
+  },
   "tabs": {
     "entity": "Сущности",
     "order": "Сортировка"

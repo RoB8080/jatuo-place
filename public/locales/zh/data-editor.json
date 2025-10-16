@@ -82,6 +82,16 @@
     "result-count_other": "找到 {{count}} 个模组",
     "search-placeholder": "搜索模组"
   },
+  "orderPanel": {
+    "moveBottom": "置底",
+    "moveDown": "下移",
+    "moveTop": "置顶",
+    "moveUp": "上移",
+    "searchPlaceholder": "搜索文件",
+    "resultCount_one": "找到 1 个匹配",
+    "resultCount_other": "找到 {{count}} 个匹配",
+    "locate": "定位"
+  },
   "tabs": {
     "entity": "实体",
     "order": "排序"

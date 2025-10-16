@@ -182,3 +182,19 @@
     @apply bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold
   }
 }
+
+/* glow-flash 已废弃，相关样式移除 */
+
+/* Border pulse animation for selected item (fast double pulse) */
+@keyframes border-pulse {
+  0%, 100% {
+    border-color: var(--border);
+  }
+  50% {
+    border-color: var(--ring);
+  }
+}
+
+.pulse-border {
+  animation: border-pulse 0.8s ease-in-out 0s 2;
+}

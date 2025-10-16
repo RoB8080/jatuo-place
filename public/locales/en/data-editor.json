@@ -82,6 +82,16 @@
     "result-count_other": "Found {{count}} mods",
     "search-placeholder": "Search Mod"
   },
+  "orderPanel": {
+    "moveBottom": "Move to Bottom",
+    "moveDown": "Move Down",
+    "moveTop": "Move to Top",
+    "moveUp": "Move Up",
+    "searchPlaceholder": "Search File",
+    "resultCount_one": "Found 1 match",
+    "resultCount_other": "Found {{count}} matches",
+    "locate": "Locate"
+  },
   "tabs": {
     "entity": "Entity",
     "order": "Order"

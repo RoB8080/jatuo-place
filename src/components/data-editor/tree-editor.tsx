@@ -83,7 +83,6 @@ export function TreeEditor(props: TreeEditorProps) {
           </>
         </TreeRoot>
         <ScrollBar
-          className="z-[2]"
           data-slot="tree-editor-content-scrollbar"
           orientation="vertical"
           size="sm"

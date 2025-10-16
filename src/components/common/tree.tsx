@@ -118,7 +118,7 @@ export function TreeNode(props: TreeNodeProps) {
   if (!subNodes) {
     return (
       <div className={cn(treeNodeVariants({ size }), className)}>
-        <Dot className="text-muted-foreground" />
+        <Dot className="shrink-0 text-muted-foreground" />
         {children}
       </div>
     );
@@ -138,7 +138,7 @@ export function TreeNode(props: TreeNodeProps) {
           asChild
         >
           <div>
-            <ChevronRight className="transition-transform group-data-[open=true]/tree-node:rotate-90" />
+            <ChevronRight className="shrink-0 transition-transform group-data-[open=true]/tree-node:rotate-90" />
             {children}
           </div>
         </CollapsibleTrigger>
@@ -150,7 +150,7 @@ export function TreeNode(props: TreeNodeProps) {
   );
 }
 
-const treeNodeTitleVariants = cva("flex flex-auto items-center", {
+const treeNodeTitleVariants = cva("flex min-w-0 flex-auto items-center", {
   variants: {
     size: {
       sm: "gap-1.5 [&>svg]:size-3.5",

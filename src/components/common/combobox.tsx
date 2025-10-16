@@ -9,6 +9,7 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerHeader,
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -23,10 +24,12 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { Slot } from "@radix-ui/react-slot";
 
 export type ComboboxOption = {
   value: string;
   label: string;
+  keywords?: string[];
   disabled?: boolean;
 };
 
@@ -99,47 +102,60 @@ export function ResponsiveCombobox(props: ComboboxProps) {
     </Button>
   );
 
-  const listContent = (
-    <Command className={cn("w-full", contentClassName)}>
-      <CommandInput
-        placeholder={searchPlaceholder ?? t(($) => $.combobox.search)}
-      />
-      <CommandList>
-        <CommandEmpty>{emptyLabel ?? t(($) => $.combobox.empty)}</CommandEmpty>
-        <CommandGroup>
-          {options.map((opt) => {
-            const isSelected = selectedValue === opt.value;
-            return (
-              <CommandItem
-                key={opt.value}
-                value={opt.value}
-                disabled={opt.disabled}
-                onSelect={(val) => handleSelect(val)}
-              >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    isSelected ? "opacity-100" : "opacity-0",
-                  )}
-                />
-                <span className="truncate">{opt.label}</span>
-              </CommandItem>
-            );
-          })}
-        </CommandGroup>
-      </CommandList>
-    </Command>
+  const commandList = (
+    <CommandList>
+      <CommandEmpty>{emptyLabel ?? t(($) => $.combobox.empty)}</CommandEmpty>
+      <CommandGroup>
+        {options.map((opt) => {
+          const isSelected = selectedValue === opt.value;
+          return (
+            <CommandItem
+              key={opt.value}
+              value={opt.value}
+              keywords={opt.keywords}
+              disabled={opt.disabled}
+              onSelect={(val) => handleSelect(val)}
+            >
+              <Check
+                className={cn(
+                  "mr-2 h-4 w-4",
+                  isSelected ? "opacity-100" : "opacity-0",
+                )}
+              />
+              <span className="truncate">{opt.label}</span>
+            </CommandItem>
+          );
+        })}
+      </CommandGroup>
+    </CommandList>
   );
 
   if (isMobile) {
     return (
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>{triggerButton}</DrawerTrigger>
-        <DrawerContent>
-          <div className="mt-4 border-t">{listContent}</div>
-          <DrawerClose>
-            <Button variant="ghost">Close</Button>
-          </DrawerClose>
+        <DrawerContent data-mobile="true" className={contentClassName}>
+          <Command
+            filter={(value, search, keywords) => {
+              const extendValue = value + " " + keywords?.join(" ");
+              if (extendValue.includes(search)) return 1;
+              return 0;
+            }}
+            className={cn("w-full bg-transparent")}
+          >
+            <DrawerHeader className="flex flex-row items-center gap-2">
+              <CommandInput
+                wrapperClassName="flex-auto rounded-lg border"
+                placeholder={searchPlaceholder ?? t(($) => $.combobox.search)}
+              />
+              <DrawerClose>
+                <Button variant="ghost" className="px-2">
+                  {t(($) => $.combobox.close)}
+                </Button>
+              </DrawerClose>
+            </DrawerHeader>
+            <Slot className="mx-3">{commandList}</Slot>
+          </Command>
         </DrawerContent>
       </Drawer>
     );
@@ -148,8 +164,24 @@ export function ResponsiveCombobox(props: ComboboxProps) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0" align="start">
-        {listContent}
+      <PopoverContent
+        data-mobile="false"
+        className={contentClassName}
+        align="start"
+      >
+        <Command
+          className={cn("w-full bg-transparent")}
+          filter={(value, search, keywords) => {
+            const extendValue = value + " " + keywords?.join(" ");
+            if (extendValue.includes(search)) return 1;
+            return 0;
+          }}
+        >
+          <CommandInput
+            placeholder={searchPlaceholder ?? t(($) => $.combobox.search)}
+          />
+          {commandList}
+        </Command>
       </PopoverContent>
     </Popover>
   );

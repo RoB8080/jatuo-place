@@ -142,10 +142,15 @@ const ModCategoryIDField = withForm({
               errors={normalizedErrors}
             >
               <ResponsiveCombobox
-                options={categories.map((c) => ({
-                  value: c.id,
-                  label: localize(c.name),
-                }))}
+                contentClassName="data-[mobile=true]:min-h-[50svh]"
+                options={categories.map((c) => {
+                  const label = localize(c.name);
+                  return {
+                    value: c.id,
+                    keywords: [c.id, label],
+                    label,
+                  };
+                })}
                 value={field.state.value}
                 onChange={(v: string) => field.setValue(() => v)}
               />

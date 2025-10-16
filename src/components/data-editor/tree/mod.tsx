@@ -119,7 +119,7 @@ export function ModTreeNode(props: { mod: Mod }) {
   return (() => {
     return (
       <TreeNode
-        className="sticky top-8 bg-background"
+        className="sticky top-8 z-[1] bg-background"
         key={mod.id}
         id={mod.id}
         subNodes={files.map((file) => (
@@ -149,7 +149,7 @@ export function ModNomadListTreeNode() {
   }
   return (
     <TreeNode
-      className="sticky top-8"
+      className="sticky top-8 z-[1] bg-background"
       data-slot="category-nomad-tree-node"
       id="category-nomad"
       subNodes={mods.map((mod) => (

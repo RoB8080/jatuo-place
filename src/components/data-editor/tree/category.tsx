@@ -123,6 +123,7 @@ export function CategoryTreeNode(props: {
   return (() => {
     return (
       <TreeNode
+        className="sticky top-0 z-[2] bg-background"
         id={category.id}
         subNodes={mods.map((mod) => (
           <ModTreeNode key={mod.id} mod={mod} />

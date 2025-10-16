@@ -198,3 +198,17 @@
 .pulse-border {
   animation: border-pulse 0.8s ease-in-out 0s 2;
 }
+
+/* Background pulse animation for selected item (fast double pulse) */
+@keyframes bg-pulse {
+  0%, 100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: var(--accent);
+  }
+}
+
+.pulse-bg {
+  animation: bg-pulse 0.8s ease-in-out 0s 2;
+}

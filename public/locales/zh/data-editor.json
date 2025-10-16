@@ -63,6 +63,9 @@
       "title": "编辑模组"
     }
   },
+  "entityPanel": {
+    "searchPlaceholder": "搜索模组或文件"
+  },
   "file": {
     "count_one": "1 个文件",
     "count_other": "{{count}} 个文件",
@@ -77,20 +80,14 @@
     "edit": "编辑文件",
     "nomad": "无模组文件"
   },
-  "mod-editor": {
-    "result-count_one": "找到 1 个模组",
-    "result-count_other": "找到 {{count}} 个模组",
-    "search-placeholder": "搜索模组"
-  },
   "orderPanel": {
     "moveBottom": "置底",
     "moveDown": "下移",
     "moveTop": "置顶",
     "moveUp": "上移",
-    "searchPlaceholder": "搜索文件",
     "resultCount_one": "找到 1 个匹配",
     "resultCount_other": "找到 {{count}} 个匹配",
-    "locate": "定位"
+    "searchPlaceholder": "搜索文件"
   },
   "tabs": {
     "entity": "实体",

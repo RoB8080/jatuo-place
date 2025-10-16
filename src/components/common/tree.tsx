@@ -117,7 +117,10 @@ export function TreeNode(props: TreeNodeProps) {
 
   if (!subNodes) {
     return (
-      <div className={cn(treeNodeVariants({ size }), className)}>
+      <div
+        className={cn(treeNodeVariants({ size }), className)}
+        data-tree-node-id={fullID}
+      >
         <Dot className="shrink-0 text-muted-foreground" />
         {children}
       </div>
@@ -137,7 +140,7 @@ export function TreeNode(props: TreeNodeProps) {
           className={cn(treeNodeVariants({ size }), className)}
           asChild
         >
-          <div>
+          <div data-tree-node-id={fullID}>
             <ChevronRight className="shrink-0 transition-transform group-data-[open=true]/tree-node:rotate-90" />
             {children}
           </div>

@@ -38,7 +38,13 @@ export function CategoryCreateButton(
   };
 
   return (
-    <Button type="button" variant="outline" {...props} onClick={handleClick}>
+    <Button
+      size="sm"
+      type="button"
+      variant="outline"
+      {...props}
+      onClick={handleClick}
+    >
       <Group />
       <span>{t(($) => $["category"]["create"])}</span>
     </Button>

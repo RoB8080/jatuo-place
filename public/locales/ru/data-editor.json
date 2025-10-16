@@ -63,6 +63,9 @@
       "title": "Редактировать мод"
     }
   },
+  "entityPanel": {
+    "searchPlaceholder": "Поиск модов или файлов"
+  },
   "file": {
     "count_one": "1 файл",
     "count_other": "{{count}} файлов",
@@ -77,20 +80,14 @@
     "edit": "Редактировать файл",
     "nomad": "Файлы без мода"
   },
-  "mod-editor": {
-    "result-count_one": "Найден 1 мод",
-    "result-count_other": "Найдено {{count}} модов",
-    "search-placeholder": "Поиск мода"
-  },
   "orderPanel": {
     "moveBottom": "Вниз до конца",
     "moveDown": "Опустить",
     "moveTop": "Вверх до начала",
     "moveUp": "Поднять",
-    "searchPlaceholder": "Поиск файла",
     "resultCount_one": "Найден 1 результат",
     "resultCount_other": "Найдено {{count}} результатов",
-    "locate": "Найти"
+    "searchPlaceholder": "Поиск файла"
   },
   "tabs": {
     "entity": "Сущности",

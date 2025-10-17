@@ -26,11 +26,14 @@ import {
 import type { StandardSchemaV1 } from "@tanstack/react-form";
 import { SimpleEmpty } from "@/components/common/empty";
 import { ResponsiveCombobox } from "@/components/common/combobox";
+import ConditionEditor from "../condition-editor";
+import type { Condition } from "@/libs/map-combo";
 
 const FileNameField = withForm({
   defaultValues: {} as NonRecursiveModFile,
   render: function FileNameField(props) {
     const { form } = props;
+    const { t } = useTranslation("data-editor");
     return (
       <form.Field name={`name`}>
         {(field) => {
@@ -41,7 +44,7 @@ const FileNameField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={"File Name"}
+              label={t(($) => $.entity.filePanel.nameLabel)}
               required
               invalid={invalid}
               errors={normalizedErrors}
@@ -63,6 +66,7 @@ const FileModIDField = withForm({
   render: function FileModIDField(props) {
     const { form } = props;
     const mods = useMods();
+    const { t } = useTranslation("data-editor");
     return (
       <form.Field name={`modID`}>
         {(field) => {
@@ -73,7 +77,7 @@ const FileModIDField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={"Mod ID"}
+              label={t(($) => $.entity.filePanel.modIDLabel)}
               invalid={invalid}
               errors={normalizedErrors}
             >
@@ -81,6 +85,38 @@ const FileModIDField = withForm({
                 options={mods.map((m) => ({ value: m.id, label: m.name }))}
                 value={field.state.value}
                 onChange={(v: string) => field.setValue(() => v)}
+              />
+            </SimpleFormField>
+          );
+        }}
+      </form.Field>
+    );
+  },
+});
+
+const FileConditionField = withForm({
+  defaultValues: {} as NonRecursiveModFile,
+  render: function FileConditionField(props) {
+    const { form } = props;
+    const { t } = useTranslation("data-editor");
+    return (
+      <form.Field name={`condition`}>
+        {(field) => {
+          const errors = field.state?.meta?.errors ?? [];
+          const normalizedErrors = errors.map((e) =>
+            typeof e === "string" ? { message: e } : e,
+          ) as Array<{ message?: string }>;
+          const invalid = normalizedErrors.length > 0;
+          return (
+            <SimpleFormField
+              label={t(($) => $.entity.filePanel.conditionLabel)}
+              invalid={invalid}
+              errors={normalizedErrors}
+            >
+              <ConditionEditor
+                value={field.state.value as Condition | undefined}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onChange={(next) => field.setValue(() => next as any)}
               />
             </SimpleFormField>
           );
@@ -137,9 +173,10 @@ export function FileEditSheet(props: {
         <SheetHeader>
           <SheetTitle>{locales.title}</SheetTitle>
         </SheetHeader>
-        <FieldSet className="px-4">
+        <FieldSet className="min-h-0 flex-auto overflow-y-auto px-4">
           <FileNameField form={localForm} />
           <FileModIDField form={localForm} />
+          <FileConditionField form={localForm} />
         </FieldSet>
         <SheetFooter className="flex-row">
           <Button className="flex-1" variant="outline">

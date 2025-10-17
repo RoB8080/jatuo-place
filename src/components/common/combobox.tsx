@@ -97,7 +97,7 @@ export function ResponsiveCombobox(props: ComboboxProps) {
       {...buttonProps}
       variant="outline"
     >
-      {triggerLabel}
+      <span className="truncate">{triggerLabel}</span>
       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
     </Button>
   );
@@ -166,7 +166,7 @@ export function ResponsiveCombobox(props: ComboboxProps) {
       <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
       <PopoverContent
         data-mobile="false"
-        className={contentClassName}
+        className={cn("p-0", contentClassName)}
         align="start"
       >
         <Command

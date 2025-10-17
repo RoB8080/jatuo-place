@@ -41,12 +41,17 @@
       "content": "Вы уверены, что хотите удалить 「{{categoryName}}」(ID: {{categoryID}})? Моды будут оставлены, но их ассоциация с категорией будет потеряна.",
       "title": "Удалить категорию"
     },
-    "edit": "Редактировать категорию"
+    "edit": "Редактировать категорию",
+    "property": {
+      "id": "ID категории",
+      "name": "Имя"
+    },
+    "propertyDesc": {
+      "id": "Измените с осторожностью, так как это повлияет на ассоциацию существующих модов."
+    }
   },
   "entity": {
     "categoryPanel": {
-      "idDescription": "Измените с осторожностью, так как это повлияет на ассоциацию существующих модов.",
-      "idLabel": "ID категории",
       "notFound": "",
       "title": ""
     },
@@ -55,12 +60,48 @@
       "save": "Сохранить"
     },
     "filePanel": {
+      "nameLabel": "Имя файла",
+      "modIDLabel": "ID мода",
+      "conditionLabel": "Условие",
       "notFound": "Файл не найден",
       "title": "Редактировать файл"
     },
     "modPanel": {
+      "idLabel": "ID мода",
+      "nameLabel": "Название мода",
+      "versionLabel": "Версия",
+      "categoryIDLabel": "ID категории",
+      "conditionLabel": "Условие",
+      "authorLabel": "Автор",
+      "isPaidLabel": "Платный",
+      "isPassiveLabel": "Пассивный",
+      "posterURLLabel": "URL постера",
+      "mainPageURLLabel": "URL главной страницы",
+      "downloadURLLabel": "URL загрузки",
+      "descriptionLegend": "Описание",
+      "descriptionENLabel": "Описание (EN)",
+      "descriptionRULabel": "Описание (RU)",
+      "descriptionZHLabel": "Описание (ZH)",
+      "tipsLegend": "Советы",
+      "tipsENLabel": "Совет (EN)",
+      "tipsRULabel": "Совет (RU)",
+      "tipsZHLabel": "Совет (ZH)",
+      "tipsAddAction": "Добавить совет",
+      "tipsRemoveAction": "Удалить совет",
       "notFound": "Мод не найден",
       "title": "Редактировать мод"
+    },
+    "conditionEditor": {
+      "typeLabel": "Тип",
+      "types": {
+        "none": "Нет",
+        "mod": "Требует мод",
+        "and": "Группа AND",
+        "or": "Группа OR",
+        "not": "НЕ (NOT)"
+      },
+      "noConditionHelp": "Нет условий. Выберите тип, чтобы начать.",
+      "previewLabel": "Предпросмотр: {{text}}"
     }
   },
   "entityPanel": {

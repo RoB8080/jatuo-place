@@ -1,36 +1,31 @@
 {
   "mod": {
-    "count_zero": "No mod",
+    "count_zero": "No mods",
     "count_one": "1 mod",
     "count_other": "{{count}} mods",
     "create": "New Mod",
-    "delete": "mod.delete",
+    "delete": "Delete Mod",
     "delete-confirm": {
       "cancel": "Cancel",
       "confirm": "Confirm",
-      "content": "Are you sure you want to delete 「{{modName}}」(ID: {{modID}})? Files will be kept but their mod association will be lost.",
+      "content": "Are you sure to delete mod \"{{modName}}\" (ID: {{modID}})? Files will be kept, but their mod association will be lost.",
       "title": "Delete Mod"
     },
-    "nomad": "Nomad Mods",
+    "nomad": "Uncategorized Mods",
     "edit": "Edit Mod"
   },
   "actions": {
-    "failed-loading-prod-data": "Failed to load production data",
-    "from-prod-data": "From production data",
+    "failed-loading-prod-data": "Failed to load from production data",
+    "from-prod-data": "Load from production data",
     "load": "Load",
     "save": {
       "label": "Save",
       "validation-failed": {
         "exception-tip": "Please check console for more details.",
-        "save-anyway": "Save Anyway",
-        "title": "Invalid Data"
+        "save-anyway": "Save anyway",
+        "title": "Invalid data"
       }
     }
-  },
-  "category-editor": {
-    "category-name-en-label": "Name (EN)",
-    "category-name-ru-label": "Name (RU)",
-    "category-name-zh-label": "Name (ZH)"
   },
   "category": {
     "create": "New Category",
@@ -38,15 +33,21 @@
     "delete-confirm": {
       "cancel": "Cancel",
       "confirm": "Confirm",
-      "content": "Are you sure you want to delete 「{{categoryName}}」(ID: {{categoryID}})? Mods will be kept but their category association will be lost.",
+      "content": "Are you sure to delete category \"{{categoryName}}\" (ID: {{categoryID}})? Mods will be kept, but their category association will be lost.",
       "title": "Delete Category"
     },
-    "edit": "Edit Category"
+    "edit": "Edit Category",
+    "property": {
+      "id": "Category ID",
+      "name": "Name"
+    },
+    "propertyDesc": {
+      "id": "Change carefully as it affects existing mods' category association."
+    }
   },
   "entity": {
     "categoryPanel": {
-      "idDescription": "Change with caution, as it will affect the association of existing mods.",
-      "idLabel": "Category ID",
+      "idDescription": "Change carefully as it affects existing mods' category association.",
       "notFound": "Category not found",
       "title": "Edit Category"
     },
@@ -55,16 +56,52 @@
       "save": "Save"
     },
     "filePanel": {
+      "nameLabel": "File Name",
+      "modIDLabel": "Mod ID",
+      "conditionLabel": "Condition",
       "notFound": "File not found",
       "title": "Edit File"
     },
     "modPanel": {
+      "idLabel": "Mod ID",
+      "nameLabel": "Mod Name",
+      "versionLabel": "Version",
+      "categoryIDLabel": "Category ID",
+      "conditionLabel": "Condition",
+      "authorLabel": "Author",
+      "isPaidLabel": "Paid",
+      "isPassiveLabel": "Passive",
+      "posterURLLabel": "Poster URL",
+      "mainPageURLLabel": "Main Page URL",
+      "downloadURLLabel": "Download URL",
+      "descriptionLegend": "Description",
+      "descriptionENLabel": "Description (EN)",
+      "descriptionRULabel": "Description (RU)",
+      "descriptionZHLabel": "Description (ZH)",
+      "tipsLegend": "Tips",
+      "tipsENLabel": "Tip (EN)",
+      "tipsRULabel": "Tip (RU)",
+      "tipsZHLabel": "Tip (ZH)",
+      "tipsAddAction": "Add Tip",
+      "tipsRemoveAction": "Remove Tip",
       "notFound": "Mod not found",
       "title": "Edit Mod"
+    },
+    "conditionEditor": {
+      "typeLabel": "Type",
+      "types": {
+        "none": "None",
+        "mod": "Require Mod",
+        "and": "AND Group",
+        "or": "OR Group",
+        "not": "NOT"
+      },
+      "noConditionHelp": "No condition. Select a type to start.",
+      "previewLabel": "Preview: {{text}}"
     }
   },
   "entityPanel": {
-    "searchPlaceholder": "Search Mod or File"
+    "searchPlaceholder": "Search mods or files"
   },
   "file": {
     "count_one": "1 file",
@@ -74,23 +111,23 @@
     "delete-confirm": {
       "cancel": "Cancel",
       "confirm": "Confirm",
-      "content": "Are you sure you want to delete 「{{fileName}}」?",
+      "content": "Are you sure to delete file \"{{fileName}}\"?",
       "title": "Delete File"
     },
     "edit": "Edit File",
-    "nomad": "Nomad Files"
+    "nomad": "Unmodded Files"
   },
   "orderPanel": {
     "moveBottom": "Move to Bottom",
     "moveDown": "Move Down",
     "moveTop": "Move to Top",
     "moveUp": "Move Up",
-    "resultCount_one": "Found 1 match",
-    "resultCount_other": "Found {{count}} matches",
-    "searchPlaceholder": "Search File"
+    "resultCount_one": "Found 1 result",
+    "resultCount_other": "Found {{count}} results",
+    "searchPlaceholder": "Search file"
   },
   "tabs": {
-    "entity": "Entity",
+    "entity": "Entities",
     "order": "Order"
   }
 }

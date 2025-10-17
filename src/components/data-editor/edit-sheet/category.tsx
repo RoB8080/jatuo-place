@@ -20,11 +20,12 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { modCategorySchema, type ModCategory } from "@/libs/map-combo";
 import { SimpleEmpty } from "@/components/common/empty";
+import { LocaleSetTextField } from "@/components/common/locale-field";
 
 function useCategoryIDLabels() {
   const { t } = useTranslation("data-editor");
-  const fieldLabel = t(($) => $.entity.categoryPanel.idLabel);
-  const fieldDescription = t(($) => $.entity.categoryPanel.idDescription);
+  const fieldLabel = t(($) => $.category.property.id);
+  const fieldDescription = t(($) => $.category.propertyDesc.id);
   return {
     fieldLabel,
     fieldDescription,
@@ -65,55 +66,6 @@ const CategoryIDField = withForm({
   },
 });
 
-function useCategoryNameLabel(lang: "en" | "ru" | "zh") {
-  const { t } = useTranslation("data-editor");
-
-  switch (lang) {
-    case "en":
-      return t(($) => $["category-editor"]["category-name-en-label"]);
-    case "ru":
-      return t(($) => $["category-editor"]["category-name-ru-label"]);
-    case "zh":
-      return t(($) => $["category-editor"]["category-name-zh-label"]);
-  }
-}
-
-const CategoryNameField = withForm({
-  defaultValues: {} as ModCategory,
-  props: {
-    lang: "en" as "en" | "ru" | "zh",
-  },
-  render: function CategoryNameField(props) {
-    const { form, lang } = props;
-    const label = useCategoryNameLabel(lang);
-
-    return (
-      <form.Field name={`name.${lang}`}>
-        {(field) => {
-          const errors = field.state?.meta?.errors ?? [];
-          const normalizedErrors = errors.map((e) =>
-            typeof e === "string" ? { message: e } : e,
-          ) as Array<{ message?: string }>;
-          const invalid = normalizedErrors.length > 0;
-          return (
-            <SimpleFormField
-              label={label}
-              required={lang === "en"}
-              invalid={invalid}
-              errors={normalizedErrors}
-            >
-              <Input
-                value={field.state.value}
-                onChange={(e) => field.handleChange(e.target.value)}
-              />
-            </SimpleFormField>
-          );
-        }}
-      </form.Field>
-    );
-  },
-});
-
 function useCategoryEditSheetLocales() {
   const { t } = useTranslation("data-editor");
   return {
@@ -121,6 +73,9 @@ function useCategoryEditSheetLocales() {
     notFound: t(($) => $.entity.categoryPanel.notFound),
     save: t(($) => $.entity.editPanel.save),
     cancel: t(($) => $.entity.editPanel.cancel),
+    idLabel: t(($) => $.category.property.id),
+    nameLabel: t(($) => $.category.property.name),
+    idDesc: t(($) => $.category.propertyDesc.id),
   };
 }
 
@@ -160,11 +115,13 @@ export function CategoryEditSheet(props: {
         <SheetHeader>
           <SheetTitle>{locales.title}</SheetTitle>
         </SheetHeader>
-        <FieldSet className="px-4">
+        <FieldSet className="min-h-0 flex-auto overflow-y-auto px-4">
           <CategoryIDField form={localForm} />
-          <CategoryNameField form={localForm} lang="en" />
-          <CategoryNameField form={localForm} lang="ru" />
-          <CategoryNameField form={localForm} lang="zh" />
+          <LocaleSetTextField
+            form={localForm}
+            path="name"
+            label={locales.nameLabel}
+          />
         </FieldSet>
         <SheetFooter className="flex-row">
           <Button className="flex-1" variant="outline">

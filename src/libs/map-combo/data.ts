@@ -15,7 +15,7 @@ export interface ModCategory {
 }
 
 export const modCategorySchema = z.object({
-  id: z.string().min(1, "Category ID is required"),
+  id: z.string().min(1),
   name: localeMapSchema,
 });
 
@@ -125,8 +125,35 @@ export interface MapComboData {
   files: ModFile[];
 }
 
-export const mapComboDataSchema = z.object({
-  categories: z.array(modCategorySchema),
-  mods: z.array(modSchema),
-  files: z.array(modFileSchema),
-});
+export const mapComboDataSchema = z
+  .object({
+    categories: z.array(modCategorySchema),
+    mods: z.array(modSchema),
+    files: z.array(modFileSchema),
+  })
+  .superRefine((data, ctx) => {
+    // every mod should have a valid category id
+    const categoryIDs = data.categories.map((cat) => cat.id);
+    const modIDs: string[] = [];
+    for (const mod of data.mods) {
+      modIDs.push(mod.id);
+      if (!categoryIDs.includes(mod.categoryID)) {
+        ctx.addIssue({
+          code: "custom",
+          message: `Mod category ID ${mod.categoryID} not found`,
+          path: ["mods", data.mods.indexOf(mod), "categoryID"],
+        });
+      }
+    }
+
+    // every mod file should have a valid mod id
+    for (const file of data.files) {
+      if (!modIDs.includes(file.modID)) {
+        ctx.addIssue({
+          code: "custom",
+          message: `Mod ID ${file.modID} not found`,
+          path: ["files", data.files.indexOf(file), "modID"],
+        });
+      }
+    }
+  });

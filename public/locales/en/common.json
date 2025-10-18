@@ -14,8 +14,8 @@
     "qq": "Join us on QQ"
   },
   "routes": {
-    "data-editor": "Data Editor",
+    "dataEditor": "Data Editor",
     "home": "Home",
-    "map-combo": "Map Combo"
+    "mapCombo": "Map Combo"
   }
 }

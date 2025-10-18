@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 export const Route = createFileRoute("/data-editor")({
   component: RouteComponent,
 });
-// t('routes.data-editor')
+// t('routes.dataEditor', { ns: 'common' })
 
 const tabs = [
   {

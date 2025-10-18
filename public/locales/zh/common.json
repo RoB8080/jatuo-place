@@ -14,8 +14,8 @@
     "qq": "加入我们的QQ群"
   },
   "routes": {
-    "data-editor": "数据编辑器",
+    "dataEditor": "数据编辑器",
     "home": "首页",
-    "map-combo": "地图组合"
+    "mapCombo": "地图组合"
   }
 }

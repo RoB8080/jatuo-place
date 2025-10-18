@@ -8,7 +8,8 @@
     "actions": {
       "start-to-use": "开始使用"
     },
-    "description": "欢迎来到Jatuo社区 - 一个ETS2 Modding社区"
+    "title": "探索广袤的卡车世界",
+    "description": "选择并下载，再按照推荐的加载顺序配置，即可畅享顺畅、无冲突的游玩。"
   },
   "member": {
     "role": {

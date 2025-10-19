@@ -33,7 +33,7 @@ const FileNameField = withForm({
   defaultValues: {} as NonRecursiveModFile,
   render: function FileNameField(props) {
     const { form } = props;
-    const { t } = useTranslation("data-editor");
+    const locales = useFileEditPanelLocales();
     return (
       <form.Field name={`name`}>
         {(field) => {
@@ -44,7 +44,7 @@ const FileNameField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={t(($) => $.entity.filePanel.nameLabel)}
+              label={locales.nameLabel}
               required
               invalid={invalid}
               errors={normalizedErrors}
@@ -66,7 +66,7 @@ const FileModIDField = withForm({
   render: function FileModIDField(props) {
     const { form } = props;
     const mods = useMods();
-    const { t } = useTranslation("data-editor");
+    const locales = useFileEditPanelLocales();
     return (
       <form.Field name={`modID`}>
         {(field) => {
@@ -77,7 +77,7 @@ const FileModIDField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={t(($) => $.entity.filePanel.modIDLabel)}
+              label={locales.modIDLabel}
               invalid={invalid}
               errors={normalizedErrors}
             >
@@ -98,7 +98,7 @@ const FileConditionField = withForm({
   defaultValues: {} as NonRecursiveModFile,
   render: function FileConditionField(props) {
     const { form } = props;
-    const { t } = useTranslation("data-editor");
+    const locales = useFileEditPanelLocales();
     return (
       <form.Field name={`condition`}>
         {(field) => {
@@ -109,7 +109,7 @@ const FileConditionField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={t(($) => $.entity.filePanel.conditionLabel)}
+              label={locales.conditionLabel}
               invalid={invalid}
               errors={normalizedErrors}
             >
@@ -125,6 +125,15 @@ const FileConditionField = withForm({
     );
   },
 });
+
+function useFileEditPanelLocales() {
+  const { t } = useTranslation("data-editor");
+  return {
+    nameLabel: t(($) => $.entity.filePanel.nameLabel),
+    modIDLabel: t(($) => $.entity.filePanel.modIDLabel),
+    conditionLabel: t(($) => $.entity.filePanel.conditionLabel),
+  };
+}
 
 function useFileEditSheetLocales() {
   const { t } = useTranslation("data-editor");

@@ -12,7 +12,8 @@
       "title": "删除模组"
     },
     "nomad": "未分类模组",
-    "edit": "编辑模组"
+    "edit": "编辑模组",
+    "count": "{{count}} 个模组"
   },
   "actions": {
     "failed-loading-prod-data": "从线上数据加载失败",
@@ -50,61 +51,57 @@
       "notFound": "未找到分类",
       "title": "编辑分类"
     },
+    "conditionEditor": {
+      "addAction": "添加条件",
+      "childLabel": "子条件 #{{index}}",
+      "noConditionHelp": "暂无条件。请选择类型以开始。",
+      "previewLabel": "预览：{{text}}",
+      "removeAction": "移除",
+      "typeLabel": "类型",
+      "types": {
+        "and": "AND 组",
+        "mod": "需要模组",
+        "none": "无",
+        "not": "非（NOT）",
+        "or": "OR 组"
+      }
+    },
     "editPanel": {
       "cancel": "取消",
       "save": "保存"
     },
     "filePanel": {
-      "nameLabel": "文件名",
-      "modIDLabel": "模组 ID",
       "conditionLabel": "条件",
+      "modIDLabel": "模组 ID",
+      "nameLabel": "文件名",
       "notFound": "未找到文件",
       "title": "编辑文件"
     },
     "modPanel": {
-      "idLabel": "模组 ID",
-      "nameLabel": "模组名称",
-      "versionLabel": "版本",
+      "authorLabel": "作者",
       "categoryIDLabel": "分类 ID",
       "conditionLabel": "条件",
-      "authorLabel": "作者",
+      "descriptionLegend": "描述",
+      "downloadURLLabel": "下载 URL",
+      "idLabel": "模组 ID",
       "isPaidLabel": "付费",
       "isPassiveLabel": "被动",
-      "posterURLLabel": "海报 URL",
       "mainPageURLLabel": "主页 URL",
-      "downloadURLLabel": "下载 URL",
-      "descriptionLegend": "描述",
-      "descriptionENLabel": "描述（英文）",
-      "descriptionRULabel": "描述（俄文）",
-      "descriptionZHLabel": "描述（中文）",
-      "tipsLegend": "提示",
-      "tipsENLabel": "提示（英文）",
-      "tipsRULabel": "提示（俄文）",
-      "tipsZHLabel": "提示（中文）",
-      "tipsAddAction": "添加提示",
-      "tipsRemoveAction": "移除提示",
+      "nameLabel": "模组名称",
       "notFound": "未找到模组",
-      "title": "编辑模组"
-    },
-    "conditionEditor": {
-      "typeLabel": "类型",
-      "types": {
-        "none": "无",
-        "mod": "需要模组",
-        "and": "AND 组",
-        "or": "OR 组",
-        "not": "非（NOT）"
-      },
-      "noConditionHelp": "暂无条件。请选择类型以开始。",
-      "previewLabel": "预览：{{text}}"
+      "posterURLLabel": "海报 URL",
+      "tipsAddAction": "添加提示",
+      "tipsLegend": "提示",
+      "tipsRemoveAction": "移除提示",
+      "title": "编辑模组",
+      "versionLabel": "版本"
     }
   },
   "entityPanel": {
     "searchPlaceholder": "搜索模组或文件"
   },
   "file": {
-    "count_one": "1 个文件",
-    "count_other": "{{count}} 个文件",
+    "count": "{{count}} 个文件",
     "create": "新建文件",
     "delete": "删除文件",
     "delete-confirm": {
@@ -121,8 +118,7 @@
     "moveDown": "下移",
     "moveTop": "置顶",
     "moveUp": "上移",
-    "resultCount_one": "找到 1 个匹配",
-    "resultCount_other": "找到 {{count}} 个匹配",
+    "resultCount": "找到 {{count}} 个匹配",
     "searchPlaceholder": "搜索文件"
   },
   "tabs": {

@@ -12,7 +12,8 @@
       "title": "Удалить мод"
     },
     "nomad": "Номадские моды",
-    "edit": "Редактировать мод"
+    "edit": "Редактировать мод",
+    "count": "{{count}} модов"
   },
   "actions": {
     "failed-loading-prod-data": "Не удалось загрузить данные из продакшн окружения",
@@ -22,15 +23,10 @@
       "label": "Сохранить",
       "validation-failed": {
         "exception-tip": "Пожалуйста, проверьте консоль для получения дополнительных деталей.",
-        "save-anyway": "Сохранить mesmo assim",
+        "save-anyway": "Сохранить всё равно",
         "title": "Недействительные данные"
       }
     }
-  },
-  "category-editor": {
-    "category-name-en-label": "Имя (EN)",
-    "category-name-ru-label": "Имя (RU)",
-    "category-name-zh-label": "Имя (ZH)"
   },
   "category": {
     "create": "Новая категория",
@@ -52,64 +48,60 @@
   },
   "entity": {
     "categoryPanel": {
-      "notFound": "",
-      "title": ""
+      "notFound": "Категория не найдена",
+      "title": "Редактировать категорию"
+    },
+    "conditionEditor": {
+      "addAction": "Добавить условие",
+      "childLabel": "Дочернее условие #{{index}}",
+      "noConditionHelp": "Нет условий. Выберите тип, чтобы начать.",
+      "previewLabel": "Предпросмотр: {{text}}",
+      "removeAction": "Удалить",
+      "typeLabel": "Тип",
+      "types": {
+        "and": "Группа AND",
+        "mod": "Требует мод",
+        "none": "Нет",
+        "not": "НЕ (NOT)",
+        "or": "Группа OR"
+      }
     },
     "editPanel": {
       "cancel": "Отмена",
       "save": "Сохранить"
     },
     "filePanel": {
-      "nameLabel": "Имя файла",
-      "modIDLabel": "ID мода",
       "conditionLabel": "Условие",
+      "modIDLabel": "ID мода",
+      "nameLabel": "Имя файла",
       "notFound": "Файл не найден",
       "title": "Редактировать файл"
     },
     "modPanel": {
-      "idLabel": "ID мода",
-      "nameLabel": "Название мода",
-      "versionLabel": "Версия",
+      "authorLabel": "Автор",
       "categoryIDLabel": "ID категории",
       "conditionLabel": "Условие",
-      "authorLabel": "Автор",
+      "descriptionLegend": "Описание",
+      "downloadURLLabel": "URL загрузки",
+      "idLabel": "ID мода",
       "isPaidLabel": "Платный",
       "isPassiveLabel": "Пассивный",
-      "posterURLLabel": "URL постера",
       "mainPageURLLabel": "URL главной страницы",
-      "downloadURLLabel": "URL загрузки",
-      "descriptionLegend": "Описание",
-      "descriptionENLabel": "Описание (EN)",
-      "descriptionRULabel": "Описание (RU)",
-      "descriptionZHLabel": "Описание (ZH)",
-      "tipsLegend": "Советы",
-      "tipsENLabel": "Совет (EN)",
-      "tipsRULabel": "Совет (RU)",
-      "tipsZHLabel": "Совет (ZH)",
-      "tipsAddAction": "Добавить совет",
-      "tipsRemoveAction": "Удалить совет",
+      "nameLabel": "Название мода",
       "notFound": "Мод не найден",
-      "title": "Редактировать мод"
-    },
-    "conditionEditor": {
-      "typeLabel": "Тип",
-      "types": {
-        "none": "Нет",
-        "mod": "Требует мод",
-        "and": "Группа AND",
-        "or": "Группа OR",
-        "not": "НЕ (NOT)"
-      },
-      "noConditionHelp": "Нет условий. Выберите тип, чтобы начать.",
-      "previewLabel": "Предпросмотр: {{text}}"
+      "posterURLLabel": "URL постера",
+      "tipsAddAction": "Добавить совет",
+      "tipsLegend": "Советы",
+      "tipsRemoveAction": "Удалить совет",
+      "title": "Редактировать мод",
+      "versionLabel": "Версия"
     }
   },
   "entityPanel": {
     "searchPlaceholder": "Поиск модов или файлов"
   },
   "file": {
-    "count_one": "1 файл",
-    "count_other": "{{count}} файлов",
+    "count": "{{count}} файлов",
     "create": "Новый файл",
     "delete": "Удалить файл",
     "delete-confirm": {
@@ -126,8 +118,7 @@
     "moveDown": "Опустить",
     "moveTop": "Вверх до начала",
     "moveUp": "Поднять",
-    "resultCount_one": "Найден 1 результат",
-    "resultCount_other": "Найдено {{count}} результатов",
+    "resultCount": "Найдено {{count}} результатов",
     "searchPlaceholder": "Поиск файла"
   },
   "tabs": {

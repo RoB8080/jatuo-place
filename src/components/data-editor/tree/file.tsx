@@ -14,6 +14,24 @@ import { FileEditSheet } from "../edit-sheet/file";
 
 // 创建逻辑已迁移到 hooks
 
+function useFileTreeLocales() {
+  const { t } = useTranslation("data-editor");
+  return {
+    create: t(($) => $["file"]["create"]),
+    edit: t(($) => $.file.edit),
+    delete: t(($) => $.file.delete),
+    deleteConfirm: {
+      title: t(($) => $.file["delete-confirm"].title),
+      content: (fileName?: string) =>
+        t(($) => $.file["delete-confirm"].content, { fileName }),
+      confirm: t(($) => $.file["delete-confirm"].confirm),
+      cancel: t(($) => $.file["delete-confirm"].cancel),
+    },
+    nomad: t(($) => $.file.nomad),
+    count: (count: number) => t(($) => $.file["count"], { count }),
+  };
+}
+
 export function FileCreateButton(
   props: Omit<TreeNodeActionProps, "onClick" | "tooltip" | "destructive"> & {
     modID?: string;
@@ -22,7 +40,7 @@ export function FileCreateButton(
 ) {
   const { modID, onCreated, ...restProps } = props;
   const createFile = useCreateFile();
-  const { t } = useTranslation("data-editor");
+  const locales = useFileTreeLocales();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
@@ -34,7 +52,7 @@ export function FileCreateButton(
   return (
     <TreeNodeAction
       onClick={handleClick}
-      tooltip={t(($) => $["file"]["create"])}
+      tooltip={locales.create}
       {...restProps}
     >
       <FilePlus />
@@ -48,11 +66,11 @@ function FileEditButton(
   },
 ) {
   const { fileName, ...restProps } = props;
-  const { t } = useTranslation("data-editor");
+  const locales = useFileTreeLocales();
 
   return (
     <FileEditSheet fileName={fileName}>
-      <TreeNodeAction tooltip={t(($) => $.file.edit)} {...restProps}>
+      <TreeNodeAction tooltip={locales.edit} {...restProps}>
         <SquarePen />
       </TreeNodeAction>
     </FileEditSheet>
@@ -66,15 +84,15 @@ function FileDeleteButton(
 ) {
   const { fileName, ...restProps } = props;
   const deleteFile = useDeleteFile();
-  const { t } = useTranslation("data-editor");
+  const locales = useFileTreeLocales();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const title = t(($) => $.file["delete-confirm"].title);
-    const content = t(($) => $.file["delete-confirm"].content, { fileName });
-    const confirmText = t(($) => $.file["delete-confirm"].confirm);
-    const cancelText = t(($) => $.file["delete-confirm"].cancel);
+    const title = locales.deleteConfirm.title;
+    const content = locales.deleteConfirm.content(fileName);
+    const confirmText = locales.deleteConfirm.confirm;
+    const cancelText = locales.deleteConfirm.cancel;
 
     const confirmed = await invokeConfirmDialog({
       title,
@@ -91,7 +109,7 @@ function FileDeleteButton(
   return (
     <TreeNodeAction
       onClick={handleClick}
-      tooltip={t(($) => $.file.delete)}
+      tooltip={locales.delete}
       variant="destructive"
       {...restProps}
     >
@@ -116,7 +134,7 @@ export function FileTreeNode(props: { file: ModFile }) {
 }
 
 export function FileNomadListTreeNode() {
-  const { t } = useTranslation("data-editor");
+  const locales = useFileTreeLocales();
 
   const files = useNomadFiles();
   if (files.length === 0) {
@@ -131,9 +149,9 @@ export function FileNomadListTreeNode() {
       ))}
     >
       <TreeNodeTitle className="text-destructive/80">
-        {t(($) => $.file.nomad)}
+        {locales.nomad}
         <span className="text-xs text-muted-foreground">
-          {t(($) => $.file["count"], { count: files.length })}
+          {locales.count(files.length)}
         </span>
       </TreeNodeTitle>
     </TreeNode>

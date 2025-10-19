@@ -14,6 +14,7 @@ import {
 import { File, Package, Search } from "lucide-react";
 import type { ModCategory, Mod, ModFile } from "@/libs/map-combo";
 import { cn } from "@/libs/utils";
+import { useComboboxLocales } from "@/components/common/combobox";
 
 export type EntityPick =
   | { kind: "mod"; modID: string; categoryID?: string }
@@ -27,6 +28,15 @@ export type EntitySearchPopoverProps = {
   className?: string;
 };
 
+function useEntitySearchPopoverLocales() {
+  const { t } = useTranslation("data-editor");
+  return {
+    resultCount: (count: number) =>
+      t(($) => $.orderPanel.resultCount, { count }),
+    searchPlaceholder: t(($) => $.entityPanel.searchPlaceholder),
+  };
+}
+
 export function EntitySearchPopover({
   mods,
   files,
@@ -34,7 +44,8 @@ export function EntitySearchPopover({
   onPick,
   className,
 }: EntitySearchPopoverProps) {
-  const { t } = useTranslation("data-editor");
+  const locales = useEntitySearchPopoverLocales();
+  const comboboxLocales = useComboboxLocales();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
@@ -48,9 +59,7 @@ export function EntitySearchPopover({
     return modMatches.length + fileMatches.length;
   }, [mods, files, value]);
 
-  const resultCountLabel = value
-    ? t(($) => $.orderPanel.resultCount, { count: matchedCount })
-    : null;
+  const resultCountLabel = value ? locales.resultCount(matchedCount) : null;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -59,11 +68,11 @@ export function EntitySearchPopover({
           variant="outline"
           size="sm"
           onClick={() => setOpen(true)}
-          aria-label={t(($) => $.entityPanel.searchPlaceholder)}
+          aria-label={locales.searchPlaceholder}
           className={className}
         >
           <Search className="mr-2 h-4 w-4" />
-          <span>{t(($) => $.combobox.search, { ns: "common" })}</span>
+          <span>{comboboxLocales.search}</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-[480px] p-0">
@@ -83,7 +92,7 @@ export function EntitySearchPopover({
           <CommandInput
             value={value}
             onValueChange={setValue}
-            placeholder={t(($) => $.entityPanel.searchPlaceholder)}
+            placeholder={locales.searchPlaceholder}
             autoFocus
           />
           {resultCountLabel && (
@@ -92,9 +101,7 @@ export function EntitySearchPopover({
             </div>
           )}
           <CommandList>
-            <CommandEmpty>
-              {t(($) => $.combobox.empty, { ns: "common" })}
-            </CommandEmpty>
+            <CommandEmpty>{comboboxLocales.empty}</CommandEmpty>
             <CommandGroup>
               {mods.map((mod) => {
                 const categoryName = categoriesByID

@@ -39,17 +39,35 @@
 - Files: `public/locales/<lang>/<ns>.json`; default namespace: `common`.
 - Use `useTranslation()` with selector only: `t($ => $.path.to.key)`.
 - Keep keys nested/descriptive; avoid bracket access; prefer `$.aB.xY`.
-- Wrap `t` calls in a hook where possible; if not, add a fallback comment like `// t('external.github', { ns: 'common' })` to aid extraction.
+   - dot-separated, camelCase, 2–4 levels; semantic, not positional.
+   - Interpolation/plurals: named `{{name}}`; plurals use `count` (`t($ => $.common.items, { count })`).
+   - Avoid type-unsafe runtime key concatenation. Some levels being union of string literals is Allowed.
+- Wrap all locales in a individual hook as possible as you can therefor i18next-cli can detect them.
+  - Good Case:
+    ```typescript
+    useXXXComponentLocales() {
+      const { t } = useTranslation('common');
+      // i18next-cli will detect the key in this case
+      const someLabel = t($ => $.common.someLabel);
+      return { someLabel }
+    }
+    function XXXComponent () {
+      const { someLabel } = useXXXComponentLocales();
+      return <div>{someLabel}</div>
+    }
+    ```
+  - Bad Case:
+    ```typescript
+    function XXXComponent () {
+      const { t } = useTranslation('common');
+      // i18next-cli may not detect the key in this case
+      return <div>{($) => $.common.someLabel}</div>
+    }
+    ```
+- If i18next can't detect the key, add a fallback comment like `// t('external.github', { ns: 'common' })` to ensure extraction.
 - CLI:
  - `pnpm i18n:extract` — generate keys once.
   - Run `i18n:dev` during development to catch missing keys.
- - Key Rules:
-   - Keys: dot-separated, camelCase, 2–4 levels; semantic, not positional.
-   - Namespaces: `common`, `errors`, `forms`, `mapCombo`, `dataEditor`, `toast`, `aria`.
-   - Suffixes: `label`, `placeholder`, `description`, `empty`, `hint`, `ariaLabel`, `action.*`, `title`, `subtitle`.
-   - Interpolation/plurals: named `{{name}}`; plurals use `count` (`t($ => $.common.items, { count })`).
-   - Prohibit: not type-safe runtime key concatenation; string literal `t('...')` calls.
-   - Validate: run `i18n:dev` and `i18n:extract`; resources in `public/locales/<lang>/<ns>.json`.
 
 ## Routing
 - Create file routes in `src/routes` (`index.tsx`, `map-combo.tsx`, `data-editor.tsx`).
@@ -103,7 +121,6 @@
 - Scaffold pages under `src/routes`; place translations in `public/locales`.
 - Use React Query for data; keep query keys stable.
 - Build UI from `components/ui`; compose in `components/common`.
-- Use selector form for i18n: `t($ => ...)`.
 - Respect TypeScript/ESLint; avoid suppressions.
 - Don’t run `dev` or `preview` script to debug the project. Let user do it.
 

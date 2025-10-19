@@ -23,34 +23,43 @@ type ConditionEditorProps = {
   onChange: (next?: Condition) => void;
 };
 
+function useConditionEditorLocales() {
+  const { t } = useTranslation("data-editor");
+  return {
+    typeLabel: t(($) => $.entity.conditionEditor.typeLabel),
+    types: {
+      none: t(($) => $.entity.conditionEditor.types.none),
+      mod: t(($) => $.entity.conditionEditor.types.mod),
+      and: t(($) => $.entity.conditionEditor.types.and),
+      or: t(($) => $.entity.conditionEditor.types.or),
+      not: t(($) => $.entity.conditionEditor.types.not),
+    },
+    noConditionHelp: t(($) => $.entity.conditionEditor.noConditionHelp),
+    previewLabel: (text: string) =>
+      t(($) => $.entity.conditionEditor.previewLabel, { text }),
+    childLabel: (index: number) =>
+      t(($) => $.entity.conditionEditor.childLabel, { index }),
+    removeAction: t(($) => $.entity.conditionEditor.removeAction),
+    addAction: t(($) => $.entity.conditionEditor.addAction),
+  };
+}
+
 function TypeSelector(props: { type: string; onChange: (t: string) => void }) {
   const { type, onChange } = props;
-  const { t } = useTranslation("data-editor");
+  const locales = useConditionEditorLocales();
   return (
     <div className="flex items-center gap-2">
-      <span className="text-sm text-muted-foreground">
-        {t(($) => $.entity.conditionEditor.typeLabel)}
-      </span>
+      <span className="text-sm text-muted-foreground">{locales.typeLabel}</span>
       <Select value={type} onValueChange={(v) => onChange(v)}>
         <SelectTrigger size="sm" className="min-w-[160px]">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="none">
-            {t(($) => $.entity.conditionEditor.types.none)}
-          </SelectItem>
-          <SelectItem value="mod">
-            {t(($) => $.entity.conditionEditor.types.mod)}
-          </SelectItem>
-          <SelectItem value="and">
-            {t(($) => $.entity.conditionEditor.types.and)}
-          </SelectItem>
-          <SelectItem value="or">
-            {t(($) => $.entity.conditionEditor.types.or)}
-          </SelectItem>
-          <SelectItem value="not">
-            {t(($) => $.entity.conditionEditor.types.not)}
-          </SelectItem>
+          <SelectItem value="none">{locales.types.none}</SelectItem>
+          <SelectItem value="mod">{locales.types.mod}</SelectItem>
+          <SelectItem value="and">{locales.types.and}</SelectItem>
+          <SelectItem value="or">{locales.types.or}</SelectItem>
+          <SelectItem value="not">{locales.types.not}</SelectItem>
         </SelectContent>
       </Select>
     </div>
@@ -59,7 +68,7 @@ function TypeSelector(props: { type: string; onChange: (t: string) => void }) {
 
 export function ConditionEditor(props: ConditionEditorProps) {
   const { value, onChange } = props;
-  const { t } = useTranslation("data-editor");
+  const locales = useConditionEditorLocales();
 
   const mods = useMods();
   const normalized: Condition | undefined = useMemo(() => {
@@ -155,13 +164,15 @@ export function ConditionEditor(props: ConditionEditorProps) {
 
       {currentType === "none" ? (
         <div className="text-sm text-muted-foreground">
-          {t(($) => $.entity.conditionEditor.noConditionHelp)}
+          {locales.noConditionHelp}
         </div>
       ) : null}
 
       {normalized?.type === "mod" ? (
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">Mod</span>
+          <span className="text-sm text-muted-foreground">
+            {locales.types.mod}
+          </span>
           <ResponsiveCombobox
             className="w-fit min-w-[140px]"
             options={modOptions}
@@ -174,14 +185,14 @@ export function ConditionEditor(props: ConditionEditorProps) {
       {normalized?.type === "and" || normalized?.type === "or" ? (
         <div className="flex flex-col gap-2">
           <div className="text-sm text-muted-foreground">
-            {normalized.type === "and" ? "All of:" : "Any of:"}
+            {normalized.type === "and" ? locales.types.and : locales.types.or}
           </div>
           <div className="flex flex-col gap-3 border-l pl-4">
             {normalized.conditions.map((child, idx) => (
               <div key={idx} className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-muted-foreground">
-                    Child #{idx + 1}
+                    {locales.childLabel(idx + 1)}
                   </span>
                   <Select
                     value={child.type}
@@ -193,10 +204,10 @@ export function ConditionEditor(props: ConditionEditorProps) {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="mod">Require Mod</SelectItem>
-                      <SelectItem value="and">AND Group</SelectItem>
-                      <SelectItem value="or">OR Group</SelectItem>
-                      <SelectItem value="not">NOT</SelectItem>
+                      <SelectItem value="mod">{locales.types.mod}</SelectItem>
+                      <SelectItem value="and">{locales.types.and}</SelectItem>
+                      <SelectItem value="or">{locales.types.or}</SelectItem>
+                      <SelectItem value="not">{locales.types.not}</SelectItem>
                     </SelectContent>
                   </Select>
                   <Button
@@ -205,7 +216,7 @@ export function ConditionEditor(props: ConditionEditorProps) {
                     size="sm"
                     onClick={() => updateChild(idx)}
                   >
-                    Remove
+                    {locales.removeAction}
                   </Button>
                 </div>
                 <div className="pl-3">
@@ -224,7 +235,7 @@ export function ConditionEditor(props: ConditionEditorProps) {
                 size="sm"
                 onClick={addChild}
               >
-                Add Condition
+                {locales.addAction}
               </Button>
             </div>
           </div>
@@ -233,7 +244,9 @@ export function ConditionEditor(props: ConditionEditorProps) {
 
       {normalized?.type === "not" ? (
         <div className="flex flex-col gap-2">
-          <div className="text-sm text-muted-foreground">NOT this:</div>
+          <div className="text-sm text-muted-foreground">
+            {locales.types.not}
+          </div>
           <div className="border-l pl-4">
             <ConditionEditor
               value={normalized.condition}
@@ -245,9 +258,7 @@ export function ConditionEditor(props: ConditionEditorProps) {
 
       {normalized ? (
         <div className="text-xs text-muted-foreground">
-          {t(($) => $.entity.conditionEditor.previewLabel, {
-            text: conditionToString(normalized),
-          })}
+          {locales.previewLabel(conditionToString(normalized))}
         </div>
       ) : null}
     </div>

@@ -47,6 +47,17 @@ export type ComboboxProps = Omit<
   contentClassName?: string;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
+export function useComboboxLocales() {
+  const { t } = useTranslation("common");
+  return {
+    select: t(($) => $.combobox.select),
+    empty: t(($) => $.combobox.empty),
+    search: t(($) => $.combobox.search),
+    close: t(($) => $.combobox.close),
+  };
+}
+
 export function ResponsiveCombobox(props: ComboboxProps) {
   const {
     options,
@@ -61,7 +72,7 @@ export function ResponsiveCombobox(props: ComboboxProps) {
   } = props;
 
   const isMobile = useIsMobile();
-  const { t } = useTranslation("common");
+  const locales = useComboboxLocales();
   const [open, setOpen] = React.useState(false);
   const [uncontrolledValue, setUncontrolledValue] = React.useState<string>("");
 
@@ -86,8 +97,7 @@ export function ResponsiveCombobox(props: ComboboxProps) {
     [onChange, selectedValue],
   );
 
-  const triggerLabel =
-    selectedLabel || (placeholder ?? t(($) => $.combobox.select));
+  const triggerLabel = selectedLabel || (placeholder ?? locales.select);
 
   const triggerButton = (
     <Button
@@ -104,7 +114,7 @@ export function ResponsiveCombobox(props: ComboboxProps) {
 
   const commandList = (
     <CommandList>
-      <CommandEmpty>{emptyLabel ?? t(($) => $.combobox.empty)}</CommandEmpty>
+      <CommandEmpty>{emptyLabel ?? locales.empty}</CommandEmpty>
       <CommandGroup>
         {options.map((opt) => {
           const isSelected = selectedValue === opt.value;
@@ -146,11 +156,11 @@ export function ResponsiveCombobox(props: ComboboxProps) {
             <DrawerHeader className="flex flex-row items-center gap-2">
               <CommandInput
                 wrapperClassName="flex-auto rounded-lg border"
-                placeholder={searchPlaceholder ?? t(($) => $.combobox.search)}
+                placeholder={searchPlaceholder ?? locales.search}
               />
               <DrawerClose>
                 <Button variant="ghost" className="px-2">
-                  {t(($) => $.combobox.close)}
+                  {locales.close}
                 </Button>
               </DrawerClose>
             </DrawerHeader>
@@ -177,9 +187,7 @@ export function ResponsiveCombobox(props: ComboboxProps) {
             return 0;
           }}
         >
-          <CommandInput
-            placeholder={searchPlaceholder ?? t(($) => $.combobox.search)}
-          />
+          <CommandInput placeholder={searchPlaceholder ?? locales.search} />
           {commandList}
         </Command>
       </PopoverContent>

@@ -37,7 +37,7 @@ const ModIDField = withForm({
   defaultValues: {} as NonRecursiveMod,
   render: function ModIDField(props) {
     const { form } = props;
-    const { t } = useTranslation("data-editor");
+    const locales = useModEditPanelLocales();
     return (
       <form.Field name={`id`}>
         {(field) => {
@@ -48,7 +48,7 @@ const ModIDField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={t(($) => $.entity.modPanel.idLabel)}
+              label={locales.idLabel}
               required
               invalid={invalid}
               errors={normalizedErrors}
@@ -69,7 +69,7 @@ const ModNameField = withForm({
   defaultValues: {} as NonRecursiveMod,
   render: function ModNameField(props) {
     const { form } = props;
-    const { t } = useTranslation("data-editor");
+    const locales = useModEditPanelLocales();
     return (
       <form.Field name={`name`}>
         {(field) => {
@@ -80,7 +80,7 @@ const ModNameField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={t(($) => $.entity.modPanel.nameLabel)}
+              label={locales.nameLabel}
               required
               invalid={invalid}
               errors={normalizedErrors}
@@ -101,7 +101,7 @@ const ModVersionField = withForm({
   defaultValues: {} as NonRecursiveMod,
   render: function ModVersionField(props) {
     const { form } = props;
-    const { t } = useTranslation("data-editor");
+    const locales = useModEditPanelLocales();
     return (
       <form.Field name={`version`}>
         {(field) => {
@@ -112,7 +112,7 @@ const ModVersionField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={t(($) => $.entity.modPanel.versionLabel)}
+              label={locales.versionLabel}
               required
               invalid={invalid}
               errors={normalizedErrors}
@@ -133,13 +133,13 @@ const ModDescriptionField = withForm({
   defaultValues: {} as NonRecursiveMod,
   render: function ModDescriptionField(props) {
     const { form } = props;
-    const { t } = useTranslation("data-editor");
+    const locales = useModEditPanelLocales();
     return (
       <LocaleSetTextareaField
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         form={form as any}
         path="description"
-        label={t(($) => $.entity.modPanel.descriptionLegend)}
+        label={locales.descriptionLegend}
         rows={4}
       />
     );
@@ -150,23 +150,21 @@ const ModTipsField = withForm({
   defaultValues: {} as NonRecursiveMod,
   render: function ModTipsField(props) {
     const { form } = props;
-    const { t } = useTranslation("data-editor");
+    const locales = useModEditPanelLocales();
     return (
       <form.Field name={`tips`}>
         {(field) => {
           const tips = (field.state.value ?? []) as Array<LocaleMap>;
           return (
             <div className="space-y-3">
-              <FieldLegend>
-                {t(($) => $.entity.modPanel.tipsLegend)}
-              </FieldLegend>
+              <FieldLegend>{locales.tipsLegend}</FieldLegend>
               {tips.map((_, i) => (
                 <div key={i} className="space-y-2 rounded border p-2">
                   <LocaleSetTextareaField
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     form={form as any}
                     path={`tips.${i}`}
-                    label={t(($) => $.entity.modPanel.tipsLegend)}
+                    label={locales.tipsLegend}
                     rows={4}
                   />
                   <div className="flex justify-end">
@@ -182,7 +180,7 @@ const ModTipsField = withForm({
                         })
                       }
                     >
-                      {t(($) => $.entity.modPanel.tipsRemoveAction)}
+                      {locales.tipsRemoveAction}
                     </Button>
                   </div>
                 </div>
@@ -196,7 +194,7 @@ const ModTipsField = withForm({
                     field.setValue((curr) => [...(curr ?? []), { en: "" }])
                   }
                 >
-                  {t(($) => $.entity.modPanel.tipsAddAction)}
+                  {locales.tipsAddAction}
                 </Button>
               </div>
             </div>
@@ -213,7 +211,7 @@ const ModCategoryIDField = withForm({
     const { form } = props;
     const categories = useCategories();
     const localize = useLocalizer();
-    const { t } = useTranslation("data-editor");
+    const locales = useModEditPanelLocales();
     return (
       <form.Field name={`categoryID`}>
         {(field) => {
@@ -224,7 +222,7 @@ const ModCategoryIDField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={t(($) => $.entity.modPanel.categoryIDLabel)}
+              label={locales.categoryIDLabel}
               invalid={invalid}
               errors={normalizedErrors}
             >
@@ -253,7 +251,7 @@ const ModConditionField = withForm({
   defaultValues: {} as NonRecursiveMod,
   render: function ModConditionField(props) {
     const { form } = props;
-    const { t } = useTranslation("data-editor");
+    const locales = useModEditPanelLocales();
     return (
       <form.Field name={`condition`}>
         {(field) => {
@@ -264,7 +262,7 @@ const ModConditionField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={t(($) => $.entity.modPanel.conditionLabel)}
+              label={locales.conditionLabel}
               invalid={invalid}
               errors={normalizedErrors}
             >
@@ -285,7 +283,7 @@ const ModAuthorField = withForm({
   defaultValues: {} as NonRecursiveMod,
   render: function ModAuthorField(props) {
     const { form } = props;
-    const { t } = useTranslation("data-editor");
+    const locales = useModEditPanelLocales();
     return (
       <form.Field name={`author`}>
         {(field) => {
@@ -296,7 +294,7 @@ const ModAuthorField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={t(($) => $.entity.modPanel.authorLabel)}
+              label={locales.authorLabel}
               invalid={invalid}
               errors={normalizedErrors}
             >
@@ -316,7 +314,7 @@ const ModIsPaidField = withForm({
   defaultValues: {} as NonRecursiveMod,
   render: function ModIsPaidField(props) {
     const { form } = props;
-    const { t } = useTranslation("data-editor");
+    const locales = useModEditPanelLocales();
     return (
       <form.Field name={`isPaid`}>
         {(field) => {
@@ -328,7 +326,7 @@ const ModIsPaidField = withForm({
           const checked = Boolean(field.state.value);
           return (
             <SimpleFormField
-              label={t(($) => $.entity.modPanel.isPaidLabel)}
+              label={locales.isPaidLabel}
               invalid={invalid}
               errors={normalizedErrors}
             >
@@ -349,7 +347,7 @@ const ModIsPassiveField = withForm({
   defaultValues: {} as NonRecursiveMod,
   render: function ModIsPassiveField(props) {
     const { form } = props;
-    const { t } = useTranslation("data-editor");
+    const locales = useModEditPanelLocales();
     return (
       <form.Field name={`isPassive`}>
         {(field) => {
@@ -361,7 +359,7 @@ const ModIsPassiveField = withForm({
           const checked = Boolean(field.state.value);
           return (
             <SimpleFormField
-              label={t(($) => $.entity.modPanel.isPassiveLabel)}
+              label={locales.isPassiveLabel}
               invalid={invalid}
               errors={normalizedErrors}
             >
@@ -382,7 +380,7 @@ const ModPosterURLField = withForm({
   defaultValues: {} as NonRecursiveMod,
   render: function ModPosterURLField(props) {
     const { form } = props;
-    const { t } = useTranslation("data-editor");
+    const locales = useModEditPanelLocales();
     return (
       <form.Field name={`posterURL`}>
         {(field) => {
@@ -393,7 +391,7 @@ const ModPosterURLField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={t(($) => $.entity.modPanel.posterURLLabel)}
+              label={locales.posterURLLabel}
               invalid={invalid}
               errors={normalizedErrors}
             >
@@ -413,7 +411,7 @@ const ModMainPageURLField = withForm({
   defaultValues: {} as NonRecursiveMod,
   render: function ModMainPageURLField(props) {
     const { form } = props;
-    const { t } = useTranslation("data-editor");
+    const locales = useModEditPanelLocales();
     return (
       <form.Field name={`mainPageURL`}>
         {(field) => {
@@ -424,7 +422,7 @@ const ModMainPageURLField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={t(($) => $.entity.modPanel.mainPageURLLabel)}
+              label={locales.mainPageURLLabel}
               invalid={invalid}
               errors={normalizedErrors}
             >
@@ -444,7 +442,7 @@ const ModDownloadURLField = withForm({
   defaultValues: {} as NonRecursiveMod,
   render: function ModDownloadURLField(props) {
     const { form } = props;
-    const { t } = useTranslation("data-editor");
+    const locales = useModEditPanelLocales();
     return (
       <form.Field name={`downloadURL`}>
         {(field) => {
@@ -455,7 +453,7 @@ const ModDownloadURLField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={t(($) => $.entity.modPanel.downloadURLLabel)}
+              label={locales.downloadURLLabel}
               invalid={invalid}
               errors={normalizedErrors}
             >
@@ -470,6 +468,27 @@ const ModDownloadURLField = withForm({
     );
   },
 });
+
+function useModEditPanelLocales() {
+  const { t } = useTranslation("data-editor");
+  return {
+    idLabel: t(($) => $.entity.modPanel.idLabel),
+    nameLabel: t(($) => $.entity.modPanel.nameLabel),
+    versionLabel: t(($) => $.entity.modPanel.versionLabel),
+    descriptionLegend: t(($) => $.entity.modPanel.descriptionLegend),
+    tipsLegend: t(($) => $.entity.modPanel.tipsLegend),
+    tipsAddAction: t(($) => $.entity.modPanel.tipsAddAction),
+    tipsRemoveAction: t(($) => $.entity.modPanel.tipsRemoveAction),
+    categoryIDLabel: t(($) => $.entity.modPanel.categoryIDLabel),
+    conditionLabel: t(($) => $.entity.modPanel.conditionLabel),
+    authorLabel: t(($) => $.entity.modPanel.authorLabel),
+    isPaidLabel: t(($) => $.entity.modPanel.isPaidLabel),
+    isPassiveLabel: t(($) => $.entity.modPanel.isPassiveLabel),
+    posterURLLabel: t(($) => $.entity.modPanel.posterURLLabel),
+    mainPageURLLabel: t(($) => $.entity.modPanel.mainPageURLLabel),
+    downloadURLLabel: t(($) => $.entity.modPanel.downloadURLLabel),
+  };
+}
 
 function useModEditSheetLocales() {
   const { t } = useTranslation("data-editor");

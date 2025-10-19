@@ -14,8 +14,18 @@ export interface NavWebProps {
   className?: string;
 }
 
-export function NavWeb({ className }: NavWebProps) {
+function useHeaderNavWebLocales() {
   const { t } = useTranslation("common");
+  return {
+    routes: {
+      mapCombo: t(($) => $.routes.mapCombo),
+      dataEditor: t(($) => $.routes.dataEditor),
+    },
+  };
+}
+
+export function NavWeb({ className }: NavWebProps) {
+  const locales = useHeaderNavWebLocales();
   const location = useRouterState({ select: (state) => state.location });
   return (
     <NavigationMenu className={className}>
@@ -26,7 +36,7 @@ export function NavWeb({ className }: NavWebProps) {
             className="data-[status='active']:font-bold"
             asChild
           >
-            <Link to="/map-combo">{t(($) => $.routes.mapCombo)}</Link>
+            <Link to="/map-combo">{locales.routes.mapCombo}</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem className="shrink-0">
@@ -35,7 +45,7 @@ export function NavWeb({ className }: NavWebProps) {
             className="data-[status='active']:font-bold"
             asChild
           >
-            <Link to="/data-editor">{t(($) => $.routes.dataEditor)}</Link>
+            <Link to="/data-editor">{locales.routes.dataEditor}</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>

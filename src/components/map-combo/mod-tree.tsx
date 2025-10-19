@@ -31,12 +31,24 @@ import { evaluateConditionTree } from "@/libs/map-combo/condition";
 import { ConditionDisplay } from "./condition-failure-display";
 import { useLocalizer, type Mod } from "@/libs/map-combo";
 
-function PaidMeta() {
+function useModTreeLocales() {
   const { t } = useTranslation("map-combo");
+  return {
+    paid: t(($) => $["mod-tree"].paid),
+    unableToSelect: t(($) => $["mod-tree"]["unable-to-select"]),
+    selectAll: t(($) => $["mod-tree"]["select-all"]),
+    unselectAll: t(($) => $["mod-tree"]["unselect-all"]),
+    title: t(($) => $["mod-tree"].title),
+    foldAll: t(($) => $["mod-tree"]["fold-all"]),
+  };
+}
+
+function PaidMeta() {
+  const locales = useModTreeLocales();
   return (
     <span>
       <CircleDollarSign className="mr-0.5 inline-block size-3.5 align-[-1.5px]" />
-      {t(($) => $["mod-tree"].paid)}
+      {locales.paid}
     </span>
   );
 }
@@ -125,7 +137,7 @@ function ModNode({ mod }: { mod: DataTreeMod }) {
   const { selectMods, unselectMods, selectedModIDs, modMap } =
     useMapComboContext();
   const isSelected = selectedModIDs.includes(id);
-  const { t } = useTranslation("map-combo");
+  const locales = useModTreeLocales();
 
   const conditionEvaluation = useMemo(() => {
     if (!condition) {
@@ -143,9 +155,7 @@ function ModNode({ mod }: { mod: DataTreeMod }) {
   const conditionDisplay =
     isDisabled && conditionResult ? (
       <div className="flex flex-col gap-2">
-        <div className="text-sm font-medium">
-          {t(($) => $["mod-tree"]["unable-to-select"])}
-        </div>
+        <div className="text-sm font-medium">{locales.unableToSelect}</div>
         <ConditionDisplay conditionResult={conditionResult} modMap={modMap} />
       </div>
     ) : null;
@@ -186,7 +196,7 @@ function ModNode({ mod }: { mod: DataTreeMod }) {
 
 function CategoryNode({ category }: { category: DataTreeCategory }) {
   const { id, mods } = category;
-  const { t } = useTranslation("map-combo");
+  const locales = useModTreeLocales();
   const localize = useLocalizer();
 
   const {
@@ -220,7 +230,7 @@ function CategoryNode({ category }: { category: DataTreeCategory }) {
             </Badge>
           </div>
           <div>
-            <SimpleTooltip content={t(($) => $["mod-tree"]["select-all"])}>
+            <SimpleTooltip content={locales.selectAll}>
               <Button
                 size="icon-xs"
                 variant="ghost"
@@ -233,7 +243,7 @@ function CategoryNode({ category }: { category: DataTreeCategory }) {
                 <ListPlus />
               </Button>
             </SimpleTooltip>
-            <SimpleTooltip content={t(($) => $["mod-tree"]["unselect-all"])}>
+            <SimpleTooltip content={locales.unselectAll}>
               <Button
                 size="xs"
                 variant="ghost"
@@ -260,7 +270,7 @@ function CategoryNode({ category }: { category: DataTreeCategory }) {
 
 export function ModTree() {
   const { dataTree, collapseCategories } = useMapComboContext();
-  const { t } = useTranslation("map-combo");
+  const locales = useModTreeLocales();
 
   const collapseAllCategories = () =>
     collapseCategories(dataTree.map((category) => category.id));
@@ -268,9 +278,9 @@ export function ModTree() {
   return (
     <div className="w-full space-y-1">
       <div className="flex items-center justify-between p-2 pl-3">
-        <h5>{t(($) => $["mod-tree"].title)}</h5>
+        <h5>{locales.title}</h5>
         <div className="flex items-center gap-2">
-          <SimpleTooltip content={t(($) => $["mod-tree"]["fold-all"])}>
+          <SimpleTooltip content={locales.foldAll}>
             <Button
               variant="ghost"
               onClick={collapseAllCategories}

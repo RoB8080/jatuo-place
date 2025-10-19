@@ -18,7 +18,6 @@ import { Spinner } from "../ui/spinner";
 import { useId } from "react";
 import dayjs from "dayjs";
 import { z } from "zod";
-import i18n from "@/libs/i18n";
 
 export interface DataEditorActionsProps {
   className?: string;
@@ -35,28 +34,40 @@ function saveDataAsJSON(data: unknown, invalid?: boolean) {
   URL.revokeObjectURL(url);
 }
 
-// const handleValidSubmit = useCallback((data: MapComboData) => {
-//   saveDataAsJSON(data);
-// }, []);
+function useDataEditorActionsLocales() {
+  const { t } = useTranslation("data-editor");
+  return {
+    load: t(($) => $.actions.load),
+    fromProdData: t(($) => $.actions["from-prod-data"]),
+    failedLoadingProdData: t(($) => $.actions["failed-loading-prod-data"]),
+    save: {
+      label: t(($) => $.actions.save.label),
+      validationFailedTitle: t(
+        ($) => $.actions["save"]["validation-failed"].title,
+      ),
+      exceptionTip: t(
+        ($) => $.actions["save"]["validation-failed"]["exception-tip"],
+      ),
+      saveAnyway: t(
+        ($) => $.actions["save"]["validation-failed"]["save-anyway"],
+      ),
+    },
+  };
+}
 
-// const handleInvalidSubmit = useCallback(
-//   (err: unknown) => {
-//     console.error("invalid data", err);
-//     toast.warning("数据不符合要求，将保存临时版本");
-//     saveDataAsJSON(dataForm.baseStore.state.values, true);
-//   },
-//   [dataForm],
-// );
-
-function handleClickSave(workingData: MapComboData) {
+function handleClickSave(
+  workingData: MapComboData,
+  locales: {
+    title: string;
+    exceptionTip: string;
+    saveAnyway: string;
+  },
+) {
   try {
     const validatedData = mapComboDataSchema.parse(workingData);
     saveDataAsJSON(validatedData);
   } catch (error) {
-    /* t("actions.save.validation-failed.title", { ns: "data-editor" }) */
-    const title = i18n.t(($) => $.actions["save"]["validation-failed"].title, {
-      ns: "data-editor",
-    });
+    const title = locales.title;
 
     const toastContent =
       error instanceof z.ZodError ? (
@@ -71,32 +82,14 @@ function handleClickSave(workingData: MapComboData) {
       ) : (
         <section>
           <h5>{title}</h5>
-          <p>
-            {
-              /* t("actions.save.validation-failed.exception-tip", { ns: "data-editor" }) */
-              i18n.t(
-                ($) => $.actions["save"]["validation-failed"]["exception-tip"],
-                {
-                  ns: "data-editor",
-                },
-              )
-            }
-          </p>
+          <p>{locales.exceptionTip}</p>
         </section>
       );
 
     toast.error(toastContent, {
       action: (
         <Button onClick={() => saveDataAsJSON(workingData, true)}>
-          {
-            /* t("actions.save.validation-failed.save-anyway", { ns: "data-editor" }) */
-            i18n.t(
-              ($) => $.actions["save"]["validation-failed"]["save-anyway"],
-              {
-                ns: "data-editor",
-              },
-            )
-          }
+          {locales.saveAnyway}
         </Button>
       ),
     });
@@ -106,7 +99,7 @@ function handleClickSave(workingData: MapComboData) {
 export function DataEditorActions(props: DataEditorActionsProps) {
   const { className } = props;
   const { workingData, setWorkingData } = useDataEditorContext();
-  const { t } = useTranslation("data-editor");
+  const locales = useDataEditorActionsLocales();
   const fileInputID = useId();
   const { mutate: loadFromVersion, isPending: isLoadingFromVersion } =
     useMutation({
@@ -120,8 +113,7 @@ export function DataEditorActions(props: DataEditorActionsProps) {
       onSuccess: (data) => setWorkingData(data),
       onError: (error) => {
         console.error(error);
-        // t("actions.failed-loading-prod-data", { ns: "data-editor" })
-        toast.error(t(($) => $.actions["failed-loading-prod-data"]));
+        toast.error(locales.failedLoadingProdData);
       },
     });
 
@@ -139,13 +131,13 @@ export function DataEditorActions(props: DataEditorActionsProps) {
         >
           <input className="hidden" type="file" id={fileInputID} />
           <FileUp />
-          {t(($) => $.actions.load)}
+          {locales.load}
         </Button>
         <SimpleDropdownMenu
           content={
             <>
               <DropdownMenuLabel className="text-sm font-normal text-muted-foreground">
-                {t(($) => $.actions["from-prod-data"])}
+                {locales.fromProdData}
               </DropdownMenuLabel>
               {versionKeys.map((versionKey) => (
                 <DropdownMenuItem
@@ -168,10 +160,19 @@ export function DataEditorActions(props: DataEditorActionsProps) {
           </Button>
         </SimpleDropdownMenu>
       </ButtonGroup>
-      <Button variant="outline" onClick={() => handleClickSave(workingData)}>
+      <Button
+        variant="outline"
+        onClick={() =>
+          handleClickSave(workingData, {
+            title: locales.save.validationFailedTitle,
+            exceptionTip: locales.save.exceptionTip,
+            saveAnyway: locales.save.saveAnyway,
+          })
+        }
+      >
         <input className="hidden" type="file" />
         <FileDown />
-        {t(($) => $.actions.save.label)}
+        {locales.save.label}
       </Button>
     </div>
   );

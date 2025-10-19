@@ -108,8 +108,26 @@ const memberInfos: MemberInfo[] = [
   },
 ];
 
-function Member({ info }: { info: MemberInfo }) {
+function useMembersLocales() {
   const { t } = useTranslation("home");
+  return {
+    title: t(($) => $.members.title),
+    description: t(($) => $.members.description),
+    donate: t(($) => $.members.donate),
+    role: {
+      rc_mapper: t(($) => $.member.role.rc_mapper),
+      programmer: t(($) => $.member.role.programmer),
+      def_fixer: t(($) => $.member.role.def_fixer),
+      miscellaneous: t(($) => $.member.role.miscellaneous),
+      ui_engineer: t(($) => $.member.role.ui_engineer),
+      web_developer: t(($) => $.member.role.web_developer),
+      vtc_manager: t(($) => $.member.role.vtc_manager),
+    },
+  };
+}
+
+function Member({ info }: { info: MemberInfo }) {
+  const locales = useMembersLocales();
   const isMobile = useIsMobile();
   return (
     <Item variant="muted">
@@ -129,7 +147,7 @@ function Member({ info }: { info: MemberInfo }) {
               className="before:content-['_·_'] sm:first:before:content-none"
               key={role}
             >
-              {t(($) => $.member.role[role])}
+              {locales.role[role]}
             </span>
           ))}
         </div>
@@ -168,7 +186,7 @@ function Member({ info }: { info: MemberInfo }) {
                 variant="ghost"
               >
                 <HandHeart className="size-5" />
-                <div>{t(($) => $.members.donate)}</div>
+                <div>{locales.donate}</div>
               </Button>
             ) : (
               <Button
@@ -176,7 +194,7 @@ function Member({ info }: { info: MemberInfo }) {
                 variant="ghost"
               >
                 <HandHeart className="size-5" />
-                <div>{t(($) => $.members.donate)}</div>
+                <div>{locales.donate}</div>
               </Button>
             )}
           </a>
@@ -187,7 +205,7 @@ function Member({ info }: { info: MemberInfo }) {
 }
 
 export function Members() {
-  const { t } = useTranslation("home");
+  const locales = useMembersLocales();
   return (
     <FlexibleBox
       as="section"
@@ -196,9 +214,9 @@ export function Members() {
       innerClassName="flex flex-col gap-8 md:flex-row"
     >
       <div className="top-8 md:sticky md:w-[240px] ">
-        <h2>{t(($) => $.members.title)}</h2>
+        <h2>{locales.title}</h2>
         <p className="pt-4 font-medium text-muted-foreground">
-          {t(($) => $.members.description)}
+          {locales.description}
         </p>
       </div>
       <div className="flex flex-auto flex-col gap-4">

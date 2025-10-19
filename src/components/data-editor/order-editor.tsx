@@ -34,6 +34,13 @@ function reorder<T>(list: T[], from: number, to: number): T[] {
   return next;
 }
 
+function useOrderEditorLocales() {
+  const { t } = useTranslation("data-editor");
+  return {
+    fileCount: (count: number) => t(($) => $.file.count, { count }),
+  };
+}
+
 export function OrderEditor({ className }: { className?: string }) {
   const { workingData, setWorkingData } = useDataEditorContext();
   const files = workingData.files;
@@ -42,7 +49,7 @@ export function OrderEditor({ className }: { className?: string }) {
     for (const m of workingData.mods) map.set(m.id, m);
     return map;
   }, [workingData.mods]);
-  const { t } = useTranslation("data-editor");
+  const locales = useOrderEditorLocales();
   const [activeId, setActiveId] = useState<string | null>(null);
   // Search state moved into SearchPopover component
 
@@ -127,7 +134,7 @@ export function OrderEditor({ className }: { className?: string }) {
     }));
   };
 
-  const countLabel = t(($) => $.file.count, { count: files.length });
+  const countLabel = locales.fileCount(files.length);
   // Result count label moved into SearchPopover
 
   const handleDragStart = ({ active }: DragStartEvent) => {

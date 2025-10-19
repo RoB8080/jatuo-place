@@ -22,13 +22,12 @@ import { modCategorySchema, type ModCategory } from "@/libs/map-combo";
 import { SimpleEmpty } from "@/components/common/empty";
 import { LocaleSetTextField } from "@/components/common/locale-field";
 
-function useCategoryIDLabels() {
+function useCategoryEditPanelLocales() {
   const { t } = useTranslation("data-editor");
-  const fieldLabel = t(($) => $.category.property.id);
-  const fieldDescription = t(($) => $.category.propertyDesc.id);
   return {
-    fieldLabel,
-    fieldDescription,
+    idLabel: t(($) => $.category.property.id),
+    idDesc: t(($) => $.category.propertyDesc.id),
+    nameLabel: t(($) => $.category.property.name),
   };
 }
 
@@ -36,7 +35,7 @@ const CategoryIDField = withForm({
   defaultValues: {} as ModCategory,
   render: function CategoryIDField(props) {
     const { form } = props;
-    const { fieldLabel, fieldDescription } = useCategoryIDLabels();
+    const panelLocales = useCategoryEditPanelLocales();
 
     return (
       <form.Field name={`id`}>
@@ -48,8 +47,8 @@ const CategoryIDField = withForm({
           const invalid = normalizedErrors.length > 0;
           return (
             <SimpleFormField
-              label={fieldLabel}
-              description={fieldDescription}
+              label={panelLocales.idLabel}
+              description={panelLocales.idDesc}
               required
               invalid={invalid}
               errors={normalizedErrors}
@@ -73,9 +72,6 @@ function useCategoryEditSheetLocales() {
     notFound: t(($) => $.entity.categoryPanel.notFound),
     save: t(($) => $.entity.editPanel.save),
     cancel: t(($) => $.entity.editPanel.cancel),
-    idLabel: t(($) => $.category.property.id),
-    nameLabel: t(($) => $.category.property.name),
-    idDesc: t(($) => $.category.propertyDesc.id),
   };
 }
 
@@ -86,6 +82,7 @@ export function CategoryEditSheet(props: {
   const { index, children } = props;
   const [isOpen, setIsOpen] = useState(false);
   const locales = useCategoryEditSheetLocales();
+  const panelLocales = useCategoryEditPanelLocales();
 
   const isMobile = useIsMobile();
   const categories = useCategories();
@@ -120,7 +117,7 @@ export function CategoryEditSheet(props: {
           <LocaleSetTextField
             form={localForm}
             path="name"
-            label={locales.nameLabel}
+            label={panelLocales.nameLabel}
           />
         </FieldSet>
         <SheetFooter className="flex-row">

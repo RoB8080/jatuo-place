@@ -12,7 +12,8 @@
       "title": "Delete Mod"
     },
     "nomad": "Uncategorized Mods",
-    "edit": "Edit Mod"
+    "edit": "Edit Mod",
+    "count": "{{count}} mods"
   },
   "actions": {
     "failed-loading-prod-data": "Failed to load from production data",
@@ -47,65 +48,60 @@
   },
   "entity": {
     "categoryPanel": {
-      "idDescription": "Change carefully as it affects existing mods' category association.",
       "notFound": "Category not found",
       "title": "Edit Category"
+    },
+    "conditionEditor": {
+      "addAction": "Add Condition",
+      "childLabel": "Child #{{index}}",
+      "noConditionHelp": "No condition. Select a type to start.",
+      "previewLabel": "Preview: {{text}}",
+      "removeAction": "Remove",
+      "typeLabel": "Type",
+      "types": {
+        "and": "AND Group",
+        "mod": "Require Mod",
+        "none": "None",
+        "not": "NOT",
+        "or": "OR Group"
+      }
     },
     "editPanel": {
       "cancel": "Cancel",
       "save": "Save"
     },
     "filePanel": {
-      "nameLabel": "File Name",
-      "modIDLabel": "Mod ID",
       "conditionLabel": "Condition",
+      "modIDLabel": "Mod ID",
+      "nameLabel": "File Name",
       "notFound": "File not found",
       "title": "Edit File"
     },
     "modPanel": {
-      "idLabel": "Mod ID",
-      "nameLabel": "Mod Name",
-      "versionLabel": "Version",
+      "authorLabel": "Author",
       "categoryIDLabel": "Category ID",
       "conditionLabel": "Condition",
-      "authorLabel": "Author",
+      "descriptionLegend": "Description",
+      "downloadURLLabel": "Download URL",
+      "idLabel": "Mod ID",
       "isPaidLabel": "Paid",
       "isPassiveLabel": "Passive",
-      "posterURLLabel": "Poster URL",
       "mainPageURLLabel": "Main Page URL",
-      "downloadURLLabel": "Download URL",
-      "descriptionLegend": "Description",
-      "descriptionENLabel": "Description (EN)",
-      "descriptionRULabel": "Description (RU)",
-      "descriptionZHLabel": "Description (ZH)",
-      "tipsLegend": "Tips",
-      "tipsENLabel": "Tip (EN)",
-      "tipsRULabel": "Tip (RU)",
-      "tipsZHLabel": "Tip (ZH)",
-      "tipsAddAction": "Add Tip",
-      "tipsRemoveAction": "Remove Tip",
+      "nameLabel": "Mod Name",
       "notFound": "Mod not found",
-      "title": "Edit Mod"
-    },
-    "conditionEditor": {
-      "typeLabel": "Type",
-      "types": {
-        "none": "None",
-        "mod": "Require Mod",
-        "and": "AND Group",
-        "or": "OR Group",
-        "not": "NOT"
-      },
-      "noConditionHelp": "No condition. Select a type to start.",
-      "previewLabel": "Preview: {{text}}"
+      "posterURLLabel": "Poster URL",
+      "tipsAddAction": "Add Tip",
+      "tipsLegend": "Tips",
+      "tipsRemoveAction": "Remove Tip",
+      "title": "Edit Mod",
+      "versionLabel": "Version"
     }
   },
   "entityPanel": {
     "searchPlaceholder": "Search mods or files"
   },
   "file": {
-    "count_one": "1 file",
-    "count_other": "{{count}} files",
+    "count": "{{count}} files",
     "create": "New File",
     "delete": "Delete File",
     "delete-confirm": {
@@ -122,8 +118,7 @@
     "moveDown": "Move Down",
     "moveTop": "Move to Top",
     "moveUp": "Move Up",
-    "resultCount_one": "Found 1 result",
-    "resultCount_other": "Found {{count}} results",
+    "resultCount": "Found {{count}} results",
     "searchPlaceholder": "Search file"
   },
   "tabs": {

@@ -13,6 +13,7 @@ import {
 import { Search } from "lucide-react";
 import type { ModFile, Mod } from "@/libs/map-combo";
 import { cn } from "@/libs/utils";
+import { useComboboxLocales } from "@/components/common/combobox";
 
 export type SearchPopoverProps = {
   items: Array<{ id: string; file: ModFile }>;
@@ -21,13 +22,23 @@ export type SearchPopoverProps = {
   className?: string;
 };
 
+function useOrderSearchPopoverLocales() {
+  const { t } = useTranslation("data-editor");
+  return {
+    resultCount: (count: number) =>
+      t(($) => $.orderPanel.resultCount, { count }),
+    searchPlaceholder: t(($) => $.orderPanel.searchPlaceholder),
+  };
+}
+
 export function SearchPopover({
   items,
   modsByID,
   onSelectItem,
   className,
 }: SearchPopoverProps) {
-  const { t } = useTranslation("data-editor");
+  const locales = useOrderSearchPopoverLocales();
+  const comboboxLocales = useComboboxLocales();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
@@ -38,9 +49,7 @@ export function SearchPopover({
       .length;
   }, [items, value]);
 
-  const resultCountLabel = value
-    ? t(($) => $.orderPanel.resultCount, { count: matchedCount })
-    : null;
+  const resultCountLabel = value ? locales.resultCount(matchedCount) : null;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -49,11 +58,11 @@ export function SearchPopover({
           variant="outline"
           size="sm"
           onClick={() => setOpen(true)}
-          aria-label={t(($) => $.orderPanel.searchPlaceholder)}
+          aria-label={locales.searchPlaceholder}
           className={className}
         >
           <Search className="mr-2 h-4 w-4" />
-          <span>{t(($) => $.combobox.search, { ns: "common" })}</span>
+          <span>{comboboxLocales.search}</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-[420px] p-0">
@@ -73,7 +82,7 @@ export function SearchPopover({
           <CommandInput
             value={value}
             onValueChange={setValue}
-            placeholder={t(($) => $.orderPanel.searchPlaceholder)}
+            placeholder={locales.searchPlaceholder}
             autoFocus
           />
           {resultCountLabel && (
@@ -82,9 +91,7 @@ export function SearchPopover({
             </div>
           )}
           <CommandList>
-            <CommandEmpty>
-              {t(($) => $.combobox.empty, { ns: "common" })}
-            </CommandEmpty>
+            <CommandEmpty>{comboboxLocales.empty}</CommandEmpty>
             <CommandGroup>
               {items.map(({ id, file }) => {
                 const mod = file.modID ? modsByID.get(file.modID) : undefined;

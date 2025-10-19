@@ -20,6 +20,25 @@ import { ModEditSheet } from "../edit-sheet/mod";
 
 // 创建逻辑已迁移到 hooks
 
+function useModTreeLocales() {
+  const { t } = useTranslation("data-editor");
+  return {
+    create: t(($) => $.mod.create),
+    edit: t(($) => $.mod.edit),
+    delete: t(($) => $.mod.delete),
+    deleteConfirm: {
+      title: t(($) => $.mod["delete-confirm"].title),
+      content: (modID?: string, modName?: string) =>
+        t(($) => $.mod["delete-confirm"].content, { modID, modName }),
+      confirm: t(($) => $.mod["delete-confirm"].confirm),
+      cancel: t(($) => $.mod["delete-confirm"].cancel),
+    },
+    nomad: t(($) => $.mod.nomad),
+    modCount: (count: number) => t(($) => $.mod.count, { count }),
+    fileCount: (count: number) => t(($) => $.file.count, { count }),
+  };
+}
+
 export function ModCreateButton(
   props: Omit<TreeNodeActionProps, "onClick" | "tooltip" | "destructive"> & {
     categoryID?: string;
@@ -28,7 +47,7 @@ export function ModCreateButton(
 ) {
   const { categoryID, onCreated, ...restProps } = props;
   const createMod = useCreateMod();
-  const { t } = useTranslation("data-editor");
+  const locales = useModTreeLocales();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
@@ -40,7 +59,7 @@ export function ModCreateButton(
   return (
     <TreeNodeAction
       onClick={handleClick}
-      tooltip={t(($) => $["mod"]["create"])}
+      tooltip={locales.create}
       {...restProps}
     >
       <PackagePlus />
@@ -54,11 +73,11 @@ function ModEditButton(
   },
 ) {
   const { modID, ...restProps } = props;
-  const { t } = useTranslation("data-editor");
+  const locales = useModTreeLocales();
 
   return (
     <ModEditSheet modID={modID}>
-      <TreeNodeAction tooltip={t(($) => $.mod.edit)} {...restProps}>
+      <TreeNodeAction tooltip={locales.edit} {...restProps}>
         <SquarePen />
       </TreeNodeAction>
     </ModEditSheet>
@@ -73,18 +92,15 @@ function ModDeleteButton(
 ) {
   const { modID, modName, ...restProps } = props;
   const deleteMod = useDeleteMod();
-  const { t } = useTranslation("data-editor");
+  const locales = useModTreeLocales();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const title = t(($) => $.mod["delete-confirm"].title);
-    const content = t(($) => $.mod["delete-confirm"].content, {
-      modID,
-      modName,
-    });
-    const confirmText = t(($) => $.mod["delete-confirm"].confirm);
-    const cancelText = t(($) => $.mod["delete-confirm"].cancel);
+    const title = locales.deleteConfirm.title;
+    const content = locales.deleteConfirm.content(modID, modName);
+    const confirmText = locales.deleteConfirm.confirm;
+    const cancelText = locales.deleteConfirm.cancel;
 
     const confirmed = await invokeConfirmDialog({
       title,
@@ -102,7 +118,7 @@ function ModDeleteButton(
   return (
     <TreeNodeAction
       onClick={handleClick}
-      tooltip={t(($) => $.mod.delete)}
+      tooltip={locales.delete}
       variant="destructive"
       {...restProps}
     >
@@ -114,7 +130,7 @@ function ModDeleteButton(
 export function ModTreeNode(props: { mod: Mod }) {
   const { mod } = props;
   const files = useFilesByMod(mod.id);
-  const { t } = useTranslation("data-editor");
+  const locales = useModTreeLocales();
 
   return (() => {
     return (
@@ -130,7 +146,7 @@ export function ModTreeNode(props: { mod: Mod }) {
           <Package className="shrink-0 text-muted-foreground" />
           <div className="truncate">{mod.name}</div>
           <div className="shrink-0 text-xs text-muted-foreground">
-            {t(($) => $.file["count"], { count: files.length })}
+            {locales.fileCount(files.length)}
           </div>
         </TreeNodeTitle>
         <FileCreateButton modID={mod.id} />
@@ -142,7 +158,7 @@ export function ModTreeNode(props: { mod: Mod }) {
 }
 
 export function ModNomadListTreeNode() {
-  const { t } = useTranslation("data-editor");
+  const locales = useModTreeLocales();
   const mods = useNomadMods();
   if (mods.length === 0) {
     return <></>;
@@ -157,9 +173,9 @@ export function ModNomadListTreeNode() {
       ))}
     >
       <TreeNodeTitle className="text-destructive/80">
-        {t(($) => $.mod.nomad)}
+        {locales.nomad}
         <span className="text-xs text-muted-foreground">
-          {t(($) => $.mod.count, { count: mods.length })}
+          {locales.modCount(mods.length)}
         </span>
       </TreeNodeTitle>
     </TreeNode>

@@ -27,8 +27,18 @@ const tabs = [
   },
 ] as const;
 
-function RouteComponent() {
+function useDataEditorLocales() {
   const { t } = useTranslation("data-editor");
+  return {
+    tabs: {
+      entity: t(($) => $.tabs.entity),
+      order: t(($) => $.tabs.order),
+    },
+  };
+}
+
+function RouteComponent() {
+  const locales = useDataEditorLocales();
   return (
     <Tabs className="min-h-0 flex-auto pt-2" defaultValue={tabs[0].key}>
       <DataEditorRoot>
@@ -41,7 +51,7 @@ function RouteComponent() {
             {tabs.map((tab) => (
               <TabsTrigger key={tab.key} value={tab.key}>
                 <tab.icon className="size-4" />
-                {t(($) => $.tabs[tab.key])}
+                {locales.tabs[tab.key]}
               </TabsTrigger>
             ))}
           </TabsList>

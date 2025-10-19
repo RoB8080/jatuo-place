@@ -21,6 +21,27 @@ import {
 
 // 创建逻辑已迁移到 hooks
 
+function useCategoryTreeLocales() {
+  const { t } = useTranslation("data-editor");
+  return {
+    category: {
+      create: t(($) => $["category"]["create"]),
+      edit: t(($) => $.category.edit),
+      delete: t(($) => $.category.delete),
+      deleteConfirm: {
+        title: t(($) => $.category["delete-confirm"].title),
+        content: (params: { categoryName?: string; categoryID: string }) =>
+          t(($) => $.category["delete-confirm"].content, params),
+        confirm: t(($) => $.category["delete-confirm"].confirm),
+        cancel: t(($) => $.category["delete-confirm"].cancel),
+      },
+    },
+    mod: {
+      count: (count: number) => t(($) => $.mod["count"], { count }),
+    },
+  };
+}
+
 export function CategoryCreateButton(
   props: Omit<ComponentProps<typeof Button>, "type" | "onClick"> & {
     onCreated?: (category: ModCategory) => void;
@@ -28,7 +49,7 @@ export function CategoryCreateButton(
 ) {
   const { onCreated } = props;
   const createCategory = useCreateCategory();
-  const { t } = useTranslation("data-editor");
+  const locales = useCategoryTreeLocales();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
@@ -46,7 +67,7 @@ export function CategoryCreateButton(
       onClick={handleClick}
     >
       <Group />
-      <span>{t(($) => $["category"]["create"])}</span>
+      <span>{locales.category.create}</span>
     </Button>
   );
 }
@@ -59,12 +80,12 @@ function CategoryEditButton(
 ) {
   "use no memo";
   const { categoryID, index, ...restProps } = props;
-  const { t } = useTranslation("data-editor");
+  const locales = useCategoryTreeLocales();
 
   return (
     <>
       <CategoryEditSheet index={index}>
-        <TreeNodeAction tooltip={t(($) => $.category.edit)} {...restProps}>
+        <TreeNodeAction tooltip={locales.category.edit} {...restProps}>
           <SquarePen />
         </TreeNodeAction>
       </CategoryEditSheet>
@@ -80,18 +101,18 @@ function CategoryDeleteButton(
 ) {
   const { categoryID, categoryName, ...restProps } = props;
   const deleteCategory = useDeleteCategory();
-  const { t } = useTranslation("data-editor");
+  const locales = useCategoryTreeLocales();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const title = t(($) => $.category["delete-confirm"].title);
-    const content = t(($) => $.category["delete-confirm"].content, {
+    const title = locales.category.deleteConfirm.title;
+    const content = locales.category.deleteConfirm.content({
       categoryName,
       categoryID,
     });
-    const confirmText = t(($) => $.category["delete-confirm"].confirm);
-    const cancelText = t(($) => $.category["delete-confirm"].cancel);
+    const confirmText = locales.category.deleteConfirm.confirm;
+    const cancelText = locales.category.deleteConfirm.cancel;
 
     const confirmed = await invokeConfirmDialog({
       title,
@@ -108,7 +129,7 @@ function CategoryDeleteButton(
   return (
     <TreeNodeAction
       onClick={handleClick}
-      tooltip={t(($) => $.category.delete)}
+      tooltip={locales.category.delete}
       variant="destructive"
       {...restProps}
     >
@@ -124,7 +145,7 @@ export function CategoryTreeNode(props: {
   const { category, index } = props;
   const mods = useModsByCategory(category.id);
   const localize = useLocalizer();
-  const { t } = useTranslation("data-editor");
+  const locales = useCategoryTreeLocales();
 
   return (() => {
     return (
@@ -139,7 +160,7 @@ export function CategoryTreeNode(props: {
           <Group className="size-4 text-muted-foreground" />
           <div className="truncate">{localize(category.name)}</div>
           <div className="shrink-0 text-xs text-muted-foreground">
-            {t(($) => $.mod["count"], { count: mods.length })}
+            {locales.mod.count(mods.length)}
           </div>
         </TreeNodeTitle>
 

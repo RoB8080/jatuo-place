@@ -18,6 +18,16 @@ function toTransformString(
   return `${tx}${sx}`;
 }
 
+function useSortableRowLocales() {
+  const { t } = useTranslation("data-editor");
+  return {
+    moveTop: t(($) => $.orderPanel.moveTop),
+    moveUp: t(($) => $.orderPanel.moveUp),
+    moveDown: t(($) => $.orderPanel.moveDown),
+    moveBottom: t(($) => $.orderPanel.moveBottom),
+  };
+}
+
 export function SortableRow(props: {
   id: string;
   name: string;
@@ -45,7 +55,7 @@ export function SortableRow(props: {
     onMoveDown,
     onMoveBottom,
   } = props;
-  const { t } = useTranslation("data-editor");
+  const locales = useSortableRowLocales();
   const {
     attributes,
     listeners,
@@ -83,7 +93,7 @@ export function SortableRow(props: {
       <ItemActions>
         <ButtonGroup>
           <Button
-            aria-label={t(($) => $.orderPanel.moveTop)}
+            aria-label={locales.moveTop}
             variant="outline"
             size="icon-sm"
             onClick={onMoveTop}
@@ -92,7 +102,7 @@ export function SortableRow(props: {
             <ChevronsUp className="size-4" />
           </Button>
           <Button
-            aria-label={t(($) => $.orderPanel.moveUp)}
+            aria-label={locales.moveUp}
             variant="outline"
             size="icon-sm"
             onClick={onMoveUp}
@@ -102,7 +112,7 @@ export function SortableRow(props: {
           </Button>
           <ButtonGroupSeparator />
           <Button
-            aria-label={t(($) => $.orderPanel.moveDown)}
+            aria-label={locales.moveDown}
             variant="outline"
             size="icon-sm"
             onClick={onMoveDown}
@@ -111,7 +121,7 @@ export function SortableRow(props: {
             <ArrowDown className="size-4" />
           </Button>
           <Button
-            aria-label={t(($) => $.orderPanel.moveBottom)}
+            aria-label={locales.moveBottom}
             variant="outline"
             size="icon-sm"
             onClick={onMoveBottom}

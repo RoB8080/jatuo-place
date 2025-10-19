@@ -9,7 +9,7 @@
     "dev": "concurrently --kill-others --names WEB,API -c blue,magenta \"npm run dev:web\" \"npm run dev:api\"",
     "i18n:extract": "i18next-cli extract",
     "i18n:check": "i18next-cli status",
-    "build": "tsc -b && vite build && vercel build",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "format": "eslint . --fix",
     "test": "vitest",

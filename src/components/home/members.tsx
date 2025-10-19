@@ -8,6 +8,8 @@ import Trucky from "@/assets/svgs/brand/trucky.svg?react";
 
 import { Button } from "../ui/button";
 import { HandHeart } from "lucide-react";
+import { Item, ItemActions, ItemContent, ItemMedia } from "../ui/item";
+import { useIsMobile } from "@/libs/common";
 
 type Roles =
   // t("member.role.rc_mapper", { ns: "home" })
@@ -39,7 +41,7 @@ interface MemberInfo {
 const memberInfos: MemberInfo[] = [
   {
     name: "Rxx2008",
-    avatar: "/members/avatar.rxx2008.jpg",
+    avatar: "/images/members/avatar.rxx2008.jpg",
     roles: ["rc_mapper", "miscellaneous"],
     externalLinks: [
       {
@@ -59,7 +61,7 @@ const memberInfos: MemberInfo[] = [
   },
   {
     name: "Jane",
-    avatar: "/members/avatar.jane.jpg",
+    avatar: "/images/members/avatar.jane.jpg",
     roles: ["programmer", "rc_mapper", "def_fixer"],
     externalLinks: [
       {
@@ -74,7 +76,7 @@ const memberInfos: MemberInfo[] = [
   },
   {
     name: "Joseph",
-    avatar: "/members/avatar.joseph.jpg",
+    avatar: "/images/members/avatar.joseph.jpg",
     roles: ["rc_mapper"],
     externalLinks: [
       {
@@ -85,7 +87,7 @@ const memberInfos: MemberInfo[] = [
   },
   {
     name: "Sūn_Siro14",
-    avatar: "/members/avatar.sun_siro14.jpg",
+    avatar: "/images/members/avatar.sun_siro14.jpg",
     roles: ["rc_mapper"],
     externalLinks: [
       {
@@ -96,32 +98,58 @@ const memberInfos: MemberInfo[] = [
   },
   {
     name: "初一爱笑啊",
-    avatar: "/members/avatar.chu_yi_ai_xiao_a.jpg",
+    avatar: "/images/members/avatar.chu_yi_ai_xiao_a.jpg",
     roles: ["vtc_manager"],
   },
   {
     name: "RoB8080",
-    avatar: "/members/avatar.rob8080.jpg",
+    avatar: "/images/members/avatar.rob8080.jpg",
     roles: ["web_developer"],
   },
 ];
 
-function Member({ info }: { info: MemberInfo }) {
+function useMembersLocales() {
   const { t } = useTranslation("home");
+  return {
+    title: t(($) => $.members.title),
+    description: t(($) => $.members.description),
+    donate: t(($) => $.members.donate),
+    role: {
+      rc_mapper: t(($) => $.member.role.rc_mapper),
+      programmer: t(($) => $.member.role.programmer),
+      def_fixer: t(($) => $.member.role.def_fixer),
+      miscellaneous: t(($) => $.member.role.miscellaneous),
+      ui_engineer: t(($) => $.member.role.ui_engineer),
+      web_developer: t(($) => $.member.role.web_developer),
+      vtc_manager: t(($) => $.member.role.vtc_manager),
+    },
+  };
+}
+
+function Member({ info }: { info: MemberInfo }) {
+  const locales = useMembersLocales();
+  const isMobile = useIsMobile();
   return (
-    <div className="relative flex flex-row gap-8 rounded-xl bg-muted p-8">
-      <div className="flex-none">
+    <Item variant="muted">
+      <ItemMedia>
         <Avatar className="size-16">
           <AvatarImage src={info.avatar} />
           <AvatarFallback>{info.name}</AvatarFallback>
         </Avatar>
-      </div>
-      <div className="flex-auto">
+      </ItemMedia>
+      <ItemContent>
         <div className="text-xl leading-8 font-medium text-foreground">
           {info.name}
         </div>
-        <div className="text-sm leading-5 font-medium text-muted-foreground">
-          {info.roles.map((role) => t(($) => $.member.role[role])).join(" / ")}
+        <div className="flex flex-col gap-0.5 text-sm leading-5 font-medium text-muted-foreground sm:block">
+          {info.roles.map((role) => (
+            <span
+              className="before:content-['_·_'] sm:first:before:content-none"
+              key={role}
+            >
+              {locales.role[role]}
+            </span>
+          ))}
         </div>
         <div className="mt-1 -ml-2 flex flex-row">
           {info.externalLinks?.map((link) => (
@@ -141,42 +169,54 @@ function Member({ info }: { info: MemberInfo }) {
             </a>
           ))}
         </div>
-      </div>
+      </ItemContent>
 
       {info.donateHref && (
-        <a
-          className="absolute top-3 right-3"
-          key={info.donateHref}
-          href={info.donateHref}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button
-            className="text-muted-foreground transition-all hover:text-primary"
-            variant="ghost"
+        <ItemActions>
+          <a
+            key={info.donateHref}
+            href={info.donateHref}
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <HandHeart className="size-5" />
-            <div>{t(($) => $.members.donate)}</div>
-          </Button>
-        </a>
+            {isMobile ? (
+              <Button
+                className="h-fit flex-col gap-0.5 py-2 text-muted-foreground transition-all hover:text-primary"
+                size="xs"
+                variant="ghost"
+              >
+                <HandHeart className="size-5" />
+                <div>{locales.donate}</div>
+              </Button>
+            ) : (
+              <Button
+                className="text-muted-foreground transition-all hover:text-primary"
+                variant="ghost"
+              >
+                <HandHeart className="size-5" />
+                <div>{locales.donate}</div>
+              </Button>
+            )}
+          </a>
+        </ItemActions>
       )}
-    </div>
+    </Item>
   );
 }
 
 export function Members() {
-  const { t } = useTranslation("home");
+  const locales = useMembersLocales();
   return (
     <FlexibleBox
       as="section"
       data-slot="members"
       className="py-12"
-      innerClassName="flex flex-col gap-8 px-4 md:flex-row md:px-0"
+      innerClassName="flex flex-col gap-8 md:flex-row"
     >
       <div className="top-8 md:sticky md:w-[240px] ">
-        <h2>{t(($) => $.members.title)}</h2>
+        <h2>{locales.title}</h2>
         <p className="pt-4 font-medium text-muted-foreground">
-          {t(($) => $.members.description)}
+          {locales.description}
         </p>
       </div>
       <div className="flex flex-auto flex-col gap-4">

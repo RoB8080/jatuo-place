@@ -1,19 +1,41 @@
 import { cn } from "@/libs/utils";
+import { cva } from "class-variance-authority";
 import type { ComponentProps } from "react";
+
+type CardSize = "sm" | "md";
+type CardVariant = "default" | "dashed";
+
+const cardVariants = cva(
+  "group/card flex flex-col rounded-xl border bg-card text-card-foreground shadow-sm",
+  {
+    variants: {
+      size: {
+        sm: "gap-4 py-4",
+        md: "gap-6 py-6",
+      } satisfies Record<CardSize, string>,
+      variant: {
+        default: "border border-border",
+        dashed: "border border-dashed border-border",
+      } satisfies Record<CardVariant, string>,
+    },
+    defaultVariants: {
+      size: "md",
+      variant: "default",
+    },
+  },
+);
 
 function Card({
   className,
   size = "md",
+  variant = "default",
   ...props
-}: ComponentProps<"div"> & { size?: "sm" | "md" }) {
+}: ComponentProps<"div"> & { size?: CardSize; variant?: CardVariant }) {
   return (
     <div
       data-slot="card"
       data-size={size}
-      className={cn(
-        "group/card flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm data-[size=sm]:gap-4 data-[size=sm]:py-4",
-        className,
-      )}
+      className={cn(cardVariants({ size, variant }), className)}
       {...props}
     />
   );

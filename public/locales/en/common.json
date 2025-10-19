@@ -1,0 +1,21 @@
+{
+  "combobox": {
+    "close": "Close",
+    "empty": "No result.",
+    "search": "Search",
+    "select": "Select..."
+  },
+  "empty": {
+    "noData": "No Data"
+  },
+  "external": {
+    "discord": "Join us on Discord",
+    "github": "View on GitHub",
+    "qq": "Join us on QQ"
+  },
+  "routes": {
+    "dataEditor": "Data Editor",
+    "home": "Home",
+    "mapCombo": "Map Combo"
+  }
+}

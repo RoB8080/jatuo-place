@@ -100,24 +100,29 @@ function flattenConditionItems(
   return items;
 }
 
-export function ConditionDisplay({
-  conditionResult,
-  modMap,
-}: ConditionDisplayProps) {
+function useConditionDisplayLocales() {
   const { t } = useTranslation("map-combo");
-
-  if (!conditionResult) {
-    return null;
-  }
-
-  // Prepare translations at the top level
-  const translations = {
+  return {
     and: t(($) => $["condition-display"].and),
     or: t(($) => $["condition-display"].or),
     not: t(($) => $["condition-display"].not),
     incompatibleMod: t(($) => $["condition-display"]["incompatible-mod"]),
     requires: t(($) => $["condition-display"].requires),
   };
+}
+
+export function ConditionDisplay({
+  conditionResult,
+  modMap,
+}: ConditionDisplayProps) {
+  const locales = useConditionDisplayLocales();
+
+  if (!conditionResult) {
+    return null;
+  }
+
+  // Prepare translations at the top level
+  const translations = locales;
 
   const items = flattenConditionItems([conditionResult], modMap, translations);
 

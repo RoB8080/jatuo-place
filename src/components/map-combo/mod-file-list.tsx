@@ -12,6 +12,13 @@ export interface ModFileListProps {
   className?: string;
 }
 
+function useModFileListLocales() {
+  const { t } = useTranslation("map-combo");
+  return {
+    download: t(($) => $["mod-file-list"].download),
+  };
+}
+
 function ModFile({
   data,
   ref,
@@ -21,8 +28,7 @@ function ModFile({
 }) {
   const { name, posterURL, mod } = data;
   const { downloadURL } = mod ?? {};
-  const { t } = useTranslation("map-combo");
-  const downloadLabel = t(($) => $["mod-file-list"].download);
+  const locales = useModFileListLocales();
 
   return (
     <Card size="sm" ref={ref}>
@@ -39,7 +45,7 @@ function ModFile({
           <p className="flex-auto text-wrap text-muted-foreground"></p>
           <div className="flex flex-row-reverse">
             {downloadURL && (
-              <SimpleTooltip content={downloadLabel}>
+              <SimpleTooltip content={locales.download}>
                 <a href={downloadURL} target="_blank" rel="noopener noreferrer">
                   <Button size="icon-sm">
                     <Download className="size-3.5" />

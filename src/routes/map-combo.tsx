@@ -55,4 +55,4 @@ function RouteComponent() {
 export const Route = createFileRoute("/map-combo")({
   component: RouteComponent,
 });
-// t('routes.map-combo')
+// t('routes.mapCombo', { ns: 'common' })

@@ -1,0 +1,30 @@
+{
+  "about": {
+    "paragraph-1": "我们是一个致力于交付高级修复、真实地图和最佳地图组合的社区。",
+    "paragraph-2": "加入我们，探索人类、自然和技术的组合。",
+    "title": "关于我们"
+  },
+  "hero": {
+    "actions": {
+      "start-to-use": "开始使用"
+    },
+    "description": "选择并下载，再按照推荐的加载顺序配置，即可畅享顺畅、无冲突的游玩。",
+    "title": "探索广袤的卡车世界"
+  },
+  "member": {
+    "role": {
+      "def_fixer": "Def 修复",
+      "miscellaneous": "其他",
+      "programmer": "程序",
+      "rc_mapper": "RC 制作",
+      "ui_engineer": "UI 工程师",
+      "vtc_manager": "VTC 管理",
+      "web_developer": "Web 开发"
+    }
+  },
+  "members": {
+    "description": "为社区做出了重要贡献的团队成员",
+    "donate": "捐赠",
+    "title": "团队成员"
+  }
+}

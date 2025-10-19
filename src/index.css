@@ -57,7 +57,7 @@
 }
 
 :root {
-  --background: oklch(0.98 0 0);
+  --background: oklch(0.99 0 0);
   --foreground: oklch(0.28 0.04 260.33);
   --card: oklch(1.00 0 0);
   --card-foreground: oklch(0.28 0.04 260.33);
@@ -181,4 +181,34 @@
   code {
     @apply bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold
   }
+}
+
+/* glow-flash 已废弃，相关样式移除 */
+
+/* Border pulse animation for selected item (fast double pulse) */
+@keyframes border-pulse {
+  0%, 100% {
+    border-color: var(--border);
+  }
+  50% {
+    border-color: var(--ring);
+  }
+}
+
+.pulse-border {
+  animation: border-pulse 0.8s ease-in-out 0s 2;
+}
+
+/* Background pulse animation for selected item (fast double pulse) */
+@keyframes bg-pulse {
+  0%, 100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: var(--accent);
+  }
+}
+
+.pulse-bg {
+  animation: bg-pulse 0.8s ease-in-out 0s 2;
 }

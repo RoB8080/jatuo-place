@@ -1,0 +1,128 @@
+{
+  "mod": {
+    "count_zero": "Нет модов",
+    "count_one": "1 мод",
+    "count_other": "{{count}} модов",
+    "create": "Новый мод",
+    "delete": "Удалить мод",
+    "delete-confirm": {
+      "cancel": "Отмена",
+      "confirm": "Удалить",
+      "content": "Вы уверены, что хотите удалить 「{{modName}}」(ID: {{modID}})? Файлы будут оставлены, но их ассоциация с модом будет потеряна.",
+      "title": "Удалить мод"
+    },
+    "nomad": "Номадские моды",
+    "edit": "Редактировать мод",
+    "count": "{{count}} модов"
+  },
+  "actions": {
+    "failed-loading-prod-data": "Не удалось загрузить данные из продакшн окружения",
+    "from-prod-data": "Из продакшн данных",
+    "load": "Загрузить",
+    "save": {
+      "label": "Сохранить",
+      "validation-failed": {
+        "exception-tip": "Пожалуйста, проверьте консоль для получения дополнительных деталей.",
+        "save-anyway": "Сохранить всё равно",
+        "title": "Недействительные данные"
+      }
+    }
+  },
+  "category": {
+    "create": "Новая категория",
+    "delete": "Удалить категорию",
+    "delete-confirm": {
+      "cancel": "Отмена",
+      "confirm": "Удалить",
+      "content": "Вы уверены, что хотите удалить 「{{categoryName}}」(ID: {{categoryID}})? Моды будут оставлены, но их ассоциация с категорией будет потеряна.",
+      "title": "Удалить категорию"
+    },
+    "edit": "Редактировать категорию",
+    "property": {
+      "id": "ID категории",
+      "name": "Имя"
+    },
+    "propertyDesc": {
+      "id": "Измените с осторожностью, так как это повлияет на ассоциацию существующих модов."
+    }
+  },
+  "entity": {
+    "categoryPanel": {
+      "notFound": "Категория не найдена",
+      "title": "Редактировать категорию"
+    },
+    "conditionEditor": {
+      "addAction": "Добавить условие",
+      "childLabel": "Дочернее условие #{{index}}",
+      "noConditionHelp": "Нет условий. Выберите тип, чтобы начать.",
+      "previewLabel": "Предпросмотр: {{text}}",
+      "removeAction": "Удалить",
+      "typeLabel": "Тип",
+      "types": {
+        "and": "Группа AND",
+        "mod": "Требует мод",
+        "none": "Нет",
+        "not": "НЕ (NOT)",
+        "or": "Группа OR"
+      }
+    },
+    "editPanel": {
+      "cancel": "Отмена",
+      "save": "Сохранить"
+    },
+    "filePanel": {
+      "conditionLabel": "Условие",
+      "modIDLabel": "ID мода",
+      "nameLabel": "Имя файла",
+      "notFound": "Файл не найден",
+      "title": "Редактировать файл"
+    },
+    "modPanel": {
+      "authorLabel": "Автор",
+      "categoryIDLabel": "ID категории",
+      "conditionLabel": "Условие",
+      "descriptionLegend": "Описание",
+      "downloadURLLabel": "URL загрузки",
+      "idLabel": "ID мода",
+      "isPaidLabel": "Платный",
+      "isPassiveLabel": "Пассивный",
+      "mainPageURLLabel": "URL главной страницы",
+      "nameLabel": "Название мода",
+      "notFound": "Мод не найден",
+      "posterURLLabel": "URL постера",
+      "tipsAddAction": "Добавить совет",
+      "tipsLegend": "Советы",
+      "tipsRemoveAction": "Удалить совет",
+      "title": "Редактировать мод",
+      "versionLabel": "Версия"
+    }
+  },
+  "entityPanel": {
+    "searchPlaceholder": "Поиск модов или файлов"
+  },
+  "file": {
+    "count": "{{count}} файлов",
+    "create": "Новый файл",
+    "delete": "Удалить файл",
+    "delete-confirm": {
+      "cancel": "Отмена",
+      "confirm": "Удалить",
+      "content": "Вы уверены, что хотите удалить 「{{fileName}}」?",
+      "title": "Удалить файл"
+    },
+    "edit": "Редактировать файл",
+    "nomad": "Файлы без мода"
+  },
+  "orderPanel": {
+    "moveBottom": "Вниз до конца",
+    "moveDown": "Опустить",
+    "moveTop": "Вверх до начала",
+    "moveUp": "Поднять",
+    "resultCount": "Найдено {{count}} результатов",
+    "searchPlaceholder": "Поиск файла"
+  },
+  "tabs": {
+    "entity": "Сущности",
+    "order": "Сортировка"
+  }
+}

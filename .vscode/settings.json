@@ -35,5 +35,7 @@
   "cSpell.words": [
     "Jatuo"
   ],
-  "files.eol": "\n"
+  "files.eol": "\n",
+  "javascript.inlayHints.parameterNames.enabled": "all",
+  "typescript.inlayHints.parameterNames.enabled": "all"
 }

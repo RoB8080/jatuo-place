@@ -1,0 +1,128 @@
+{
+  "mod": {
+    "count_zero": "No mods",
+    "count_one": "1 mod",
+    "count_other": "{{count}} mods",
+    "create": "New Mod",
+    "delete": "Delete Mod",
+    "delete-confirm": {
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "content": "Are you sure to delete mod \"{{modName}}\" (ID: {{modID}})? Files will be kept, but their mod association will be lost.",
+      "title": "Delete Mod"
+    },
+    "nomad": "Uncategorized Mods",
+    "edit": "Edit Mod",
+    "count": "{{count}} mods"
+  },
+  "actions": {
+    "failed-loading-prod-data": "Failed to load from production data",
+    "from-prod-data": "Load from production data",
+    "load": "Load",
+    "save": {
+      "label": "Save",
+      "validation-failed": {
+        "exception-tip": "Please check console for more details.",
+        "save-anyway": "Save anyway",
+        "title": "Invalid data"
+      }
+    }
+  },
+  "category": {
+    "create": "New Category",
+    "delete": "Delete Category",
+    "delete-confirm": {
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "content": "Are you sure to delete category \"{{categoryName}}\" (ID: {{categoryID}})? Mods will be kept, but their category association will be lost.",
+      "title": "Delete Category"
+    },
+    "edit": "Edit Category",
+    "property": {
+      "id": "Category ID",
+      "name": "Name"
+    },
+    "propertyDesc": {
+      "id": "Change carefully as it affects existing mods' category association."
+    }
+  },
+  "entity": {
+    "categoryPanel": {
+      "notFound": "Category not found",
+      "title": "Edit Category"
+    },
+    "conditionEditor": {
+      "addAction": "Add Condition",
+      "childLabel": "Child #{{index}}",
+      "noConditionHelp": "No condition. Select a type to start.",
+      "previewLabel": "Preview: {{text}}",
+      "removeAction": "Remove",
+      "typeLabel": "Type",
+      "types": {
+        "and": "AND Group",
+        "mod": "Require Mod",
+        "none": "None",
+        "not": "NOT",
+        "or": "OR Group"
+      }
+    },
+    "editPanel": {
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "filePanel": {
+      "conditionLabel": "Condition",
+      "modIDLabel": "Mod ID",
+      "nameLabel": "File Name",
+      "notFound": "File not found",
+      "title": "Edit File"
+    },
+    "modPanel": {
+      "authorLabel": "Author",
+      "categoryIDLabel": "Category ID",
+      "conditionLabel": "Condition",
+      "descriptionLegend": "Description",
+      "downloadURLLabel": "Download URL",
+      "idLabel": "Mod ID",
+      "isPaidLabel": "Paid",
+      "isPassiveLabel": "Passive",
+      "mainPageURLLabel": "Main Page URL",
+      "nameLabel": "Mod Name",
+      "notFound": "Mod not found",
+      "posterURLLabel": "Poster URL",
+      "tipsAddAction": "Add Tip",
+      "tipsLegend": "Tips",
+      "tipsRemoveAction": "Remove Tip",
+      "title": "Edit Mod",
+      "versionLabel": "Version"
+    }
+  },
+  "entityPanel": {
+    "searchPlaceholder": "Search mods or files"
+  },
+  "file": {
+    "count": "{{count}} files",
+    "create": "New File",
+    "delete": "Delete File",
+    "delete-confirm": {
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "content": "Are you sure to delete file \"{{fileName}}\"?",
+      "title": "Delete File"
+    },
+    "edit": "Edit File",
+    "nomad": "Unmodded Files"
+  },
+  "orderPanel": {
+    "moveBottom": "Move to Bottom",
+    "moveDown": "Move Down",
+    "moveTop": "Move to Top",
+    "moveUp": "Move Up",
+    "resultCount": "Found {{count}} results",
+    "searchPlaceholder": "Search file"
+  },
+  "tabs": {
+    "entity": "Entities",
+    "order": "Order"
+  }
+}

@@ -1,0 +1,568 @@
+import {
+  SimpleFormField,
+  useAppForm,
+  withForm,
+} from "@/components/common/form";
+import { FieldSet, FieldLegend } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { useIsMobile } from "@/libs/common";
+import { useState, type ReactNode } from "react";
+import { useCategories, useMods, useUpdateMod } from "../atoms/hooks";
+import { useTranslation } from "react-i18next";
+import { Button } from "@/components/ui/button";
+import {
+  modSchema,
+  type Mod,
+  type NonRecursiveMod,
+  useLocalizer,
+} from "@/libs/map-combo";
+import { SimpleEmpty } from "@/components/common/empty";
+import type { StandardSchemaV1 } from "@tanstack/react-form";
+import { ResponsiveCombobox } from "@/components/common/combobox";
+import ConditionEditor from "../condition-editor";
+import type { Condition } from "@/libs/map-combo";
+import type { LocaleMap } from "@/libs/map-combo/locale";
+import { LocaleSetTextareaField } from "@/components/common/locale-field";
+
+const ModIDField = withForm({
+  defaultValues: {} as NonRecursiveMod,
+  render: function ModIDField(props) {
+    const { form } = props;
+    const locales = useModEditPanelLocales();
+    return (
+      <form.Field name={`id`}>
+        {(field) => {
+          const errors = field.state?.meta?.errors ?? [];
+          const normalizedErrors = errors.map((e) =>
+            typeof e === "string" ? { message: e } : e,
+          ) as Array<{ message?: string }>;
+          const invalid = normalizedErrors.length > 0;
+          return (
+            <SimpleFormField
+              label={locales.idLabel}
+              required
+              invalid={invalid}
+              errors={normalizedErrors}
+            >
+              <Input
+                value={field.state.value}
+                onChange={(e) => field.handleChange(e.target.value)}
+              />
+            </SimpleFormField>
+          );
+        }}
+      </form.Field>
+    );
+  },
+});
+
+const ModNameField = withForm({
+  defaultValues: {} as NonRecursiveMod,
+  render: function ModNameField(props) {
+    const { form } = props;
+    const locales = useModEditPanelLocales();
+    return (
+      <form.Field name={`name`}>
+        {(field) => {
+          const errors = field.state?.meta?.errors ?? [];
+          const normalizedErrors = errors.map((e) =>
+            typeof e === "string" ? { message: e } : e,
+          ) as Array<{ message?: string }>;
+          const invalid = normalizedErrors.length > 0;
+          return (
+            <SimpleFormField
+              label={locales.nameLabel}
+              required
+              invalid={invalid}
+              errors={normalizedErrors}
+            >
+              <Input
+                value={field.state.value}
+                onChange={(e) => field.handleChange(e.target.value)}
+              />
+            </SimpleFormField>
+          );
+        }}
+      </form.Field>
+    );
+  },
+});
+
+const ModVersionField = withForm({
+  defaultValues: {} as NonRecursiveMod,
+  render: function ModVersionField(props) {
+    const { form } = props;
+    const locales = useModEditPanelLocales();
+    return (
+      <form.Field name={`version`}>
+        {(field) => {
+          const errors = field.state?.meta?.errors ?? [];
+          const normalizedErrors = errors.map((e) =>
+            typeof e === "string" ? { message: e } : e,
+          ) as Array<{ message?: string }>;
+          const invalid = normalizedErrors.length > 0;
+          return (
+            <SimpleFormField
+              label={locales.versionLabel}
+              required
+              invalid={invalid}
+              errors={normalizedErrors}
+            >
+              <Input
+                value={field.state.value}
+                onChange={(e) => field.handleChange(e.target.value)}
+              />
+            </SimpleFormField>
+          );
+        }}
+      </form.Field>
+    );
+  },
+});
+
+const ModDescriptionField = withForm({
+  defaultValues: {} as NonRecursiveMod,
+  render: function ModDescriptionField(props) {
+    const { form } = props;
+    const locales = useModEditPanelLocales();
+    return (
+      <LocaleSetTextareaField
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        form={form as any}
+        path="description"
+        label={locales.descriptionLegend}
+        rows={4}
+      />
+    );
+  },
+});
+
+const ModTipsField = withForm({
+  defaultValues: {} as NonRecursiveMod,
+  render: function ModTipsField(props) {
+    const { form } = props;
+    const locales = useModEditPanelLocales();
+    return (
+      <form.Field name={`tips`} mode="array">
+        {(field) => {
+          const tips = (field.state.value ?? []) as Array<LocaleMap>;
+          return (
+            <div className="space-y-3">
+              <FieldLegend className="flex items-center justify-between">
+                {locales.tipsLegend}
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  type="button"
+                  onClick={() => field.pushValue({ en: "" })}
+                >
+                  {locales.tipsAddAction}
+                </Button>
+              </FieldLegend>
+              {tips.map((_, i) => (
+                <div key={i} className="space-y-2 rounded border p-2">
+                  <LocaleSetTextareaField
+                    labelClassName="flex w-full justify-between"
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    form={form as any}
+                    path={`tips.${i}`}
+                    label={
+                      <>
+                        <span>
+                          {locales.tipsLegend}
+                          {i + 1}
+                        </span>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          type="button"
+                          onClick={() => field.removeValue(i)}
+                        >
+                          {locales.tipsRemoveAction}
+                        </Button>
+                      </>
+                    }
+                    rows={4}
+                  />
+                  <div className="flex justify-end"></div>
+                </div>
+              ))}
+            </div>
+          );
+        }}
+      </form.Field>
+    );
+  },
+});
+
+const ModCategoryIDField = withForm({
+  defaultValues: {} as NonRecursiveMod,
+  render: function ModCategoryIDField(props) {
+    const { form } = props;
+    const categories = useCategories();
+    const localize = useLocalizer();
+    const locales = useModEditPanelLocales();
+    return (
+      <form.Field name={`categoryID`}>
+        {(field) => {
+          const errors = field.state?.meta?.errors ?? [];
+          const normalizedErrors = errors.map((e) =>
+            typeof e === "string" ? { message: e } : e,
+          ) as Array<{ message?: string }>;
+          const invalid = normalizedErrors.length > 0;
+          return (
+            <SimpleFormField
+              label={locales.categoryIDLabel}
+              invalid={invalid}
+              errors={normalizedErrors}
+            >
+              <ResponsiveCombobox
+                contentClassName="data-[mobile=true]:min-h-[50svh]"
+                options={categories.map((c) => {
+                  const label = localize(c.name);
+                  return {
+                    value: c.id,
+                    keywords: [c.id, label],
+                    label,
+                  };
+                })}
+                value={field.state.value}
+                onChange={(v: string) => field.setValue(() => v)}
+              />
+            </SimpleFormField>
+          );
+        }}
+      </form.Field>
+    );
+  },
+});
+
+const ModConditionField = withForm({
+  defaultValues: {} as NonRecursiveMod,
+  render: function ModConditionField(props) {
+    const { form } = props;
+    const locales = useModEditPanelLocales();
+    return (
+      <form.Field name={`condition`}>
+        {(field) => {
+          const errors = field.state?.meta?.errors ?? [];
+          const normalizedErrors = errors.map((e) =>
+            typeof e === "string" ? { message: e } : e,
+          ) as Array<{ message?: string }>;
+          const invalid = normalizedErrors.length > 0;
+          return (
+            <SimpleFormField
+              label={locales.conditionLabel}
+              invalid={invalid}
+              errors={normalizedErrors}
+            >
+              <ConditionEditor
+                value={field.state.value as Condition | undefined}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onChange={(next) => field.setValue(() => next as any)}
+              />
+            </SimpleFormField>
+          );
+        }}
+      </form.Field>
+    );
+  },
+});
+
+const ModAuthorField = withForm({
+  defaultValues: {} as NonRecursiveMod,
+  render: function ModAuthorField(props) {
+    const { form } = props;
+    const locales = useModEditPanelLocales();
+    return (
+      <form.Field name={`author`}>
+        {(field) => {
+          const errors = field.state?.meta?.errors ?? [];
+          const normalizedErrors = errors.map((e) =>
+            typeof e === "string" ? { message: e } : e,
+          ) as Array<{ message?: string }>;
+          const invalid = normalizedErrors.length > 0;
+          return (
+            <SimpleFormField
+              label={locales.authorLabel}
+              invalid={invalid}
+              errors={normalizedErrors}
+            >
+              <Input
+                value={field.state.value ?? ""}
+                onChange={(e) => field.handleChange(e.target.value)}
+              />
+            </SimpleFormField>
+          );
+        }}
+      </form.Field>
+    );
+  },
+});
+
+const ModIsPaidField = withForm({
+  defaultValues: {} as NonRecursiveMod,
+  render: function ModIsPaidField(props) {
+    const { form } = props;
+    const locales = useModEditPanelLocales();
+    return (
+      <form.Field name={`isPaid`}>
+        {(field) => {
+          const errors = field.state?.meta?.errors ?? [];
+          const normalizedErrors = errors.map((e) =>
+            typeof e === "string" ? { message: e } : e,
+          ) as Array<{ message?: string }>;
+          const invalid = normalizedErrors.length > 0;
+          const checked = Boolean(field.state.value);
+          return (
+            <SimpleFormField
+              label={locales.isPaidLabel}
+              invalid={invalid}
+              errors={normalizedErrors}
+            >
+              <Checkbox
+                id="isPaid"
+                checked={checked}
+                onCheckedChange={(v) => field.setValue(() => Boolean(v))}
+              />
+            </SimpleFormField>
+          );
+        }}
+      </form.Field>
+    );
+  },
+});
+
+const ModIsPassiveField = withForm({
+  defaultValues: {} as NonRecursiveMod,
+  render: function ModIsPassiveField(props) {
+    const { form } = props;
+    const locales = useModEditPanelLocales();
+    return (
+      <form.Field name={`isPassive`}>
+        {(field) => {
+          const errors = field.state?.meta?.errors ?? [];
+          const normalizedErrors = errors.map((e) =>
+            typeof e === "string" ? { message: e } : e,
+          ) as Array<{ message?: string }>;
+          const invalid = normalizedErrors.length > 0;
+          const checked = Boolean(field.state.value);
+          return (
+            <SimpleFormField
+              label={locales.isPassiveLabel}
+              invalid={invalid}
+              errors={normalizedErrors}
+            >
+              <Checkbox
+                id="isPassive"
+                checked={checked}
+                onCheckedChange={(v) => field.setValue(() => Boolean(v))}
+              />
+            </SimpleFormField>
+          );
+        }}
+      </form.Field>
+    );
+  },
+});
+
+const ModPosterURLField = withForm({
+  defaultValues: {} as NonRecursiveMod,
+  render: function ModPosterURLField(props) {
+    const { form } = props;
+    const locales = useModEditPanelLocales();
+    return (
+      <form.Field name={`posterURL`}>
+        {(field) => {
+          const errors = field.state?.meta?.errors ?? [];
+          const normalizedErrors = errors.map((e) =>
+            typeof e === "string" ? { message: e } : e,
+          ) as Array<{ message?: string }>;
+          const invalid = normalizedErrors.length > 0;
+          return (
+            <SimpleFormField
+              label={locales.posterURLLabel}
+              invalid={invalid}
+              errors={normalizedErrors}
+            >
+              <Input
+                value={field.state.value ?? ""}
+                onChange={(e) => field.handleChange(e.target.value)}
+              />
+            </SimpleFormField>
+          );
+        }}
+      </form.Field>
+    );
+  },
+});
+
+const ModMainPageURLField = withForm({
+  defaultValues: {} as NonRecursiveMod,
+  render: function ModMainPageURLField(props) {
+    const { form } = props;
+    const locales = useModEditPanelLocales();
+    return (
+      <form.Field name={`mainPageURL`}>
+        {(field) => {
+          const errors = field.state?.meta?.errors ?? [];
+          const normalizedErrors = errors.map((e) =>
+            typeof e === "string" ? { message: e } : e,
+          ) as Array<{ message?: string }>;
+          const invalid = normalizedErrors.length > 0;
+          return (
+            <SimpleFormField
+              label={locales.mainPageURLLabel}
+              invalid={invalid}
+              errors={normalizedErrors}
+            >
+              <Input
+                value={field.state.value ?? ""}
+                onChange={(e) => field.handleChange(e.target.value)}
+              />
+            </SimpleFormField>
+          );
+        }}
+      </form.Field>
+    );
+  },
+});
+
+const ModDownloadURLField = withForm({
+  defaultValues: {} as NonRecursiveMod,
+  render: function ModDownloadURLField(props) {
+    const { form } = props;
+    const locales = useModEditPanelLocales();
+    return (
+      <form.Field name={`downloadURL`}>
+        {(field) => {
+          const errors = field.state?.meta?.errors ?? [];
+          const normalizedErrors = errors.map((e) =>
+            typeof e === "string" ? { message: e } : e,
+          ) as Array<{ message?: string }>;
+          const invalid = normalizedErrors.length > 0;
+          return (
+            <SimpleFormField
+              label={locales.downloadURLLabel}
+              invalid={invalid}
+              errors={normalizedErrors}
+            >
+              <Input
+                value={field.state.value ?? ""}
+                onChange={(e) => field.handleChange(e.target.value)}
+              />
+            </SimpleFormField>
+          );
+        }}
+      </form.Field>
+    );
+  },
+});
+
+function useModEditPanelLocales() {
+  const { t } = useTranslation("data-editor");
+  return {
+    idLabel: t(($) => $.entity.modPanel.idLabel),
+    nameLabel: t(($) => $.entity.modPanel.nameLabel),
+    versionLabel: t(($) => $.entity.modPanel.versionLabel),
+    descriptionLegend: t(($) => $.entity.modPanel.descriptionLegend),
+    tipsLegend: t(($) => $.entity.modPanel.tipsLegend),
+    tipsAddAction: t(($) => $.entity.modPanel.tipsAddAction),
+    tipsRemoveAction: t(($) => $.entity.modPanel.tipsRemoveAction),
+    categoryIDLabel: t(($) => $.entity.modPanel.categoryIDLabel),
+    conditionLabel: t(($) => $.entity.modPanel.conditionLabel),
+    authorLabel: t(($) => $.entity.modPanel.authorLabel),
+    isPaidLabel: t(($) => $.entity.modPanel.isPaidLabel),
+    isPassiveLabel: t(($) => $.entity.modPanel.isPassiveLabel),
+    posterURLLabel: t(($) => $.entity.modPanel.posterURLLabel),
+    mainPageURLLabel: t(($) => $.entity.modPanel.mainPageURLLabel),
+    downloadURLLabel: t(($) => $.entity.modPanel.downloadURLLabel),
+  };
+}
+
+function useModEditSheetLocales() {
+  const { t } = useTranslation("data-editor");
+  return {
+    title: t(($) => $.entity.modPanel.title),
+    notFound: t(($) => $.entity.modPanel.notFound),
+    save: t(($) => $.entity.editPanel.save),
+    cancel: t(($) => $.entity.editPanel.cancel),
+  };
+}
+
+export function ModEditSheet(props: { modID: string; children: ReactNode }) {
+  const { modID, children } = props;
+  const [isOpen, setIsOpen] = useState(false);
+  const locales = useModEditSheetLocales();
+  const isMobile = useIsMobile();
+  const mods = useMods();
+  const updateMod = useUpdateMod();
+
+  const mod = mods.find((m) => m.id === modID);
+
+  const localForm = useAppForm({
+    defaultValues: mod as NonRecursiveMod,
+    validators: {
+      onChange: modSchema as StandardSchemaV1<NonRecursiveMod>,
+    },
+    onSubmit: ({ value }: { value: NonRecursiveMod }) => {
+      updateMod(modID, value as Mod);
+    },
+  });
+
+  if (!mod) {
+    return <SimpleEmpty title={locales.notFound} />;
+  }
+
+  return (
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild onClick={(e) => e.stopPropagation()}>
+        {children}
+      </SheetTrigger>
+      <SheetContent side={isMobile ? "bottom" : "right"}>
+        <SheetHeader>
+          <SheetTitle>{locales.title}</SheetTitle>
+        </SheetHeader>
+        <FieldSet className="min-h-0 flex-auto overflow-y-auto px-4">
+          <ModIDField form={localForm} />
+          <ModNameField form={localForm} />
+          <ModVersionField form={localForm} />
+          <ModAuthorField form={localForm} />
+          <ModIsPaidField form={localForm} />
+          <ModIsPassiveField form={localForm} />
+          <ModPosterURLField form={localForm} />
+          <ModMainPageURLField form={localForm} />
+          <ModDownloadURLField form={localForm} />
+          <ModDescriptionField form={localForm} />
+          <ModTipsField form={localForm} />
+          <ModCategoryIDField form={localForm} />
+          <ModConditionField form={localForm} />
+        </FieldSet>
+        <SheetFooter className="flex-row">
+          <Button className="flex-1" variant="outline">
+            {locales.cancel}
+          </Button>
+          <Button
+            className="flex-2"
+            type="button"
+            onClick={() => {
+              localForm.handleSubmit().then(() => setIsOpen(false));
+            }}
+          >
+            {locales.save}
+          </Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  );
+}

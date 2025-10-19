@@ -12,8 +12,8 @@ export function Hero() {
       data-slot="hero"
       innerClassName="flex flex-col px-8 py-24 text-center"
     >
-      <h1 className="text-[48px] font-black md:text-[64px] lg:text-[76px]">
-        Jatuo's Place
+      <h1 className="text-[48px] font-bold md:text-5xl lg:text-6xl">
+        {t(($) => $.hero.title)}
       </h1>
       <p className="mx-6 mt-4 mb-7 text-base text-muted-foreground md:mt-5 md:mb-8 md:text-lg lg:mt-6 lg:mb-10 lg:text-xl">
         {t(($) => $.hero.description)}

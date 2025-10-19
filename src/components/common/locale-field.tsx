@@ -129,15 +129,21 @@ export const LocaleSetTextareaField = withForm({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   defaultValues: {} as any,
   props: {
-    path: "" as string,
-    label: "" as ReactNode,
-    rows: 4 as number,
+    className: undefined,
+    path: "",
+    label: "",
+    rows: 4,
+  } as {
+    labelClassName?: string;
+    path: string;
+    label: ReactNode;
+    rows: number;
   },
   render: function LocaleSetTextareaField(props) {
-    const { form, path, label, rows } = props;
+    const { form, path, label, rows, labelClassName } = props;
     return (
       <Field>
-        <FieldLabel>{label}</FieldLabel>
+        <FieldLabel className={labelClassName}>{label}</FieldLabel>
         <LocaleTextareaField
           form={form}
           path={path}

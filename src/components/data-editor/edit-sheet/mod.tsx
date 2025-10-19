@@ -152,51 +152,51 @@ const ModTipsField = withForm({
     const { form } = props;
     const locales = useModEditPanelLocales();
     return (
-      <form.Field name={`tips`}>
+      <form.Field name={`tips`} mode="array">
         {(field) => {
           const tips = (field.state.value ?? []) as Array<LocaleMap>;
           return (
             <div className="space-y-3">
-              <FieldLegend>{locales.tipsLegend}</FieldLegend>
-              {tips.map((_, i) => (
-                <div key={i} className="space-y-2 rounded border p-2">
-                  <LocaleSetTextareaField
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    form={form as any}
-                    path={`tips.${i}`}
-                    label={locales.tipsLegend}
-                    rows={4}
-                  />
-                  <div className="flex justify-end">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      type="button"
-                      onClick={() =>
-                        field.setValue((curr) => {
-                          const next = [...(curr ?? [])];
-                          next.splice(i, 1);
-                          return next;
-                        })
-                      }
-                    >
-                      {locales.tipsRemoveAction}
-                    </Button>
-                  </div>
-                </div>
-              ))}
-              <div className="flex justify-end">
+              <FieldLegend className="flex items-center justify-between">
+                {locales.tipsLegend}
+
                 <Button
                   variant="outline"
                   size="sm"
                   type="button"
-                  onClick={() =>
-                    field.setValue((curr) => [...(curr ?? []), { en: "" }])
-                  }
+                  onClick={() => field.pushValue({ en: "" })}
                 >
                   {locales.tipsAddAction}
                 </Button>
-              </div>
+              </FieldLegend>
+              {tips.map((_, i) => (
+                <div key={i} className="space-y-2 rounded border p-2">
+                  <LocaleSetTextareaField
+                    labelClassName="flex w-full justify-between"
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    form={form as any}
+                    path={`tips.${i}`}
+                    label={
+                      <>
+                        <span>
+                          {locales.tipsLegend}
+                          {i + 1}
+                        </span>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          type="button"
+                          onClick={() => field.removeValue(i)}
+                        >
+                          {locales.tipsRemoveAction}
+                        </Button>
+                      </>
+                    }
+                    rows={4}
+                  />
+                  <div className="flex justify-end"></div>
+                </div>
+              ))}
             </div>
           );
         }}

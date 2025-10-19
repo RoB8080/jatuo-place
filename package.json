@@ -13,7 +13,8 @@
     "lint": "eslint .",
     "format": "eslint . --fix",
     "test": "vitest",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "analyze": "vite-bundle-visualizer"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -98,6 +99,7 @@
     "typescript-eslint": "^8.44.0",
     "vercel": "^48.2.9",
     "vite": "npm:rolldown-vite@7.1.12",
+    "vite-bundle-visualizer": "^1.2.1",
     "vite-plugin-svgr": "^4.5.0",
     "vite-plugin-vercel": "^9.0.7",
     "vitest": "^3.2.4"

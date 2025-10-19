@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/libs/utils";
 import {
-  OAuthButton,
   useUser,
   type CurrentInternalUser,
   type CurrentUser,
@@ -92,48 +91,14 @@ function SignOutDropdownItem({ onClick }: { onClick: () => void }) {
   );
 }
 
-function SignInDialog({
-  open,
-  onOpenChange,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) {
-  const { t } = useTranslation("auth");
-
-  const signInTitle = t(($) => $.signIn.signIn);
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        className="w-[400px] max-w-[90svw]"
-        showCloseButton={false}
-      >
-        <DialogTitle className="text-center">{signInTitle}</DialogTitle>
-        <div className="my-2 space-y-2.5">
-          <OAuthButton type="sign-in" provider="google" />
-          <OAuthButton type="sign-in" provider="github" />
-        </div>
-        <DialogClose asChild>
-          <Button variant="outline">{t(($) => $.signIn.cancel)}</Button>
-        </DialogClose>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-function SignInDropdownItem({ onClick }: { onClick: () => void }) {
+function SignInDropdownItem() {
   const { t } = useTranslation("auth");
 
   const signInLabel = t(($) => $.signIn.signIn);
 
   return (
-    <DropdownMenuItem
-      onClick={() => {
-        onClick();
-      }}
-    >
-      {signInLabel}
+    <DropdownMenuItem asChild>
+      <Link to="/sign-in">{signInLabel}</Link>
     </DropdownMenuItem>
   );
 }
@@ -252,7 +217,6 @@ export function HeaderMenu({ className }: HeaderMenuProps) {
   const user = useUser();
   const isMobile = useIsMobile();
   const [openSignOutDialog, setOpenSignOutDialog] = useState(false);
-  const [openSignInDialog, setOpenSignInDialog] = useState(false);
 
   const content = (
     <>
@@ -266,7 +230,7 @@ export function HeaderMenu({ className }: HeaderMenuProps) {
       {user ? (
         <SignOutDropdownItem onClick={() => setOpenSignOutDialog(true)} />
       ) : (
-        <SignInDropdownItem onClick={() => setOpenSignInDialog(true)} />
+        <SignInDropdownItem />
       )}
       <DropdownMenuSeparator />
       <div className="flex items-center gap-2">
@@ -283,10 +247,6 @@ export function HeaderMenu({ className }: HeaderMenuProps) {
       open={openSignOutDialog}
       onOpenChange={setOpenSignOutDialog}
     />
-  );
-
-  const signInDialog = !user && (
-    <SignInDialog open={openSignInDialog} onOpenChange={setOpenSignInDialog} />
   );
 
   return (
@@ -308,7 +268,6 @@ export function HeaderMenu({ className }: HeaderMenuProps) {
           </Button>
         )}
       </SimpleDropdownMenu>
-      {signInDialog}
       {signOutDialog}
     </>
   );

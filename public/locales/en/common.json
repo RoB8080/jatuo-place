@@ -16,6 +16,14 @@
   "routes": {
     "dataEditor": "Data Editor",
     "home": "Home",
-    "mapCombo": "Map Combo"
+    "mapCombo": "Map Combo",
+    "routes": "Modules"
+  },
+  "theme": {
+    "dark": "Dark",
+    "label": "Theme",
+    "light": "Light",
+    "switchToast": "Theme switched to {{theme}}",
+    "system": "Follow System"
   }
 }

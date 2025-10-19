@@ -1,11 +1,10 @@
-import { Separator } from "@/components/ui/separator";
 import { LanguageSelect } from "../locale/";
-import { MenuMobile } from "./mobile";
 import { cn } from "@/libs/utils";
 import logo from "@/assets/logo.png";
 import { Link } from "@tanstack/react-router";
 import { useIsMobile } from "@/libs/common";
-import { ActionsWeb, NavWeb } from "./web";
+import { NavWeb } from "./web";
+import { HeaderMenu } from "./menu";
 
 export interface AppHeaderProps {
   className?: string;
@@ -38,12 +37,8 @@ export function AppHeader({ className }: AppHeaderProps) {
         data-slot="header-right"
         className="flex grow-1 basis-0 flex-row items-center justify-end gap-2"
       >
-        {isMobile ? <MenuMobile /> : <ActionsWeb />}
-        <Separator
-          orientation="vertical"
-          className="data-[orientation=vertical]:h-4"
-        />
         <LanguageSelect />
+        <HeaderMenu />
       </div>
     </header>
   );

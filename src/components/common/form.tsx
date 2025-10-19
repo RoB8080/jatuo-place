@@ -13,7 +13,7 @@ import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 export interface SimpleFormFieldProps {
   className?: string;
   /** The field's label. */
-  label: ReactNode;
+  label?: ReactNode;
   /** Whether the field is required. will show an asterisk */
   required?: boolean;
   /** The field's children element. */
@@ -26,6 +26,8 @@ export interface SimpleFormFieldProps {
   invalid?: boolean;
   /** Errors to display. only show when `invalid` is true */
   errors?: Array<{ message?: string } | string>;
+  /** Whether to keep the error space even when there are no errors. */
+  keepErrorSpace?: boolean;
 }
 
 export function SimpleFormField(props: SimpleFormFieldProps) {
@@ -50,16 +52,18 @@ export function SimpleFormField(props: SimpleFormFieldProps) {
       orientation={orientation}
       data-invalid={invalid}
     >
-      <FieldLabel htmlFor={inputID}>
-        <div className="flex items-center">
-          <span>{label}</span>
-          {required && (
-            <Asterisk
-              className={"size-3.5 -translate-y-0.5 text-destructive"}
-            />
-          )}
-        </div>
-      </FieldLabel>
+      {label && (
+        <FieldLabel htmlFor={inputID}>
+          <div className="flex items-center">
+            <span>{label}</span>
+            {required && (
+              <Asterisk
+                className={"size-3.5 -translate-y-0.5 text-destructive"}
+              />
+            )}
+          </div>
+        </FieldLabel>
+      )}
       <Slot id={inputID} aria-invalid={invalid}>
         {children}
       </Slot>

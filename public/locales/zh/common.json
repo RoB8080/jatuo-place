@@ -16,6 +16,14 @@
   "routes": {
     "dataEditor": "数据编辑器",
     "home": "首页",
-    "mapCombo": "地图组合"
+    "mapCombo": "地图组合",
+    "routes": "模块"
+  },
+  "theme": {
+    "dark": "深色",
+    "label": "主题",
+    "light": "浅色",
+    "switchToast": "主题已切换为 {{theme}}",
+    "system": "跟随系统"
   }
 }

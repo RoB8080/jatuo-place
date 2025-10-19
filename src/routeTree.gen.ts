@@ -9,10 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as MapComboRouteImport } from './routes/map-combo'
 import { Route as DataEditorRouteImport } from './routes/data-editor'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HandlerSplatRouteImport } from './routes/handler.$'
 
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MapComboRoute = MapComboRouteImport.update({
   id: '/map-combo',
   path: '/map-combo',
@@ -28,39 +35,65 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HandlerSplatRoute = HandlerSplatRouteImport.update({
+  id: '/handler/$',
+  path: '/handler/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/data-editor': typeof DataEditorRoute
   '/map-combo': typeof MapComboRoute
+  '/sign-in': typeof SignInRoute
+  '/handler/$': typeof HandlerSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/data-editor': typeof DataEditorRoute
   '/map-combo': typeof MapComboRoute
+  '/sign-in': typeof SignInRoute
+  '/handler/$': typeof HandlerSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/data-editor': typeof DataEditorRoute
   '/map-combo': typeof MapComboRoute
+  '/sign-in': typeof SignInRoute
+  '/handler/$': typeof HandlerSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/data-editor' | '/map-combo'
+  fullPaths: '/' | '/data-editor' | '/map-combo' | '/sign-in' | '/handler/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/data-editor' | '/map-combo'
-  id: '__root__' | '/' | '/data-editor' | '/map-combo'
+  to: '/' | '/data-editor' | '/map-combo' | '/sign-in' | '/handler/$'
+  id:
+    | '__root__'
+    | '/'
+    | '/data-editor'
+    | '/map-combo'
+    | '/sign-in'
+    | '/handler/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DataEditorRoute: typeof DataEditorRoute
   MapComboRoute: typeof MapComboRoute
+  SignInRoute: typeof SignInRoute
+  HandlerSplatRoute: typeof HandlerSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/map-combo': {
       id: '/map-combo'
       path: '/map-combo'
@@ -82,6 +115,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/handler/$': {
+      id: '/handler/$'
+      path: '/handler/$'
+      fullPath: '/handler/$'
+      preLoaderRoute: typeof HandlerSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +129,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DataEditorRoute: DataEditorRoute,
   MapComboRoute: MapComboRoute,
+  SignInRoute: SignInRoute,
+  HandlerSplatRoute: HandlerSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -8,16 +8,19 @@ import { useTheme } from "@/components/global/theme";
 
 const themes = [
   {
+    // t("theme.system", { ns: "common" })
     key: "system",
     icon: Monitor,
     label: "System theme",
   },
   {
+    // t("theme.light", { ns: "common" })
     key: "light",
     icon: Sun,
     label: "Light theme",
   },
   {
+    // t("theme.dark", { ns: "common" })
     key: "dark",
     icon: Moon,
     label: "Dark theme",
